@@ -1,0 +1,10 @@
+{
+    "ApiKey": "ключ API",
+    "IsDonated": "статус пожертвования",
+    "Main settings": "Основные параметры",
+    "SystemId": "Идентификатор системы",
+    "name": "Имя",
+    "pvoutputorg adapter settings": "Настройки адаптера для pvoutputorg",
+    "readInterval": "интервал чтения данных [мин]",
+    "systems": "Система"
+}

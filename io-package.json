@@ -1,0 +1,72 @@
+{
+  "common": {
+    "name": "amtronwallbox",
+    "version": "0.0.1",
+    "news": {
+
+      "0.0.1": {
+        "en": "initial release",
+        "de": "Erstveröffentlichung",
+        "ru": "Первый выпуск",
+        "pt": "lançamento inicial",
+        "nl": "Eerste uitgave",
+        "fr": "Première version",
+        "it": "Versione iniziale",
+        "es": "Versión inicial",
+        "pl": "Pierwsze wydanie",
+        "zh-cn": "初始发行"
+      }
+    },
+    "title": "AMTRON wallbox",
+    "titleLang": {
+      "en": "control of AMTRON wallbox"
+    },
+    "desc": {
+      "en": "read statistic information and set configuration values on AMTRON wallboxes from Mennekes"
+
+    },
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "icon": "amtronwallbox.png",
+    "enabled": true,
+    "messagebox": true,
+    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.amtronwallbox/master/admin/amtronwallbox.png",
+    "keywords": [
+      "amtron",
+      "mennekes",
+      "wallbox"
+    ],
+    "readme": "https://github.com/rg-engineering/ioBroker.amtronwallbox/blob/master/README.md",
+    "loglevel": "info",
+    "stopBeforeUpdate": true,
+    "type": "energy",
+    "license": "MIT",
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
+    ],
+    "plugins": {
+      "sentry": {
+        "dsn": "https://bb7e6f51a1274ced81576d84f82f667e@o390433.ingest.sentry.io/5434784"
+      }
+    },
+    "compact": true,
+    "authors": [
+      {
+        "name": "René G.",
+        "email": "info@rg-engineering.eu"
+      }
+    ],
+    "connectionType": "local",
+    "dataSource": "push",
+    "adminUI": {
+      "config": "materialize"
+    },
+    "messages": []
+  },
+    "native": {
+      
+    }
+}

@@ -1,0 +1,11 @@
+.idea
+
+# npm package files
+
+# i18n intermediate files
+admin/i18n/flat.txt
+admin/i18n/*/flat.txt
+node_modules
+/readme.txt
+/pvoutputorg.njsproj
+/pvoutputorg.njsproj.user
