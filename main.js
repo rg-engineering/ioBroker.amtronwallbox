@@ -200,13 +200,8 @@ async function read_rest(system) {
 
         */
 
+        let sURL = "http://" + system.IPAddress + "/rest/full_state";
 
-
-
-        
-
-
-        let sURL = "http://" + system.URL + "/rest/full_state";
         let header = {
             headers: {
                 Accept: 'application/json '
