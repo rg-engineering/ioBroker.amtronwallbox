@@ -1,73 +1,89 @@
 {
-  "common": {
-    "name": "amtronwallbox",
-    "version": "0.0.1",
-    "news": {
-
-      "0.0.1": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Первый выпуск",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "zh-cn": "初始发行"
-      }
+    "common": {
+        "name": "amtronwallbox",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Первый выпуск",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "初始发行"
+            }
+        },
+        "title": "AMTRON wallbox",
+        "titleLang": {
+            "en": "control of AMTRON wallbox",
+            "de": "Steuerung der AMTRON Wallbox",
+            "ru": "управление настенной коробкой AMTRON",
+            "pt": "controle da caixa de parede AMTRON",
+            "nl": "bediening van AMTRON wallbox",
+            "fr": "commande de la wallbox AMTRON",
+            "it": "controllo della wallbox AMTRON",
+            "es": "control de la caja de empotrar AMTRON",
+            "pl": "sterowanie wallboxem AMTRON",
+            "zh-cn": "AMTRON 墙盒的控制"
+        },
+        "desc": {
+            "en": "read statistic information and set configuration values on AMTRON wallboxes from Mennekes",
+            "de": "Statistikinformationen lesen und Konfigurationswerte auf AMTRON-Wallboxen von Mennekes einstellen",
+            "ru": "читать статистическую информацию и задавать значения конфигурации на настенных ящиках AMTRON от Mennekes",
+            "pt": "leia informações estatísticas e defina valores de configuração em caixas de parede AMTRON da Mennekes",
+            "nl": "lees statistische informatie en stel configuratiewaarden in op AMTRON wallboxes van Mennekes",
+            "fr": "lire les informations statistiques et définir les valeurs de configuration sur les boîtiers muraux AMTRON de Mennekes",
+            "it": "leggere le informazioni statistiche e impostare i valori di configurazione sulle wallbox AMTRON di Mennekes",
+            "es": "leer información estadística y establecer valores de configuración en los wallboxes AMTRON de Mennekes",
+            "pl": "odczytywanie informacji statystycznych i ustawianie wartości konfiguracyjnych w stacjach naściennych AMTRON firmy Mennekes",
+            "zh-cn": "从 Mennekes 读取 AMTRON 墙盒上的统计信息并设置配置值"
+        },
+        "platform": "Javascript/Node.js",
+        "mode": "daemon",
+        "icon": "amtronwallbox.png",
+        "enabled": true,
+        "messagebox": true,
+        "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.amtronwallbox/master/admin/amtronwallbox.png",
+        "keywords": [
+            "amtron",
+            "mennekes",
+            "wallbox"
+        ],
+        "readme": "https://github.com/rg-engineering/ioBroker.amtronwallbox/blob/master/README.md",
+        "loglevel": "info",
+        "stopBeforeUpdate": true,
+        "type": "energy",
+        "license": "MIT",
+        "materialize": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ],
+        "plugins": {
+            "sentry": {
+                "dsn": "https://bb7e6f51a1274ced81576d84f82f667e@o390433.ingest.sentry.io/5434784"
+            }
+        },
+        "compact": true,
+        "authors": [
+            {
+                "name": "René G.",
+                "email": "info@rg-engineering.eu"
+            }
+        ],
+        "connectionType": "local",
+        "dataSource": "push",
+        "adminUI": {
+            "config": "materialize"
+        },
+        "messages": []
     },
-    "title": "AMTRON wallbox",
-    "titleLang": {
-      "en": "control of AMTRON wallbox"
-    },
-    "desc": {
-      "en": "read statistic information and set configuration values on AMTRON wallboxes from Mennekes"
-
-    },
-    "platform": "Javascript/Node.js",
-    "mode": "daemon",
-    "icon": "amtronwallbox.png",
-    "enabled": true,
-    "messagebox": true,
-    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.amtronwallbox/master/admin/amtronwallbox.png",
-    "keywords": [
-      "amtron",
-      "mennekes",
-      "wallbox"
-    ],
-    "readme": "https://github.com/rg-engineering/ioBroker.amtronwallbox/blob/master/README.md",
-    "loglevel": "info",
-    "stopBeforeUpdate": true,
-    "type": "energy",
-    "license": "MIT",
-    "materialize": true,
-    "dependencies": [
-      {
-        "js-controller": ">=2.0.0"
-      }
-    ],
-    "plugins": {
-      "sentry": {
-        "dsn": "https://bb7e6f51a1274ced81576d84f82f667e@o390433.ingest.sentry.io/5434784"
-      }
-    },
-    "compact": true,
-    "authors": [
-      {
-        "name": "René G.",
-        "email": "info@rg-engineering.eu"
-      }
-    ],
-    "connectionType": "local",
-    "dataSource": "push",
-    "adminUI": {
-      "config": "materialize"
-    },
-    "messages": []
-  },
-  "native": {
-    "WallboxSystems": [],
-    "readInterval": 5
-  }
+    "native": {
+        "WallboxSystems": [],
+        "readInterval": 5
+    }
 }
