@@ -1,6 +1,6 @@
 {
   "name": "iobroker.amtronwallbox",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ioBroker Adapter for AMTRON wallboxes",
   "author": {
     "name": "René G.",
@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "2.6.0",
-    "@sentry/node": "6.19.3",
-    "axios": "0.26.1"
+    "axios": "0.27.2",
+    "cron": "2.0.0"
   },
   "devDependencies": {
     "@iobroker/testing": "2.6.0",

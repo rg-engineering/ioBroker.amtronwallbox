@@ -1,5 +1,5 @@
 ﻿/*
- * pvoutputorg adapter für iobroker
+ * AMTRON wallbox adapter für iobroker
  *
  * Created: 15.05.2022 18:39:28
  *  Author: Rene
@@ -10,6 +10,9 @@
 const utils = require("@iobroker/adapter-core");
 const axios = require('axios');
 
+const CronJob = require("cron").CronJob;
+
+let cronJobs = [];
 
 /*
  * docu see
@@ -44,8 +47,10 @@ function startAdapter(options) {
         //  is called when adapter shuts down
         unload: function (callback) {
             try {
+                CronStop();
+                //clearInterval(intervalID);
+                //intervalID = null;
                 adapter && adapter.log && adapter.log.info && adapter.log.info("cleaned everything up...");
-                //to do stop intervall
                 callback();
             } catch (e) {
                 callback();
@@ -54,8 +59,9 @@ function startAdapter(options) {
         //#######################################
         //
         SIGINT: function () {
-            clearInterval(intervalID);
-            intervalID = null;
+            CronStop();
+            //clearInterval(intervalID);
+            //intervalID = null;
             adapter && adapter.log && adapter.log.info && adapter.log.info("cleaned everything up...");
             CronStop();
         },
@@ -82,7 +88,7 @@ function startAdapter(options) {
 
 
 
-let intervalID;
+//let intervalID;
 async function main() {
 
     adapter.log.debug("start  ");
@@ -101,7 +107,8 @@ async function main() {
         adapter.log.warn("read interval not defined");
     }
     adapter.log.debug("read every  " + readInterval + " minutes");
-    intervalID = setInterval(Do, readInterval * 60 * 1000);
+    //intervalID = setInterval(Do, readInterval * 60 * 1000);
+    CronCreate(readInterval, Do)
     
 }
 
@@ -226,33 +233,33 @@ async function read_rest(system) {
             await adapter.setStateAsync(system.Name + ".Connection.State", { ack: true, val: data[0].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".Authorisation.State", { ack: true, val: data[1].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".Authorisation.UID", { ack: true, val: data[2].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".TimeSinceChargingStart", { ack: true, val: data[3].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Meter", { ack: true, val: data[4].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Power", { ack: true, val: data[5].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Transaction", { ack: true, val: data[6].split(":")[1] });
+            await adapter.setStateAsync(system.Name + ".TimeSinceChargingStart", { ack: true, val: Number(data[3].split(":")[1]) });
+            await adapter.setStateAsync(system.Name + ".Meter", { ack: true, val: Number(data[4].split(":")[1]) });
+            await adapter.setStateAsync(system.Name + ".Power", { ack: true, val: Number(data[5].split(":")[1]) });
+            await adapter.setStateAsync(system.Name + ".Transaction", { ack: true, val: Number(data[6].split(":")[1]) });
             await adapter.setStateAsync(system.Name + ".CP_ID", { ack: true, val: data[7].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".OCPP.State", { ack: true, val: data[8].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".Type2.State", { ack: true, val: data[9].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".Type2.Proximity", { ack: true, val: data[10].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".SigCurrent", { ack: true, val: data[11].split(":")[1] });
+            await adapter.setStateAsync(system.Name + ".SigCurrent", { ack: true, val: Number(data[11].split(":")[1]) });
             await adapter.setStateAsync(system.Name + ".Schuko.State", { ack: true, val: data[12].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".Backend.ConnectionState", { ack: true, val: data[13].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".FreeCharging", { ack: true, val: data[14].split(":")[1] });
+            await adapter.setStateAsync(system.Name + ".FreeCharging", { ack: true, val: Boolean( data[14].split(":")[1]) });
             await adapter.setStateAsync(system.Name + ".SlaveState", { ack: true, val: data[15].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".OCPP.MeterConfig", { ack: true, val: data[16].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".OCPP.MeterSerial", { ack: true, val: data[17].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Current", { ack: true, val: data[18].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".EnergyManagerCurrent", { ack: true, val: data[19].split(":")[1] });
+            await adapter.setStateAsync(system.Name + ".Current", { ack: true, val: Number(data[18].split(":")[1]) });
+            await adapter.setStateAsync(system.Name + ".EnergyManagerCurrent", { ack: true, val: Number(data[19].split(":")[1]) });
             await adapter.setStateAsync(system.Name + ".AmbientTemperature", { ack: true, val: data[20].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".FirmwareVersion", { ack: true, val: data[21].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".SerialNumber", { ack: true, val: data[22].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".ContactCyclesSchuko", { ack: true, val: data[23].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".ContactcyclesType2", { ack: true, val: data[24].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".MaxCurrent", { ack: true, val: data[25].split(":")[1] });
+            await adapter.setStateAsync(system.Name + ".ContactCyclesSchuko", { ack: true, val: Number(data[23].split(":")[1]) });
+            await adapter.setStateAsync(system.Name + ".ContactcyclesType2", { ack: true, val: Number(data[24].split(":")[1]) });
+            await adapter.setStateAsync(system.Name + ".MaxCurrent", { ack: true, val: Number(data[25].split(":")[1]) });
             await adapter.setStateAsync(system.Name + ".RCMB.State", { ack: true, val: data[26].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".RCMB.MaxValues", { ack: true, val: data[27].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".RCMB.CurrentValues", { ack: true, val: data[28].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".CableAttached", { ack: true, val: data[29].split(":")[1] });
+            await adapter.setStateAsync(system.Name + ".CableAttached", { ack: true, val: Boolean(data[29].split(":")[1]) });
             await adapter.setStateAsync(system.Name + ".Schuko.Config", { ack: true, val: data[30].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".RCD.State", { ack: true, val: data[31].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".MCB.Type2State", { ack: true, val: data[32].split(":")[1] });
@@ -262,7 +269,22 @@ async function read_rest(system) {
             await adapter.setStateAsync(system.Name + ".CP_Model", { ack: true, val: data[36].split(":")[1] });
             await adapter.setStateAsync(system.Name + ".DisplayText", { ack: true, val: data[37].split(":")[1] });
 
-
+            /*
+            amtronwallbox.0 	2022-05-20 12:20:53.613	info	State value to set for "amtronwallbox.0.Wallbox.CableAttached" has to be type "boolean" but received type "string"
+            amtronwallbox.0 2022-05-20 12:20:53.594	info	State value to set for "amtronwallbox.0.Wallbox.MaxCurrent" has to be type "number" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.545	info	State value to set for "amtronwallbox.0.Wallbox.ContactcyclesType2" has to be type "number" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.486	info	State value to set for "amtronwallbox.0.Wallbox.ContactCyclesSchuko" has to be type "number" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.449	info	State value to set for "amtronwallbox.0.Wallbox.EnergyManagerCurrent" has to be type "number" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.406	info	State value to set for "amtronwallbox.0.Wallbox.Current" has to be type "number" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.392	info	State value to set for "amtronwallbox.0.Wallbox.FreeCharging" has to be type "boolean" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.342	info	State value to set for "amtronwallbox.0.Wallbox.SigCurrent" has to be type "number" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.324	info	State value to set for "amtronwallbox.0.Wallbox.Transaction" has to be type "number" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.319	info	State value to set for "amtronwallbox.0.Wallbox.Power" has to be type "number" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.313	info	State value to set for "amtronwallbox.0.Wallbox.Meter" has to be type "number" but received type "string"
+            amtronwallbox.0	2022-05-20 12:20:53.268	info	State value to set for "amtronwallbox.0.Wallbox.TimeSinceChargingStart" has to be type "number" but received type "string"
+            
+            */
+             
 
         }
         else {
@@ -903,6 +925,102 @@ async function CreateObject(key, obj) {
         await adapter.setObjectNotExistsAsync(key, obj);
     }
 }
+
+//===============================================================================
+//cron functions
+function CronStop() {
+    if (cronJobs.length > 0) {
+        adapter.log.debug("delete " + cronJobs.length + " cron jobs");
+        //cancel all cron jobs...
+        const start = cronJobs.length - 1;
+        for (let n = start; n >= 0; n--) {
+            cronJobs[n].stop();
+        }
+        cronJobs = [];
+    }
+}
+
+function deleteCronJob(id) {
+
+    cronJobs[id].stop();
+
+    if (id === cronJobs.length - 1) {
+        cronJobs.pop(); //remove last
+    }
+    else {
+        delete cronJobs[id];
+    }
+    CronStatus();
+
+
+}
+
+function CronCreate(Minute, callback) {
+
+    try {
+
+        const timezone = adapter.config.timezone || "Europe/Berlin";
+
+        let cronString = "";
+        //https://crontab-generator.org/
+        if (Minute == -99) {
+            //every day late evening
+            cronString = "5 23 * * *";
+            //just for logging
+            Minute = "late evening";
+        }
+        else {
+
+            cronString = "*/" + Minute + " * * * * ";
+        }
+
+        const nextCron = cronJobs.length;
+
+        adapter.log.debug("create cron job #" + nextCron + " every " + Minute + " string: " + cronString + " " + timezone);
+
+        //details see https://www.npmjs.com/package/cron
+        cronJobs[nextCron] = new CronJob(cronString,
+            () => callback(),
+            () => adapter.log.debug("cron job stopped"), // This function is executed when the job stops
+            true,
+            timezone
+        );
+
+    }
+    catch (e) {
+        adapter.log.error("exception in CronCreate [" + e + "]");
+    }
+}
+
+function CronStatus() {
+    let n = 0;
+    let length = 0;
+    try {
+        if (typeof cronJobs !== undefined && cronJobs != null) {
+
+            length = cronJobs.length;
+            //adapter.log.debug("cron jobs");
+            for (n = 0; n < length; n++) {
+                if (typeof cronJobs[n] !== undefined && cronJobs[n] != null) {
+                    adapter.log.debug("cron status = " + cronJobs[n].running + " next event: " + timeConverter("DE", cronJobs[n].nextDates()));
+                }
+            }
+
+            if (length > 500) {
+                adapter.log.warn("more then 500 cron jobs existing for this adapter, this might be a configuration error! (" + length + ")");
+            }
+            else {
+                adapter.log.info(length + " cron job(s) created");
+            }
+        }
+    }
+    catch (e) {
+        adapter.log.error("exception in getCronStat [" + e + "] : " + n + " of " + length);
+    }
+}
+
+
+
 
 // If started as allInOne/compact mode => return function to create instance
 if (module && module.parent) {

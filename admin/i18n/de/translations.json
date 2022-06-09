@@ -1,10 +1,3 @@
 {
-    "ApiKey": "API-Schlüssel",
-    "IsDonated": "wird gespendet",
-    "Main settings": "Haupteinstellungen",
-    "SystemId": "System-ID",
-    "name": "Name",
-    "pvoutputorg adapter settings": "Adaptereinstellungen für pvoutputorg",
-    "readInterval": "Intervall zum Lesen von Daten [min]",
-    "systems": "System"
+
 }

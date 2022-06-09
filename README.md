@@ -28,7 +28,9 @@ Attention:
    
 ## Changelog
 
-
+### 0.0.2 (in progress)
+* (René) some bug fixes
+* (René) change to cron
 
 ### 0.0.1 (2022-05-19)
 * (René) initial release
@@ -36,7 +38,7 @@ Attention:
 ## License
 MIT License
 
-Copyright (c) 2022 rg-engineering <info@rg-engineering.eu>
+Copyright (c) 2022 rg-engineering info@rg-engineering.eu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
