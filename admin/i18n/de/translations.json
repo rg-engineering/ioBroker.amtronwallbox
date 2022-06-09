@@ -1,3 +1,10 @@
 {
-
+    "ApiKey": "API-Schlüssel",
+    "IPAddress": "IP Adresse",
+    "IsActive": "aktiv",
+    "Main settings": "Haupteinstellungen",
+    "Type": "Typ",
+    "name": "Name",
+    "readInterval": "Leseintervall [min]",
+    "systems": "Systeme"
 }

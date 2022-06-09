@@ -1,7 +1,10 @@
 {
+    "ApiKey": "Api Key",
+    "IPAddress": "IP-Address",
+    "IsActive": "active",
     "Main settings": "Main settings",
-    "SystemId": "System ID",
-    "name": "Name",
-    "readInterval": "interval to read data [min]",
-    "systems": "System"
+    "Type": "type",
+    "name": "name",
+    "readInterval": "read intervall [min]",
+    "systems": "systems"
 }

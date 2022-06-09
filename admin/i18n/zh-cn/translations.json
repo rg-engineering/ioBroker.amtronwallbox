@@ -1,3 +1,10 @@
 {
-
+    "ApiKey": "API 密钥",
+    "IPAddress": "IP地址",
+    "IsActive": "积极的",
+    "Main settings": "主要设置",
+    "Type": "类型",
+    "name": "姓名",
+    "readInterval": "读取间隔 [分钟]",
+    "systems": "系统"
 }

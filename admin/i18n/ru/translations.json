@@ -1,3 +1,10 @@
 {
-
+    "ApiKey": "API-ключ",
+    "IPAddress": "Айпи адрес",
+    "IsActive": "активный",
+    "Main settings": "Основные параметры",
+    "Type": "тип",
+    "name": "имя",
+    "readInterval": "интервал чтения [мин]",
+    "systems": "системы"
 }
