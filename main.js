@@ -58,13 +58,13 @@ function startAdapter(options) {
         },
         //#######################################
         //
-        SIGINT: function () {
-            CronStop();
-            //clearInterval(intervalID);
-            //intervalID = null;
-            adapter && adapter.log && adapter.log.info && adapter.log.info("cleaned everything up...");
-            CronStop();
-        },
+        //SIGINT: function () {
+        //    CronStop();
+        //    //clearInterval(intervalID);
+        //    //intervalID = null;
+        //    adapter && adapter.log && adapter.log.info && adapter.log.info("cleaned everything up...");
+        //    CronStop();
+        //},
         //#######################################
         //  is called if a subscribed object changes
         //objectChange: function (id, obj) {

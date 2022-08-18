@@ -28,9 +28,10 @@ Attention:
    
 ## Changelog
 
-### 0.0.2 (in progress)
+### 0.0.3 (2022-08-18)
 * (René) some bug fixes
 * (René) change to cron
+* (René) update of dependencies
 
 ### 0.0.1 (2022-05-19)
 * (René) initial release
