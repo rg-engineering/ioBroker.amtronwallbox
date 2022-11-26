@@ -13,7 +13,8 @@
                 "it": "dipendenze aggiornate",
                 "es": "dependencias actualizadas",
                 "pl": "zaktualizowano zależności",
-                "zh-cn": "已更新依赖项"
+                "zh-cn": "已更新依赖项",
+                "uk": "залежності оновлено"
             },
             "0.0.1": {
                 "en": "initial release",
@@ -25,7 +26,8 @@
                 "it": "Versione iniziale",
                 "es": "Versión inicial",
                 "pl": "Pierwsze wydanie",
-                "zh-cn": "初始发行"
+                "zh-cn": "初始发行",
+                "uk": "початковий випуск"
             }
         },
         "title": "AMTRON wallbox",
@@ -39,7 +41,8 @@
             "it": "controllo della wallbox AMTRON",
             "es": "control de la caja de empotrar AMTRON",
             "pl": "sterowanie wallboxem AMTRON",
-            "zh-cn": "AMTRON 墙盒的控制"
+            "zh-cn": "AMTRON 墙盒的控制",
+            "uk": "управління AMTRON wallbox"
         },
         "desc": {
             "en": "read statistic information and set configuration values on AMTRON wallboxes from Mennekes",
@@ -51,7 +54,8 @@
             "it": "leggere le informazioni statistiche e impostare i valori di configurazione sulle wallbox AMTRON di Mennekes",
             "es": "leer información estadística y establecer valores de configuración en los wallboxes AMTRON de Mennekes",
             "pl": "odczytywanie informacji statystycznych i ustawianie wartości konfiguracyjnych w stacjach naściennych AMTRON firmy Mennekes",
-            "zh-cn": "从 Mennekes 读取 AMTRON 墙盒上的统计信息并设置配置值"
+            "zh-cn": "从 Mennekes 读取 AMTRON 墙盒上的统计信息并设置配置值",
+            "uk": "читати статистичну інформацію та встановлювати значення конфігурації на AMTRON wallbox від Mennekes"
         },
         "platform": "Javascript/Node.js",
         "mode": "daemon",

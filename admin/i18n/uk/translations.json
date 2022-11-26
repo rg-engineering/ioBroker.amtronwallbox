@@ -1,0 +1,10 @@
+{
+    "ApiKey": "Ключ API",
+    "IPAddress": "IP-адреса",
+    "IsActive": "активний",
+    "Main settings": "Основні налаштування",
+    "Type": "типу",
+    "name": "назва",
+    "readInterval": "інтервал читання [хв]",
+    "systems": "системи"
+}
