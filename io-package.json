@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "amtronwallbox",
-        "version": "0.0.3",
+        "version": "0.1.0",
         "news": {
+            "0.1.0": {
+                "en": "support for XTRA added",
+                "de": "Unterstützung für XTRA hinzugefügt",
+                "ru": "добавлена ​​поддержка XTRA",
+                "pt": "suporte para XTRA adicionado",
+                "nl": "ondersteuning voor XTRA toegevoegd",
+                "fr": "prise en charge de XTRA ajoutée",
+                "it": "supporto per XTRA aggiunto",
+                "es": "soporte para XTRA añadido",
+                "pl": "dodano obsługę XTRA",
+                "uk": "додано підтримку XTRA",
+                "zh-cn": "添加了对 XTRA 的支持"
+            },
             "0.0.3": {
                 "en": "dependencies updated",
                 "de": "Abhängigkeiten aktualisiert",

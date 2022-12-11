@@ -107,7 +107,7 @@ async function main() {
         adapter.log.warn("read interval not defined");
     }
     adapter.log.debug("read every  " + readInterval + " minutes");
-    //intervalID = setInterval(Do, readInterval * 60 * 1000);
+    
     CronCreate(readInterval, Do)
     
 }
@@ -127,19 +127,28 @@ async function ReadData(){
 
     for (const system of adapter.config.WallboxSystems) {
 
-        if (system.Type === "ChargeControl") {
-            await read_rest(system);
-        }
-        else {
-            //system type ChargeControl string not yet implemented
-            adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
+        if (system.IsActive) {
+            if (system.Type === "ChargeControl") {
+                await read_rest(system);
+            }
+            else if (system.Type === "Compact ") {
+
+            }
+            else if (system.Type === "Xtra ") {
+                await read_MHCP(system);
+            }
+
+            else {
+                //system type ChargeControl string not yet implemented
+                adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
+            }
         }
     }
     
     
 }
 
-async function read_MHCP() {
+async function read_MHCP(system) {
 
     try {
 
@@ -153,11 +162,81 @@ async function read_MHCP() {
                 var abfrage_Statistics_Year = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Year?DevKey=999999";
                 var abfrage_Statistics_Annual = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Annual?DevKey=999999";
                 */
+
+        await read_MHCP_DevInfo(system);
+
     }
     catch (e) {
         adapter.log.error("exception in read_MHCP [" + e + "]");
     }
 }
+
+async function read_MHCP_DevInfo(system) {
+    //Retrieves information about the wallbox.
+    try {
+        /*
+                var abfrage_DevInfo = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/DevInfo?DevKey=999999";
+        */
+
+        let sURL = "http://" + system.IPAddress + ":25000/MHCP/1.0/DevInfo?DevKey=" + system.ApiKey;
+
+        let header = {
+            headers: {
+                Accept: 'application/json '
+            }
+        }
+        adapter.log.debug("URL " + sURL);
+
+        let buffer = await axios.get(sURL, header);
+
+        adapter.log.debug("got data status " + typeof buffer.data + " " + JSON.stringify(buffer.data));
+        
+
+        if (buffer != null && buffer.status == 200 && buffer.data != null && typeof buffer.data === "string") {
+            /*
+            "DevName": [string],         Name of the device 
+            "LocTime": [number],         timestamp 
+            "Summer": [boolean],         Is summer time? 
+            "Tz": [number],              timezone offset in minutes 
+            "ItemNo": [string],          item number 
+            "Sn": [number],              Serial Number 
+            "Hcc3": [string],            Info about the HCC3 (main controller) 
+            "Hmi": [string],             Info about hardware software? 
+            "Rfid": [string],            Info about RFID? 
+            "Wifi": [string],            WiFi module version? 
+            "FixedVehCosts": [number],   Fixed vehicle costs as specified in the app 
+            "OldVehCosts": [number],     OldVehicle costs? 
+            "Color": [number],           ? 
+            "DevMode": [EnumDevMode],    Curent charging mode 
+            "ChgState": [EnumChargingState],  Current charging state 
+            "WifiOn": [boolean],         true if WiFi is on 
+            "AutoChg": [boolean],        true if auto-start charging is enabled
+            "ChgContinue": [boolean],    true if charging should continue after power outage 
+            "Err": [number],             current error code, 0 if there is none 
+            "Battery": [number],         EV battery capacity for EnergyManager in Wh
+            "Phases": [number],          number of phases connected 
+            "Cable": [boolean],          true if cable is connected/installed? 
+            "Auth": [boolean],           true if auth by rfid is enabled? 
+            "DsoEnabled": [boolean],     ? 
+            "EmEnabled": [boolean],      true if EnergyManager mode is enabled 
+            "MaxCurr": [number],         currently set max. charging current per phase in A
+            "MaxPwr": [number],          currently set max. charging power in W
+            "MaxCurrWb": [number]        upper limit for charging current per phase in A
+             */
+
+
+        }
+
+
+
+    }
+    catch (e) {
+        adapter.log.error("exception in read_MHCP_DevInfo [" + e + "]");
+    }
+}
+
+
+
 
 async function read_rest(system) {
 
