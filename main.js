@@ -56,25 +56,7 @@ function startAdapter(options) {
                 callback();
             }
         },
-        //#######################################
-        //
-        //SIGINT: function () {
-        //    CronStop();
-        //    //clearInterval(intervalID);
-        //    //intervalID = null;
-        //    adapter && adapter.log && adapter.log.info && adapter.log.info("cleaned everything up...");
-        //    CronStop();
-        //},
-        //#######################################
-        //  is called if a subscribed object changes
-        //objectChange: function (id, obj) {
-        //    adapter.log.debug("[OBJECT CHANGE] ==== " + id + " === " + JSON.stringify(obj));
-        //},
-        //#######################################
-        // is called if a subscribed state changes
-        //stateChange: function (id, state) {
-        //HandleStateChange(id, state);
-        //},
+        
         stateChange: async (id, state) => {
             await HandleStateChange(id, state);
         },
@@ -98,6 +80,8 @@ async function main() {
 
     subscribeVars();
 
+    //read all data
+    await ReadData();
 
     let readInterval = 15;
     if (parseInt(adapter.config.readInterval) > 0) {
@@ -107,7 +91,7 @@ async function main() {
         adapter.log.warn("read interval not defined");
     }
     adapter.log.debug("read every  " + readInterval + " minutes");
-    
+           
     CronCreate(readInterval, Do)
     
 }
@@ -131,10 +115,10 @@ async function ReadData(){
             if (system.Type === "ChargeControl") {
                 await read_rest(system);
             }
-            else if (system.Type === "Compact ") {
+            else if (system.Type === "Compact") {
 
             }
-            else if (system.Type === "Xtra ") {
+            else if (system.Type === "Xtra") {
                 await read_MHCP(system);
             }
 
@@ -420,554 +404,944 @@ async function checkVariables() {
 
     
     for (const system of adapter.config.WallboxSystems) {
+        if (system.IsActive) {
+            if (system.Type === "ChargeControl") {
+                await checkVariables_rest(system);
+            }
+            else if (system.Type === "Compact") {
 
-        let key;
-        let obj;
+            }
+            else if (system.Type === "Xtra") {
+                await checkVariables_MHCP(system);
+            }
 
-        key = system.Name + ".Connection.State";
-        obj = {
-            type: "state",
-            common: {
-                name: "Connection State",
-                type: "string",
-                role: "value",
-                read: true,
-                write: false
+            else {
+                //system type ChargeControl string not yet implemented
+                adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
             }
         }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".Authorisation.State";
-        obj = {
-            type: "state",
-            common: {
-                name: "Authorisation State",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".Authorisation.UID";
-        obj = {
-            type: "state",
-            common: {
-                name: "Authorisation UID",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".TimeSinceChargingStart";
-        obj = {
-            type: "state",
-            common: {
-                name: "Time Since Charging Start",
-                type: "number",
-                role: "value",
-                unit: "s",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-
-        key = system.Name + ".Meter";
-        obj = {
-            type: "state",
-            common: {
-                name: "Meter",
-                type: "number",
-                role: "value",
-                unit: "Wh",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".Power";
-        obj = {
-            type: "state",
-            common: {
-                name: "Power",
-                type: "number",
-                role: "value",
-                unit: "W",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".Transaction";
-        obj = {
-            type: "state",
-            common: {
-                name: "Transaction",
-                type: "number",
-                role: "value",
-                unit: "Wh",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".CP_ID";
-        obj = {
-            type: "state",
-            common: {
-                name: "System ID",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".OCPP.State";
-        obj = {
-            type: "state",
-            common: {
-                name: "OCPP State",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".Type2.State";
-        obj = {
-            type: "state",
-            common: {
-                name: "Type2 State",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".Type2.Proximity";
-        obj = {
-            type: "state",
-            common: {
-                name: "Type2 Proximity",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".SigCurrent";
-        obj = {
-            type: "state",
-            common: {
-                name: "SIG Current",
-                type: "number",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".Schuko.State";
-        obj = {
-            type: "state",
-            common: {
-                name: "Schuko State",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-
-        key = system.Name + ".Backend.ConnectionState";
-        obj = {
-            type: "state",
-            common: {
-                name: "Backend Connection State",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-
-        key = system.Name + ".FreeCharging";
-        obj = {
-            type: "state",
-            common: {
-                name: "FreeCharging",
-                type: "boolean",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-
-        key = system.Name + ".SlaveState";
-        obj = {
-            type: "state",
-            common: {
-                name: "SlaveState",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-
-        key = system.Name + ".OCPP.MeterConfig";
-        obj = {
-            type: "state",
-            common: {
-                name: "OCPP Meter Config",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".OCPP.MeterSerial";
-        obj = {
-            type: "state",
-            common: {
-                name: "OCPP Meter Serial",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".Current";
-        obj = {
-            type: "state",
-            common: {
-                name: "Current",
-                type: "number",
-                role: "value",
-                unit: "A",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".EnergyManagerCurrent";
-        obj = {
-            type: "state",
-            common: {
-                name: "Energy Manager Current",
-                type: "number",
-                role: "value",
-                unit: "A",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".AmbientTemperature";
-        obj = {
-            type: "state",
-            common: {
-                name: "AmbientTemperature",
-                type: "string",
-                role: "value",
-                unit: "°C",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".FirmwareVersion";
-        obj = {
-            type: "state",
-            common: {
-                name: "FirmwareVersion",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".SerialNumber";
-        obj = {
-            type: "state",
-            common: {
-                name: "SerialNumber",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".ContactCyclesSchuko";
-        obj = {
-            type: "state",
-            common: {
-                name: "Contact´Cycles Schuko",
-                type: "number",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".ContactcyclesType2";
-        obj = {
-            type: "state",
-            common: {
-                name: "Contact´Cycles Type2",
-                type: "number",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".MaxCurrent";
-        obj = {
-            type: "state",
-            common: {
-                name: "Maximun Current",
-                type: "number",
-                role: "value",
-                unit: "A",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".RCMB.State";
-        obj = {
-            type: "state",
-            common: {
-                name: "RCMB State",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".RCMB.MaxValues";
-        obj = {
-            type: "state",
-            common: {
-                name: "RCMB Maximum Values",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".RCMB.CurrentValues";
-        obj = {
-            type: "state",
-            common: {
-                name: "RCMB Current Values",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".CableAttached";
-        obj = {
-            type: "state",
-            common: {
-                name: "CableAttached",
-                type: "boolean",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-
-        key = system.Name + ".Schuko.Config";
-        obj = {
-            type: "state",
-            common: {
-                name: "Schuko Config",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".RCD.State";
-        obj = {
-            type: "state",
-            common: {
-                name: "RCD State",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".MCB.Type2State";
-        obj = {
-            type: "state",
-            common: {
-                name: "MCB Type2 State",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".MCB.SchukoState";
-        obj = {
-            type: "state",
-            common: {
-                name: "MCB Schuko State",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".CP_Vendor";
-        obj = {
-            type: "state",
-            common: {
-                name: "System Vendor",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".Errors";
-        obj = {
-            type: "state",
-            common: {
-                name: "Errors",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-        key = system.Name + ".CP_Model";
-        obj = {
-            type: "state",
-            common: {
-                name: "System Model",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-
-        key = system.Name + ".DisplayText";
-        obj = {
-            type: "state",
-            common: {
-                name: "Display Text",
-                type: "string",
-                role: "value",
-                unit: "",
-                read: true,
-                write: false
-            }
-        }
-        await CreateObject(key, obj);
-
-
-
     }
-
-
     
+}
+
+
+
+async function checkVariables_rest(system) {
+    let key;
+    let obj;
+
+    key = system.Name + ".Connection.State";
+    obj = {
+        type: "state",
+        common: {
+            name: "Connection State",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Authorisation.State";
+    obj = {
+        type: "state",
+        common: {
+            name: "Authorisation State",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Authorisation.UID";
+    obj = {
+        type: "state",
+        common: {
+            name: "Authorisation UID",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".TimeSinceChargingStart";
+    obj = {
+        type: "state",
+        common: {
+            name: "Time Since Charging Start",
+            type: "number",
+            role: "value",
+            unit: "s",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = system.Name + ".Meter";
+    obj = {
+        type: "state",
+        common: {
+            name: "Meter",
+            type: "number",
+            role: "value",
+            unit: "Wh",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Power";
+    obj = {
+        type: "state",
+        common: {
+            name: "Power",
+            type: "number",
+            role: "value",
+            unit: "W",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Transaction";
+    obj = {
+        type: "state",
+        common: {
+            name: "Transaction",
+            type: "number",
+            role: "value",
+            unit: "Wh",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".CP_ID";
+    obj = {
+        type: "state",
+        common: {
+            name: "System ID",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".OCPP.State";
+    obj = {
+        type: "state",
+        common: {
+            name: "OCPP State",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Type2.State";
+    obj = {
+        type: "state",
+        common: {
+            name: "Type2 State",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Type2.Proximity";
+    obj = {
+        type: "state",
+        common: {
+            name: "Type2 Proximity",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".SigCurrent";
+    obj = {
+        type: "state",
+        common: {
+            name: "SIG Current",
+            type: "number",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Schuko.State";
+    obj = {
+        type: "state",
+        common: {
+            name: "Schuko State",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = system.Name + ".Backend.ConnectionState";
+    obj = {
+        type: "state",
+        common: {
+            name: "Backend Connection State",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = system.Name + ".FreeCharging";
+    obj = {
+        type: "state",
+        common: {
+            name: "FreeCharging",
+            type: "boolean",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = system.Name + ".SlaveState";
+    obj = {
+        type: "state",
+        common: {
+            name: "SlaveState",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = system.Name + ".OCPP.MeterConfig";
+    obj = {
+        type: "state",
+        common: {
+            name: "OCPP Meter Config",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".OCPP.MeterSerial";
+    obj = {
+        type: "state",
+        common: {
+            name: "OCPP Meter Serial",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Current";
+    obj = {
+        type: "state",
+        common: {
+            name: "Current",
+            type: "number",
+            role: "value",
+            unit: "A",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".EnergyManagerCurrent";
+    obj = {
+        type: "state",
+        common: {
+            name: "Energy Manager Current",
+            type: "number",
+            role: "value",
+            unit: "A",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".AmbientTemperature";
+    obj = {
+        type: "state",
+        common: {
+            name: "AmbientTemperature",
+            type: "string",
+            role: "value",
+            unit: "°C",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".FirmwareVersion";
+    obj = {
+        type: "state",
+        common: {
+            name: "FirmwareVersion",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".SerialNumber";
+    obj = {
+        type: "state",
+        common: {
+            name: "SerialNumber",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".ContactCyclesSchuko";
+    obj = {
+        type: "state",
+        common: {
+            name: "Contact´Cycles Schuko",
+            type: "number",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".ContactcyclesType2";
+    obj = {
+        type: "state",
+        common: {
+            name: "Contact´Cycles Type2",
+            type: "number",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".MaxCurrent";
+    obj = {
+        type: "state",
+        common: {
+            name: "Maximun Current",
+            type: "number",
+            role: "value",
+            unit: "A",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".RCMB.State";
+    obj = {
+        type: "state",
+        common: {
+            name: "RCMB State",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".RCMB.MaxValues";
+    obj = {
+        type: "state",
+        common: {
+            name: "RCMB Maximum Values",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".RCMB.CurrentValues";
+    obj = {
+        type: "state",
+        common: {
+            name: "RCMB Current Values",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".CableAttached";
+    obj = {
+        type: "state",
+        common: {
+            name: "CableAttached",
+            type: "boolean",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = system.Name + ".Schuko.Config";
+    obj = {
+        type: "state",
+        common: {
+            name: "Schuko Config",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".RCD.State";
+    obj = {
+        type: "state",
+        common: {
+            name: "RCD State",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".MCB.Type2State";
+    obj = {
+        type: "state",
+        common: {
+            name: "MCB Type2 State",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".MCB.SchukoState";
+    obj = {
+        type: "state",
+        common: {
+            name: "MCB Schuko State",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".CP_Vendor";
+    obj = {
+        type: "state",
+        common: {
+            name: "System Vendor",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Errors";
+    obj = {
+        type: "state",
+        common: {
+            name: "Errors",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".CP_Model";
+    obj = {
+        type: "state",
+        common: {
+            name: "System Model",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = system.Name + ".DisplayText";
+    obj = {
+        type: "state",
+        common: {
+            name: "Display Text",
+            type: "string",
+            role: "value",
+            unit: "",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+}
+
+
+async function checkVariables_MHCP(system) {
+    let key;
+    let obj;
+
+    key = system.Name + ".DevName";
+    obj = {
+        type: "state",
+        common: {
+            name: "Name of the device",
+            type: "string",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".LocTime";
+    obj = {
+        type: "state",
+        common: {
+            name: "timestamp",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Summer";
+    obj = {
+        type: "state",
+        common: {
+            name: "Is summer time?",
+            type: "boolean",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Tz";
+    obj = {
+        type: "state",
+        common: {
+            name: "timezone offset in minutes",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".ItemNo";
+    obj = {
+        type: "state",
+        common: {
+            name: "item number",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Sn";
+    obj = {
+        type: "state",
+        common: {
+            name: "Serial Number",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Hcc3";
+    obj = {
+        type: "state",
+        common: {
+            name: "Info about the HCC3 (main controller)",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Hmi";
+    obj = {
+        type: "state",
+        common: {
+            name: "Info about hardware software?",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Rfid";
+    obj = {
+        type: "state",
+        common: {
+            name: "Info about RFID?",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Wifi";
+    obj = {
+        type: "state",
+        common: {
+            name: "WiFi module version?",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".FixedVehCosts";
+    obj = {
+        type: "state",
+        common: {
+            name: "Fixed vehicle costs as specified in the app",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".OldVehCosts";
+    obj = {
+        type: "state",
+        common: {
+            name: "OldVehicle costs?",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Color";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".DevMode";
+    obj = {
+        type: "state",
+        common: {
+            name: "Curent charging mode",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".ChgState";
+    obj = {
+        type: "state",
+        common: {
+            name: "Current charging state",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".WifiOn";
+    obj = {
+        type: "state",
+        common: {
+            name: "true if WiFi is on",
+            type: "boolean",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".AutoChg";
+    obj = {
+        type: "state",
+        common: {
+            name: "true if auto-start charging is enabled",
+            type: "boolean",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".ChgContinue";
+    obj = {
+        type: "state",
+        common: {
+            name: "true if charging should continue after power outage",
+            type: "boolean",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Err";
+    obj = {
+        type: "state",
+        common: {
+            name: "current error code, 0 if there is none",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Battery";
+    obj = {
+        type: "state",
+        common: {
+            name: "EV battery capacity for EnergyManager in Wh",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Phases";
+    obj = {
+        type: "state",
+        common: {
+            name: "number of phases connected",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Cable";
+    obj = {
+        type: "state",
+        common: {
+            name: "true if cable is connected/installed?",
+            type: "boolean",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Auth";
+    obj = {
+        type: "state",
+        common: {
+            name: "true if auth by rfid is enabled?",
+            type: "boolean",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".DsoEnabled";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "boolean",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".EmEnabled";
+    obj = {
+        type: "state",
+        common: {
+            name: "true if EnergyManager mode is enabled",
+            type: "boolean",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".MaxCurr";
+    obj = {
+        type: "state",
+        common: {
+            name: "currently set max. charging current per phase in A",
+            unit: "A",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".MaxPwr";
+    obj = {
+        type: "state",
+        common: {
+            name: "currently set max. charging power in W",
+            unit: "W",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".MaxCurrWb";
+    obj = {
+        type: "state",
+        common: {
+            name: "upper limit for charging current per phase in A",
+            unit: "A",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
     
 }
 
