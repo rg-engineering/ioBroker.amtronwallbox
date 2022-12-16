@@ -152,6 +152,12 @@ async function read_MHCP(system) {
 
         await read_MHCP_ChargeData(system);
 
+        await read_MHCP_StatisticData(system, "Day");
+        await read_MHCP_StatisticData(system, "Week");
+        await read_MHCP_StatisticData(system, "Month");
+        await read_MHCP_StatisticData(system, "Year");
+        await read_MHCP_StatisticData(system, "Annual");
+
     }
     catch (e) {
         adapter.log.error("exception in read_MHCP [" + e + "]");
@@ -192,7 +198,7 @@ async function read_MHCP_DevInfo(system) {
 }
 
 async function read_MHCP_ChargeData(system) {
-    //Retrieves information about the wallbox.
+    //Retrieves charge information about the wallbox.
     try {
         /*
                 var abfrage_ChargeData = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/ChargeData?DevKey=999999";
@@ -216,6 +222,45 @@ async function read_MHCP_ChargeData(system) {
 
             for (let entry in buffer.data) {
                 await adapter.setStateAsync(system.Name + ".charge." + entry, { ack: true, val: buffer.data[entry] });
+            }
+        }
+    }
+    catch (e) {
+        adapter.log.error("exception in read_MHCP_DevInfo [" + e + "]");
+    }
+}
+
+
+async function read_MHCP_StatisticData(system, period) {
+    //Retrieves statistic about the wallbox.
+    try {
+        /*
+                var abfrage_Statistics_Day = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Day?DevKey=999999";
+                var abfrage_Statistics_Week = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Week?DevKey=999999";
+                var abfrage_Statistics_Month = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Month?DevKey=999999";
+                var abfrage_Statistics_Year = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Year?DevKey=999999";
+                var abfrage_Statistics_Annual = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Annual?DevKey=999999";
+
+        */
+
+        let sURL = "http://" + system.IPAddress + ":25000/MHCP/1.0/Statistics/" + period + "?DevKey=" + system.ApiKey;
+
+        let header = {
+            headers: {
+                Accept: 'application/json '
+            }
+        }
+
+        adapter.log.debug("URL " + sURL.replace(/DevKey=.*/, 'DevKey=******'));
+
+        let buffer = await axios.get(sURL, header);
+
+        adapter.log.debug("got statistic data: " + period + " " + typeof buffer.data + " " + JSON.stringify(buffer.data));
+
+        if (buffer != null && buffer.status == 200 && buffer.data != null) {
+
+            for (let entry in buffer.data) {
+                await adapter.setStateAsync(system.Name + ".Statistics." + period + "." + entry, { ack: true, val: buffer.data[entry] });
             }
         }
     }
