@@ -150,6 +150,8 @@ async function read_MHCP(system) {
 
         await read_MHCP_DevInfo(system);
 
+        await read_MHCP_ChargeData(system);
+
     }
     catch (e) {
         adapter.log.error("exception in read_MHCP [" + e + "]");
@@ -175,12 +177,45 @@ async function read_MHCP_DevInfo(system) {
         
         let buffer = await axios.get(sURL, header);
 
-        adapter.log.debug("got data status " + typeof buffer.data + " " + JSON.stringify(buffer.data));
+        adapter.log.debug("got status data: " + typeof buffer.data + " " + JSON.stringify(buffer.data));
         
         if (buffer != null && buffer.status == 200 && buffer.data != null) {
 
             for (let entry in buffer.data) {
-                await adapter.setStateAsync(system.Name + "." + entry, { ack: true, val: buffer.data[entry] });
+                await adapter.setStateAsync(system.Name + ".info." + entry, { ack: true, val: buffer.data[entry] });
+            }
+        }
+    }
+    catch (e) {
+        adapter.log.error("exception in read_MHCP_DevInfo [" + e + "]");
+    }
+}
+
+async function read_MHCP_ChargeData(system) {
+    //Retrieves information about the wallbox.
+    try {
+        /*
+                var abfrage_ChargeData = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/ChargeData?DevKey=999999";
+        */
+
+        let sURL = "http://" + system.IPAddress + ":25000/MHCP/1.0/ChargeData?DevKey=" + system.ApiKey;
+
+        let header = {
+            headers: {
+                Accept: 'application/json '
+            }
+        }
+
+        adapter.log.debug("URL " + sURL.replace(/DevKey=.*/, 'DevKey=******'));
+
+        let buffer = await axios.get(sURL, header);
+
+        adapter.log.debug("got charge data: " + typeof buffer.data + " " + JSON.stringify(buffer.data));
+
+        if (buffer != null && buffer.status == 200 && buffer.data != null) {
+
+            for (let entry in buffer.data) {
+                await adapter.setStateAsync(system.Name + ".charge." + entry, { ack: true, val: buffer.data[entry] });
             }
         }
     }
@@ -399,6 +434,8 @@ async function checkVariables() {
 async function checkVariables_rest(system) {
     let key;
     let obj;
+
+    
 
     key = system.Name + ".Connection.State";
     obj = {
@@ -945,7 +982,9 @@ async function checkVariables_MHCP(system) {
     let key;
     let obj;
 
-    key = system.Name + ".DevName";
+    //dev info data
+
+    key = system.Name + ".info.DevName";
     obj = {
         type: "state",
         common: {
@@ -958,7 +997,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".LocTime";
+    key = system.Name + ".info.LocTime";
     obj = {
         type: "state",
         common: {
@@ -971,7 +1010,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Summer";
+    key = system.Name + ".info.Summer";
     obj = {
         type: "state",
         common: {
@@ -984,7 +1023,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Tz";
+    key = system.Name + ".info.Tz";
     obj = {
         type: "state",
         common: {
@@ -997,7 +1036,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".ItemNo";
+    key = system.Name + ".info.ItemNo";
     obj = {
         type: "state",
         common: {
@@ -1010,7 +1049,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Sn";
+    key = system.Name + ".info.Sn";
     obj = {
         type: "state",
         common: {
@@ -1023,7 +1062,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Hcc3";
+    key = system.Name + ".info.Hcc3";
     obj = {
         type: "state",
         common: {
@@ -1036,7 +1075,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Hmi";
+    key = system.Name + ".info.Hmi";
     obj = {
         type: "state",
         common: {
@@ -1049,7 +1088,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Rfid";
+    key = system.Name + ".info.Rfid";
     obj = {
         type: "state",
         common: {
@@ -1062,7 +1101,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Wifi";
+    key = system.Name + ".info.Wifi";
     obj = {
         type: "state",
         common: {
@@ -1075,7 +1114,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".FixedVehCosts";
+    key = system.Name + ".info.FixedVehCosts";
     obj = {
         type: "state",
         common: {
@@ -1088,7 +1127,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".OldVehCosts";
+    key = system.Name + ".info.OldVehCosts";
     obj = {
         type: "state",
         common: {
@@ -1101,7 +1140,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Color";
+    key = system.Name + ".info.Color";
     obj = {
         type: "state",
         common: {
@@ -1114,7 +1153,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".DevMode";
+    key = system.Name + ".info.DevMode";
     obj = {
         type: "state",
         common: {
@@ -1127,7 +1166,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".ChgState";
+    key = system.Name + ".info.ChgState";
     obj = {
         type: "state",
         common: {
@@ -1140,7 +1179,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".WifiOn";
+    key = system.Name + ".info.WifiOn";
     obj = {
         type: "state",
         common: {
@@ -1153,7 +1192,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".AutoChg";
+    key = system.Name + ".info.AutoChg";
     obj = {
         type: "state",
         common: {
@@ -1166,7 +1205,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".ChgContinue";
+    key = system.Name + ".info.ChgContinue";
     obj = {
         type: "state",
         common: {
@@ -1179,7 +1218,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Err";
+    key = system.Name + ".info.Err";
     obj = {
         type: "state",
         common: {
@@ -1192,7 +1231,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Battery";
+    key = system.Name + ".info.Battery";
     obj = {
         type: "state",
         common: {
@@ -1205,7 +1244,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Phases";
+    key = system.Name + ".info.Phases";
     obj = {
         type: "state",
         common: {
@@ -1218,7 +1257,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Cable";
+    key = system.Name + ".info.Cable";
     obj = {
         type: "state",
         common: {
@@ -1231,7 +1270,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Auth";
+    key = system.Name + ".info.Auth";
     obj = {
         type: "state",
         common: {
@@ -1244,7 +1283,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".DsoEnabled";
+    key = system.Name + ".info.DsoEnabled";
     obj = {
         type: "state",
         common: {
@@ -1257,7 +1296,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".EmEnabled";
+    key = system.Name + ".info.EmEnabled";
     obj = {
         type: "state",
         common: {
@@ -1270,7 +1309,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".MaxCurr";
+    key = system.Name + ".info.MaxCurr";
     obj = {
         type: "state",
         common: {
@@ -1284,7 +1323,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".MaxPwr";
+    key = system.Name + ".info.MaxPwr";
     obj = {
         type: "state",
         common: {
@@ -1298,7 +1337,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".MaxCurrWb";
+    key = system.Name + ".info.MaxCurrWb";
     obj = {
         type: "state",
         common: {
@@ -1312,7 +1351,327 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    
+    //dev charge data
+
+    key = system.Name + ".charge.ChgState";
+    obj = {
+        type: "state",
+        common: {
+            name: "charge state",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.Tariff";
+    obj = {
+        type: "state",
+        common: {
+            name: "Current tariff",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.Price";
+    obj = {
+        type: "state",
+        common: {
+            name: "Price per kWh with current tariff in 0.1 cents per kWh",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.Uid";
+    obj = {
+        type: "state",
+        common: {
+            name: "Uid",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.ChgDuration";
+    obj = {
+        type: "state",
+        common: {
+            name: "how long the wallbox is charging the EV",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.ChgNrg";
+    obj = {
+        type: "state",
+        common: {
+            name: "how much energy the wallbox has charged in Wh",
+            unit: "Wh",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.NrgDemand";
+    obj = {
+        type: "state",
+        common: {
+            name: "energy demand of the vehicle in Wh",
+            unit: "Wh",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.Solar";
+    obj = {
+        type: "state",
+        common: {
+            name: "maybe percentage of solar energy for current charge",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.EmTime";
+    obj = {
+        type: "state",
+        common: {
+            name: "time in which the vehicle has to be fully charged, in Energy Manager mode in minutes",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.RemTime";
+    obj = {
+        type: "state",
+        common: {
+            name: "time remaining of the set EmTime in minutes",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.ActPwr";
+    obj = {
+        type: "state",
+        common: {
+            name: "current power draw of vehicle",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.ActCurr";
+    obj = {
+        type: "state",
+        common: {
+            name: "currently set max. charging current per phase in A",
+            type: "number",
+            unit: "A",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.MaxCurrT1";
+    obj = {
+        type: "state",
+        common: {
+            name: "max current per phase in tariff1",
+            type: "number",
+            unit: "A",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.BeginH_T1";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.BeginM_T1";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "number",
+            unit: "A",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.PriceT1";
+    obj = {
+        type: "state",
+        common: {
+            name: "Price per kWh with Tariff1 in 0.1 cents per kWh",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.MaxCurrT2";
+    obj = {
+        type: "state",
+        common: {
+            name: "max current per pahse in tariff2",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.BeginH_T2";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.BeginM_T2";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.PriceT2";
+    obj = {
+        type: "state",
+        common: {
+            name: "Price per kWh with Tariff2 in 0.1cents",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.RemoteCurr";
+    obj = {
+        type: "state",
+        common: {
+            name: "current in A per phase as set by app control mode",
+            type: "number",
+            unit: "A",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.SolarPrice";
+    obj = {
+        type: "state",
+        common: {
+            name: "price for solar energy in 0.1cents per kWh",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.ExcessNrg";
+    obj = {
+        type: "state",
+        common: {
+            name: "if only excess energy should be used in energy manager mode",
+            type: "number",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".charge.HCCP";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
+
+
 }
 
 
