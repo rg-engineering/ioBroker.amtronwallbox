@@ -28,6 +28,9 @@ Attention:
    
 ## Changelog
 
+### 0.1.0 (in progress)
+* (René) see issue #1: support of XTRA
+
 ### 0.0.3 (2022-08-18)
 * (René) some bug fixes
 * (René) change to cron
