@@ -259,8 +259,31 @@ async function read_MHCP_StatisticData(system, period) {
 
         if (buffer != null && buffer.status == 200 && buffer.data != null) {
 
-            for (let entry in buffer.data) {
-                await adapter.setStateAsync(system.Name + ".Statistics." + period + "." + entry, { ack: true, val: buffer.data[entry] });
+            if (period == "Annual") {
+                await adapter.setStateAsync(system.Name + ".Statistics." + period + ".Years", { ack: true, val: buffer.data });
+            }
+            else {
+                for (let entry in buffer.data) {
+
+                    if (entry == "TMaxCurrT1"
+                        || entry == "TBeginH_T1"
+                        || entry == "TBeginM_T1"
+                        || entry == "TPriceT1"
+                        || entry == "TMaxCurrT2"
+                        || entry == "TBeginH_T2"
+                        || entry == "TBeginM_T2"
+                        || entry == "TPriceT2"
+                        || entry == "TRemoteCurr"
+                        || entry == "TSolarPrice"
+                        || entry == "TExcessNrg"
+                    ) {
+                        //do nothing
+                    }
+                    else {
+
+                        await adapter.setStateAsync(system.Name + ".Statistics." + period + "." + entry, { ack: true, val: buffer.data[entry] });
+                    }
+                }
             }
         }
     }
@@ -268,9 +291,6 @@ async function read_MHCP_StatisticData(system, period) {
         adapter.log.error("exception in read_MHCP_DevInfo [" + e + "]");
     }
 }
-
-
-
 
 async function read_rest(system) {
 
@@ -1695,7 +1715,7 @@ async function checkVariables_MHCP(system) {
         type: "state",
         common: {
             name: "if only excess energy should be used in energy manager mode",
-            type: "number",
+            type: "boolean",
             role: "value",
             read: true,
             write: false
@@ -1716,8 +1736,197 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
+    await checkVariables_MHCP_Statistic(system, "Day");
+    await checkVariables_MHCP_Statistic(system, "Week");
+    await checkVariables_MHCP_Statistic(system, "Month");
+    await checkVariables_MHCP_Statistic(system, "Year");
+
+    key = system.Name + ".Statistics.Annual.Years";
+    obj = {
+        type: "state",
+        common: {
+            name: "historical year based data",
+            type: "string",
+            role: "value",
+            read: true,
+            write: false
+        }
+    }
+    await CreateObject(key, obj);
 
 }
+
+
+async function checkVariables_MHCP_Statistic(system, period) {
+    let key;
+    let obj;
+
+    //statistic data
+
+    key = system.Name + ".Statistics." + period + ".ChgNrg";
+    obj = {
+        type: "state",
+        common: {
+            name: "Amount of Wh",
+            type: "number",
+            unit:"Wh",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Statistics." + period + ".HybridNrg";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "number",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Statistics." + period + ".Solar";
+    obj = {
+        type: "state",
+        common: {
+            name: "Percentage charged from Solar",
+            type: "number",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Statistics." + period + ".Tariff1";
+    obj = {
+        type: "state",
+        common: {
+            name: "Percentage charged at Main Tariff",
+            type: "number",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Statistics." + period + ".Tariff2";
+    obj = {
+        type: "state",
+        common: {
+            name: "Percentage charged at Off-peak Tariff",
+            type: "number",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Statistics." + period + ".Hybrid";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "number",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Statistics." + period + ".ChgCosts";
+    obj = {
+        type: "state",
+        common: {
+            name: "Accumulated Costs",
+            type: "number",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = system.Name + ".Statistics." + period + ".HybridCosts";
+    obj = {
+        type: "state",
+        common: {
+            name: "?",
+            type: "number",
+            role: "value",
+            read: true,
+            write: true
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    if (period == "Week" || period == "Month" || period == "Year") {
+
+        key = system.Name + ".Statistics." + period + ".AvgCosts";
+        obj = {
+            type: "state",
+            common: {
+                name: "?",
+                type: "number",
+                role: "value",
+                read: true,
+                write: true
+            }
+        }
+        await CreateObject(key, obj);
+
+        key = system.Name + ".Statistics." + period + ".FixCosts";
+        obj = {
+            type: "state",
+            common: {
+                name: "?",
+                type: "number",
+                role: "value",
+                read: true,
+                write: true
+            }
+        }
+        await CreateObject(key, obj);
+
+        key = system.Name + ".Statistics." + period + ".OldCosts";
+        obj = {
+            type: "state",
+            common: {
+                name: "?",
+                type: "number",
+                role: "value",
+                read: true,
+                write: true
+            }
+        }
+        await CreateObject(key, obj);
+
+        key = system.Name + ".Statistics." + period + ".KmDiff";
+        obj = {
+            type: "state",
+            common: {
+                name: "?",
+                type: "number",
+                role: "value",
+                read: true,
+                write: true
+            }
+        }
+        await CreateObject(key, obj);
+
+    }
+
+}
+
 
 
 async function CreateObject(key, obj) {
