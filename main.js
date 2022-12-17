@@ -117,7 +117,7 @@ async function ReadData(){
                 await read_rest(system);
             }
             else if (system.Type === "Compact") {
-
+                await read_MHCP(system);
             }
             else if (system.Type === "Xtra") {
                 await read_MHCP(system);
