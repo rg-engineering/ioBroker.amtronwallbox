@@ -260,7 +260,7 @@ async function read_MHCP_StatisticData(system, period) {
         if (buffer != null && buffer.status == 200 && buffer.data != null) {
 
             if (period == "Annual") {
-                await adapter.setStateAsync(system.Name + ".Statistics." + period + ".Years", { ack: true, val: buffer.data });
+                await adapter.setStateAsync(system.Name + ".Statistics." + period + ".Years", { ack: true, val: JSON.stringify(buffer.data) });
             }
             else {
                 for (let entry in buffer.data) {
@@ -280,7 +280,6 @@ async function read_MHCP_StatisticData(system, period) {
                         //do nothing
                     }
                     else {
-
                         await adapter.setStateAsync(system.Name + ".Statistics." + period + "." + entry, { ack: true, val: buffer.data[entry] });
                     }
                 }

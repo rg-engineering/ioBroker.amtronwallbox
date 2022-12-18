@@ -19,9 +19,7 @@ For more details and for information how to disable the error reporting see [Sen
                                                                           
 [![paypal](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YBAZTEBT9SYC2&source=url) 
 
-Attention:
- At the moment only Amtron ChargeControl is implemented via REST API. The REST API allows read only
- Others with App connection will follow if someone can test it
+
 
 ## known issues
 * please create issues at [github](https://github.com/rg-engineering/ioBroker.amtronwallbox/issues) if you find bugs or whish new features
