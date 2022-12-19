@@ -26,7 +26,10 @@ For more details and for information how to disable the error reporting see [Sen
    
 ## Changelog
 
-### 0.1.0 (in progress)
+### 0.2.0 (in progress)
+* (René) see issue #1: write data to XTRA wallbox
+
+### 0.1.0 (2022-12-18)
 * (René) see issue #1: support of XTRA
 
 ### 0.0.3 (2022-08-18)

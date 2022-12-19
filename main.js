@@ -448,22 +448,134 @@ async function HandleStateChange(id, state) {
 
     if (state.ack !== true) {
 
-        adapter.log.debug("handle state change " + id);
+        adapter.log.debug("handle state change " + id + " with " + state.val);
         const ids = id.split(".");
 
-        //just dummy
-        //if (ids[2] === "cmd") {
-        //    await do_Command();
-        //}
-        //else {
+        //unhandled state change amtronwallbox.0.Test.info.DevName
+        if (ids[3] === "info") {
+            await updateInfo(id, state);
+            adapter.setForeignState(id, { ack: true });
+        }
+        else {
             adapter.log.warn("unhandled state change " + id);
-        //}
+        }
     }
+}
+
+async function updateInfo(id,state) {
+
+    let systemName = id.split(".")[2];
+
+    for (const system of adapter.config.WallboxSystems) {
+
+        if (system.Name == systemName && system.IsActive) {
+            if (system.Type === "ChargeControl") {
+                
+            }
+            else if (system.Type === "Compact") {
+                await write_MHCP_DevInfo(system, id,state);
+            }
+            else if (system.Type === "Xtra") {
+                await write_MHCP_DevInfo(system, id, state);
+            }
+
+            else {
+                //system type ChargeControl string not yet implemented
+                adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
+            }
+        }
+    }
+
 
 }
 
+async function write_MHCP_DevInfo(system, id, state) {
+    try {
+        let sURL = "http://" + system.IPAddress + ":25000/MHCP/1.0/DevInfo?DevKey=" + system.ApiKey;
+
+        let config = {
+            headers: {
+                Accept: 'application/json '
+            },
+            timeout: 5000
+
+        }
+
+        let param = id.split(".")[4];
+
+        let data = {
+            "DevName": param == "DevName" ? state.val : null,
+            "LocTime": param == "LocTime" ? state.val : null,
+            "Summer": param == "Summer" ? state.val : null,
+            "Tz": param == "Tz" ? state.val : null,
+            "FixedVehCosts": param == "FixedVehCosts" ? state.val : null,
+            "OldVehCosts": param == "OldVehCosts" ? state.val : null,
+            "Battery": param == "Battery" ? state.val : null,
+            "DevMode": param == "DevMode" ? state.val : null,
+        }
+
+        adapter.log.debug("URL " + sURL.replace(/DevKey=.*/, 'DevKey=******') + " data " + JSON.stringify(data));
+
+
+        let buffer = await axios.post(sURL, data, config);
+
+        adapter.log.debug("got result " + typeof buffer.data + " " + JSON.stringify(buffer.data));
+
+        
+    }
+    catch (e) {
+        adapter.log.error("exception in write_MHCP_DevInfo [" + e + "]");
+    }
+}
+
 function subscribeVars() {
-    //adapter.subscribeStates("cmd");
+    for (const system of adapter.config.WallboxSystems) {
+
+        if (system.IsActive) {
+            if (system.Type === "ChargeControl") {
+                
+            }
+            else if (system.Type === "Compact") {
+                
+            }
+            else if (system.Type === "Xtra") {
+
+                //All parameters can be set to null if no change is intended.
+                //https://github.com/lephisto/amtron/blob/master/docs/api/DevInfo/post.md
+                adapter.subscribeStates(system.Name + ".info.DevName");
+                adapter.subscribeStates(system.Name + ".info.LocTime");
+                adapter.subscribeStates(system.Name + ".info.Summer");
+                adapter.subscribeStates(system.Name + ".info.Tz");
+                adapter.subscribeStates(system.Name + ".info.FixedVehCosts");
+                adapter.subscribeStates(system.Name + ".info.OldVehCosts");
+                adapter.subscribeStates(system.Name + ".info.Battery");
+                adapter.subscribeStates(system.Name + ".info.DevMode");
+
+                //All parameters except "Permanent" can be set to null if no change is intended.
+                //https://github.com/lephisto/amtron/blob/master/docs/api/ChargeData/post.md
+                //adapter.subscribeStates(system.Name + ".charge.Permanent");
+                adapter.subscribeStates(system.Name + ".charge.RemoteCurr");
+                //adapter.subscribeStates(system.Name + ".charge.AutoChg"); //gibt es den DP?
+                adapter.subscribeStates(system.Name + ".charge.ChgState");
+                adapter.subscribeStates(system.Name + ".charge.Uid");
+
+                //Solar price can be set to null when no changes have to be made.
+                //https://github.com/lephisto/amtron/blob/master/docs/api/HomeManager/post.md
+
+
+                //https://github.com/lephisto/amtron/blob/master/docs/api/Whitelist/post.md
+
+
+            }
+
+            else {
+                //system type ChargeControl string not yet implemented
+                adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
+            }
+        }
+    }
+
+
 }
 
 
@@ -1069,7 +1181,7 @@ async function checkVariables_MHCP(system) {
             type: "number",
             role: "value",
             read: true,
-            write: false
+            write: true
         }
     }
     await CreateObject(key, obj);
@@ -1095,7 +1207,7 @@ async function checkVariables_MHCP(system) {
             type: "number",
             role: "value",
             read: true,
-            write: false
+            write: true
         }
     }
     await CreateObject(key, obj);
@@ -1186,7 +1298,7 @@ async function checkVariables_MHCP(system) {
             type: "number",
             role: "value",
             read: true,
-            write: false
+            write: true
         }
     }
     await CreateObject(key, obj);
@@ -1199,7 +1311,7 @@ async function checkVariables_MHCP(system) {
             type: "number",
             role: "value",
             read: true,
-            write: false
+            write: true
         }
     }
     await CreateObject(key, obj);
@@ -1225,7 +1337,7 @@ async function checkVariables_MHCP(system) {
             type: "string",
             role: "value",
             read: true,
-            write: false
+            write: true
         }
     }
     await CreateObject(key, obj);
@@ -1303,7 +1415,7 @@ async function checkVariables_MHCP(system) {
             type: "number",
             role: "value",
             read: true,
-            write: false
+            write: true
         }
     }
     await CreateObject(key, obj);
@@ -1425,7 +1537,7 @@ async function checkVariables_MHCP(system) {
             type: "string",
             role: "value",
             read: true,
-            write: false
+            write: true
         }
     }
     await CreateObject(key, obj);
@@ -1464,7 +1576,7 @@ async function checkVariables_MHCP(system) {
             type: "string",
             role: "value",
             read: true,
-            write: false
+            write: true
         }
     }
     await CreateObject(key, obj);
@@ -1691,7 +1803,7 @@ async function checkVariables_MHCP(system) {
             unit: "A",
             role: "value",
             read: true,
-            write: false
+            write: true
         }
     }
     await CreateObject(key, obj);
@@ -1771,7 +1883,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
             unit:"Wh",
             role: "value",
             read: true,
-            write: true
+            write: false
         }
     }
     await CreateObject(key, obj);
@@ -1784,7 +1896,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
             type: "number",
             role: "value",
             read: true,
-            write: true
+            write: false
         }
     }
     await CreateObject(key, obj);
@@ -1797,7 +1909,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
             type: "number",
             role: "value",
             read: true,
-            write: true
+            write: false
         }
     }
     await CreateObject(key, obj);
@@ -1810,7 +1922,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
             type: "number",
             role: "value",
             read: true,
-            write: true
+            write: false
         }
     }
     await CreateObject(key, obj);
@@ -1823,7 +1935,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
             type: "number",
             role: "value",
             read: true,
-            write: true
+            write: false
         }
     }
     await CreateObject(key, obj);
@@ -1836,7 +1948,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
             type: "number",
             role: "value",
             read: true,
-            write: true
+            write: false
         }
     }
     await CreateObject(key, obj);
@@ -1849,7 +1961,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
             type: "number",
             role: "value",
             read: true,
-            write: true
+            write: false
         }
     }
     await CreateObject(key, obj);
@@ -1862,7 +1974,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
             type: "number",
             role: "value",
             read: true,
-            write: true
+            write: false
         }
     }
     await CreateObject(key, obj);
@@ -1878,7 +1990,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
                 type: "number",
                 role: "value",
                 read: true,
-                write: true
+                write: false
             }
         }
         await CreateObject(key, obj);
@@ -1891,7 +2003,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
                 type: "number",
                 role: "value",
                 read: true,
-                write: true
+                write: false
             }
         }
         await CreateObject(key, obj);
@@ -1904,7 +2016,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
                 type: "number",
                 role: "value",
                 read: true,
-                write: true
+                write: false
             }
         }
         await CreateObject(key, obj);
@@ -1917,7 +2029,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
                 type: "number",
                 role: "value",
                 read: true,
-                write: true
+                write: false
             }
         }
         await CreateObject(key, obj);

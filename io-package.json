@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "amtronwallbox",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "news": {
+            "0.2.0": {
+                "en": "write data to XTRA wallbox",
+                "de": "Daten in die XTRA Wallbox schreiben",
+                "ru": "записать данные в XTRA Wallbox",
+                "pt": "gravar dados na caixa de embutir XTRA",
+                "nl": "schrijf gegevens naar XTRA wallbox",
+                "fr": "écrire des données sur la wallbox XTRA",
+                "it": "scrivere i dati nella wallbox XTRA",
+                "es": "escribir datos en la caja de pared XTRA",
+                "pl": "zapis danych do stacji ładowania XTRA",
+                "uk": "записати дані на XTRA wallbox",
+                "zh-cn": "将数据写入 XTRA wallbox"
+            },
             "0.1.0": {
                 "en": "support for XTRA added",
                 "de": "Unterstützung für XTRA hinzugefügt",
