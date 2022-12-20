@@ -456,6 +456,10 @@ async function HandleStateChange(id, state) {
             await updateInfo(id, state);
             adapter.setForeignState(id, { ack: true });
         }
+        else if (ids[3] === "charge") {
+            await updateCharge(id, state);
+            adapter.setForeignState(id, { ack: true });
+        }
         else {
             adapter.log.warn("unhandled state change " + id);
         }
@@ -485,8 +489,31 @@ async function updateInfo(id,state) {
             }
         }
     }
+}
 
+async function updateCharge(id, state) {
 
+    let systemName = id.split(".")[2];
+
+    for (const system of adapter.config.WallboxSystems) {
+
+        if (system.Name == systemName && system.IsActive) {
+            if (system.Type === "ChargeControl") {
+
+            }
+            else if (system.Type === "Compact") {
+                await write_MHCP_ChargeData(system, id, state);
+            }
+            else if (system.Type === "Xtra") {
+                await write_MHCP_ChargeData(system, id, state);
+            }
+
+            else {
+                //system type ChargeControl string not yet implemented
+                adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
+            }
+        }
+    }
 }
 
 async function write_MHCP_DevInfo(system, id, state) {
@@ -525,6 +552,42 @@ async function write_MHCP_DevInfo(system, id, state) {
     }
     catch (e) {
         adapter.log.error("exception in write_MHCP_DevInfo [" + e + "]");
+    }
+}
+
+async function write_MHCP_ChargeData(system, id, state) {
+    try {
+        let sURL = "http://" + system.IPAddress + ":25000/MHCP/1.0/ChargeData?DevKey=" + system.ApiKey;
+
+        let config = {
+            headers: {
+                Accept: 'application/json '
+            },
+            timeout: 5000
+
+        }
+
+        let param = id.split(".")[4];
+
+        let data = {
+            "Permanent": true,
+            "RemoteCurr": param == "RemoteCurr" ? state.val : null,
+            "AutoChg": param == "AutoChg" ? state.val : null,
+            "ChgState": param == "ChgState" ? state.val : null,
+            "Uid": param == "Uid" ? state.val : null,
+        }
+
+        adapter.log.debug("URL " + sURL.replace(/DevKey=.*/, 'DevKey=******') + " data " + JSON.stringify(data));
+
+
+        let buffer = await axios.post(sURL, data, config);
+
+        adapter.log.debug("got result " + typeof buffer.data + " " + JSON.stringify(buffer.data));
+
+
+    }
+    catch (e) {
+        adapter.log.error("exception in write_MHCP_ChargeData [" + e + "]");
     }
 }
 
