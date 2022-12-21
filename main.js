@@ -1,4 +1,4 @@
-﻿/*
+/*
  * AMTRON wallbox adapter für iobroker
  *
  * Created: 15.05.2022 18:39:28
