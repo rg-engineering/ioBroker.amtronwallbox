@@ -15,45 +15,6 @@
                 "pl": "zapis danych do stacji ładowania XTRA",
                 "uk": "записати дані на XTRA wallbox",
                 "zh-cn": "将数据写入 XTRA wallbox"
-            },
-            "0.1.0": {
-                "en": "support for XTRA added",
-                "de": "Unterstützung für XTRA hinzugefügt",
-                "ru": "добавлена ​​поддержка XTRA",
-                "pt": "suporte para XTRA adicionado",
-                "nl": "ondersteuning voor XTRA toegevoegd",
-                "fr": "prise en charge de XTRA ajoutée",
-                "it": "supporto per XTRA aggiunto",
-                "es": "soporte para XTRA añadido",
-                "pl": "dodano obsługę XTRA",
-                "uk": "додано підтримку XTRA",
-                "zh-cn": "添加了对 XTRA 的支持"
-            },
-            "0.0.3": {
-                "en": "dependencies updated",
-                "de": "Abhängigkeiten aktualisiert",
-                "ru": "зависимости обновлены",
-                "pt": "dependências atualizadas",
-                "nl": "afhankelijkheden bijgewerkt",
-                "fr": "dépendances mises à jour",
-                "it": "dipendenze aggiornate",
-                "es": "dependencias actualizadas",
-                "pl": "zaktualizowano zależności",
-                "zh-cn": "已更新依赖项",
-                "uk": "залежності оновлено"
-            },
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Первый выпуск",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "初始发行",
-                "uk": "початковий випуск"
             }
         },
         "titleLang": {
