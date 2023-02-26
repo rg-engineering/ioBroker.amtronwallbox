@@ -2206,12 +2206,12 @@ function CronStatus() {
     let n = 0;
     let length = 0;
     try {
-        if (typeof cronJobs !== undefined && cronJobs != null) {
+        if (cronJobs !== undefined && cronJobs != null) {
 
             length = cronJobs.length;
             //adapter.log.debug("cron jobs");
             for (n = 0; n < length; n++) {
-                if (typeof cronJobs[n] !== undefined && cronJobs[n] != null) {
+                if ( cronJobs[n] !== undefined && cronJobs[n] != null) {
                     adapter.log.debug("cron status = " + cronJobs[n].running + " next event: " + timeConverter("DE", cronJobs[n].nextDates()));
                 }
             }
