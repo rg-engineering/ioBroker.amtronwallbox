@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "amtronwallbox",
-        "version": "0.2.1",
+        "version": "0.2.2",
         "news": {
             "0.2.1": {
                 "en": "dependencies updated",

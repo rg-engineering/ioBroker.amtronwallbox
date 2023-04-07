@@ -26,7 +26,7 @@ For more details and for information how to disable the error reporting see [Sen
    
 ## Changelog
 
-### 0.2.1 (2023-04-07)
+### 0.2.2 (2023-04-07)
 * (René) dependencies updated
 
 ### 0.2.0 (2023-01-31)
