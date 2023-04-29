@@ -26,6 +26,9 @@ For more details and for information how to disable the error reporting see [Sen
    
 ## Changelog
 
+### 0.2.3 (in progress)
+* (René) some changes to fullfill requirements to bring the adapter to latest
+
 ### 0.2.2 (2023-04-07)
 * (René) dependencies updated
 
