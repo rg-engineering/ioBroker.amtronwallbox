@@ -17,7 +17,7 @@ For more details and for information how to disable the error reporting see [Sen
 
 **If you like it, please consider a donation:**
                                                                           
-[![paypal](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YBAZTEBT9SYC2&source=url) 
+[![paypal](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=34ESBMJ932QZC) 
 
 The adapter serves as an interface to various Amtron wallboxes. The data provided by the box is read out and made available as a data point in the adapter. 
 The data is only processed locally, a cloud connection is not necessary. For wallboxes that also support write access, the adapter can write data (e.g. charging current).
