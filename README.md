@@ -19,10 +19,22 @@ For more details and for information how to disable the error reporting see [Sen
                                                                           
 [![paypal](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YBAZTEBT9SYC2&source=url) 
 
+The adapter serves as an interface to various Amtron wallboxes. The data provided by the box is read out and made available as a data point in the adapter. 
+The data is only processed locally, a cloud connection is not necessary. For wallboxes that also support write access, the adapter can write data (e.g. charging current).
+The following Amtron wallboxes are supported:
+* Amtron Xtra
+* Amtron ChargeControl
+* Amtron Compact
 
+The adapter can manage multiple boxes.
+
+** Configuration
+Only the type of box, its IP address and, if necessary, an API key need to be configured.
+
+Note: Since the boxes have different interfaces, it may be that not all interfaces work directly. In this case please contact the developer. 
 
 ## known issues
-* please create issues at [github](https://github.com/rg-engineering/ioBroker.amtronwallbox/issues) if you find bugs or whish new features
+* please create issues at [github](https://github.com/rg-engineering/ioBroker.amtronwallbox/issues) if you find bugs or whish new features.
    
 ## Changelog
 
