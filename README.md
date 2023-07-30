@@ -41,7 +41,10 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
    
 ## Changelog
 
-### 0.2.3 (in progress)
+### 0.2.4 (2023-07-30)
+* (René) dependencies updated
+
+### 0.2.3 (2023-06-01)
 * (René) some changes to fullfill requirements to bring the adapter to latest
 
 ### 0.2.2 (2023-04-07)

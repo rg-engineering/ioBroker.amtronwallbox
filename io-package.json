@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "amtronwallbox",
-        "version": "0.2.3",
+        "version": "0.2.4",
         "news": {
+            "0.2.4": {
+                "en": "dependencies updated",
+                "de": "Abhängigkeiten aktualisiert",
+                "ru": "зависимости обновлены",
+                "pt": "dependências atualizadas",
+                "nl": "afhankelijkheden bijgewerkt",
+                "fr": "dépendances mises à jour",
+                "it": "dipendenze aggiornate",
+                "es": "dependencias actualizadas",
+                "pl": "zaktualizowane zależności",
+                "uk": "залежності оновлено",
+                "zh-cn": "依赖项已更新"
+            },
             "0.2.3": {
                 "en": "some changes to fullfill requirements to bring the adapter to latest",
                 "de": "Einige Änderungen an den Erfüllungsanforderungen, um den Adapter auf den neuesten Stand zu bringen",
@@ -92,9 +105,9 @@
             }
         ],
         "plugins": {
-          "sentry": {
-            "dsn": "https://9062b5ac97dc4ee08af43fb2513eb6c8@o390433.ingest.sentry.io/4505104266297344"
-          }
+            "sentry": {
+                "dsn": "https://9062b5ac97dc4ee08af43fb2513eb6c8@o390433.ingest.sentry.io/4505104266297344"
+            }
         },
         "compact": true,
         "authors": [
