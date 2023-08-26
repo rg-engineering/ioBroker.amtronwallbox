@@ -21,7 +21,7 @@
     "url": "https://github.com/rg-engineering/ioBroker.amtronwallbox"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "2.6.8",
+    "@iobroker/adapter-core": "3.0.3",
     "axios": "1.4.0",
     "cron": "2.4.0"
   },
