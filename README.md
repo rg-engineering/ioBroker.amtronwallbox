@@ -42,7 +42,7 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
 ## Changelog
 
 ### 0.2.5 (2023-08-27)
-* (René) smaller bug fixes
+* (René) smaller bug fixes, see issue #59
 
 ### 0.2.4 (2023-07-30)
 * (René) dependencies updated

@@ -184,11 +184,13 @@ async function read_MHCP_DevInfo(system) {
         let buffer = await axios.get(sURL, header);
 
         adapter.log.debug("got status data: " + typeof buffer.data + " " + JSON.stringify(buffer.data));
-        
+
+        const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
+
         if (buffer != null && buffer.status == 200 && buffer.data != null) {
 
             for (let entry in buffer.data) {
-                await adapter.setStateAsync(system.Name + ".info." + entry, { ack: true, val: buffer.data[entry] });
+                await adapter.setStateAsync(SystemName + ".info." + entry, { ack: true, val: buffer.data[entry] });
             }
         }
     }
@@ -218,10 +220,12 @@ async function read_MHCP_ChargeData(system) {
 
         adapter.log.debug("got charge data: " + typeof buffer.data + " " + JSON.stringify(buffer.data));
 
+        const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
+
         if (buffer != null && buffer.status == 200 && buffer.data != null) {
 
             for (let entry in buffer.data) {
-                await adapter.setStateAsync(system.Name + ".charge." + entry, { ack: true, val: buffer.data[entry] });
+                await adapter.setStateAsync(SystemName + ".charge." + entry, { ack: true, val: buffer.data[entry] });
             }
         }
     }
@@ -257,10 +261,12 @@ async function read_MHCP_StatisticData(system, period) {
 
         adapter.log.debug("got statistic data: " + period + " " + typeof buffer.data + " " + JSON.stringify(buffer.data));
 
+        const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
+
         if (buffer != null && buffer.status == 200 && buffer.data != null) {
 
             if (period == "Annual") {
-                await adapter.setStateAsync(system.Name + ".Statistics." + period + ".Years", { ack: true, val: JSON.stringify(buffer.data) });
+                await adapter.setStateAsync(SystemName + ".Statistics." + period + ".Years", { ack: true, val: JSON.stringify(buffer.data) });
             }
             else {
                 for (let entry in buffer.data) {
@@ -280,7 +286,7 @@ async function read_MHCP_StatisticData(system, period) {
                         //do nothing
                     }
                     else {
-                        await adapter.setStateAsync(system.Name + ".Statistics." + period + "." + entry, { ack: true, val: buffer.data[entry] });
+                        await adapter.setStateAsync(SystemName + ".Statistics." + period + "." + entry, { ack: true, val: buffer.data[entry] });
                     }
                 }
             }
@@ -355,6 +361,8 @@ async function read_rest(system) {
         got data status string "conn_state:no_vehicle_connected\nauth_state:not_authorized_for_charging\nauth_uid:\ntime_since_charging_start:0\nmeter_wh:16701\npower_w:0\ntransaction_wh:0\ncp_id:+49*839*00000000001\nocpp_state:available\ntype2_state:a\ntype2_proximity:cable_attached\nsig_current:0\nschuko_state:idle\nbackend_conn_state:pending\nfree_charging:off\nslave_state:\nocpp_meter_cfg:modbus_meter_nzr\nocpp_meter_serial:00202035\ncurrent_a:0.00,0.00,0.00\nenergy_man_current:0\nambient_temp:+15.00\nfirmware_ver:5.22.1-13295\ncc_serial_n:2202532503/b94060010me2\ncon_cycles_schuko:0\ncon_cycles_type2:5\nmax_current:16\nrcmb_state:okay\nrcmb_max_values: 0.0, 0.0\nrcmb_current_values: 0.0, 0.0\ncable_attached:on\nschuko_cfg:disable\nrcd_state:disable\nmcb_type2_state:disable\nmcb_schuko_state:disable\ncp_vendor:MENNEKES\nerrors:no_errors\ncp_model:CC612_2S0R_CC\ndisplay_text:"
         */
 
+        const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
+
         if (buffer != null && buffer.status == 200 && buffer.data != null && typeof buffer.data === "string") {
 
             let data = buffer.data.split(/\r?\n/);
@@ -362,44 +370,44 @@ async function read_rest(system) {
             adapter.log.debug("data " + JSON.stringify(data));
            
 
-            await adapter.setStateAsync(system.Name + ".Connection.State", { ack: true, val: data[0].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Authorisation.State", { ack: true, val: data[1].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Authorisation.UID", { ack: true, val: data[2].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".TimeSinceChargingStart", { ack: true, val: Number(data[3].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".Meter", { ack: true, val: Number(data[4].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".Power", { ack: true, val: Number(data[5].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".Transaction", { ack: true, val: Number(data[6].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".CP_ID", { ack: true, val: data[7].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".OCPP.State", { ack: true, val: data[8].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Type2.State", { ack: true, val: data[9].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Type2.Proximity", { ack: true, val: data[10].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".SigCurrent", { ack: true, val: Number(data[11].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".Schuko.State", { ack: true, val: data[12].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Backend.ConnectionState", { ack: true, val: data[13].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".FreeCharging", { ack: true, val: Boolean( data[14].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".SlaveState", { ack: true, val: data[15].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".OCPP.MeterConfig", { ack: true, val: data[16].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".OCPP.MeterSerial", { ack: true, val: data[17].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Current", { ack: true, val: Number(data[18].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".EnergyManagerCurrent", { ack: true, val: Number(data[19].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".AmbientTemperature", { ack: true, val: data[20].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".FirmwareVersion", { ack: true, val: data[21].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".SerialNumber", { ack: true, val: data[22].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".ContactCyclesSchuko", { ack: true, val: Number(data[23].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".ContactcyclesType2", { ack: true, val: Number(data[24].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".MaxCurrent", { ack: true, val: Number(data[25].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".RCMB.State", { ack: true, val: data[26].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".RCMB.MaxValues", { ack: true, val: data[27].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".RCMB.CurrentValues", { ack: true, val: data[28].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".CableAttached", { ack: true, val: Boolean(data[29].split(":")[1]) });
-            await adapter.setStateAsync(system.Name + ".Schuko.Config", { ack: true, val: data[30].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".RCD.State", { ack: true, val: data[31].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".MCB.Type2State", { ack: true, val: data[32].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".MCB.SchukoState", { ack: true, val: data[33].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".CP_Vendor", { ack: true, val: data[34].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".Errors", { ack: true, val: data[35].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".CP_Model", { ack: true, val: data[36].split(":")[1] });
-            await adapter.setStateAsync(system.Name + ".DisplayText", { ack: true, val: data[37].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".Connection.State", { ack: true, val: data[0].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".Authorisation.State", { ack: true, val: data[1].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".Authorisation.UID", { ack: true, val: data[2].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".TimeSinceChargingStart", { ack: true, val: Number(data[3].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".Meter", { ack: true, val: Number(data[4].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".Power", { ack: true, val: Number(data[5].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".Transaction", { ack: true, val: Number(data[6].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".CP_ID", { ack: true, val: data[7].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".OCPP.State", { ack: true, val: data[8].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".Type2.State", { ack: true, val: data[9].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".Type2.Proximity", { ack: true, val: data[10].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".SigCurrent", { ack: true, val: Number(data[11].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".Schuko.State", { ack: true, val: data[12].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".Backend.ConnectionState", { ack: true, val: data[13].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".FreeCharging", { ack: true, val: Boolean( data[14].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".SlaveState", { ack: true, val: data[15].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".OCPP.MeterConfig", { ack: true, val: data[16].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".OCPP.MeterSerial", { ack: true, val: data[17].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".Current", { ack: true, val: Number(data[18].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".EnergyManagerCurrent", { ack: true, val: Number(data[19].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".AmbientTemperature", { ack: true, val: data[20].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".FirmwareVersion", { ack: true, val: data[21].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".SerialNumber", { ack: true, val: data[22].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".ContactCyclesSchuko", { ack: true, val: Number(data[23].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".ContactcyclesType2", { ack: true, val: Number(data[24].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".MaxCurrent", { ack: true, val: Number(data[25].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".RCMB.State", { ack: true, val: data[26].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".RCMB.MaxValues", { ack: true, val: data[27].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".RCMB.CurrentValues", { ack: true, val: data[28].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".CableAttached", { ack: true, val: Boolean(data[29].split(":")[1]) });
+            await adapter.setStateAsync(SystemName + ".Schuko.Config", { ack: true, val: data[30].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".RCD.State", { ack: true, val: data[31].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".MCB.Type2State", { ack: true, val: data[32].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".MCB.SchukoState", { ack: true, val: data[33].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".CP_Vendor", { ack: true, val: data[34].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".Errors", { ack: true, val: data[35].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".CP_Model", { ack: true, val: data[36].split(":")[1] });
+            await adapter.setStateAsync(SystemName + ".DisplayText", { ack: true, val: data[37].split(":")[1] });
 
             /*
             amtronwallbox.0 	2022-05-20 12:20:53.613	info	State value to set for "amtronwallbox.0.Wallbox.CableAttached" has to be type "boolean" but received type "string"
@@ -470,9 +478,11 @@ async function updateInfo(id,state) {
 
     let systemName = id.split(".")[2];
 
+    const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
+
     for (const system of adapter.config.WallboxSystems) {
 
-        if (system.Name == systemName && system.IsActive) {
+        if (SystemName == systemName && system.IsActive) {
             if (system.Type === "ChargeControl") {
                 
             }
@@ -495,9 +505,11 @@ async function updateCharge(id, state) {
 
     let systemName = id.split(".")[2];
 
+    const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
+
     for (const system of adapter.config.WallboxSystems) {
 
-        if (system.Name == systemName && system.IsActive) {
+        if (SystemName == systemName && system.IsActive) {
             if (system.Type === "ChargeControl") {
 
             }
@@ -603,24 +615,26 @@ function subscribeVars() {
             }
             else if (system.Type === "Xtra") {
 
+                const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
+
                 //All parameters can be set to null if no change is intended.
                 //https://github.com/lephisto/amtron/blob/master/docs/api/DevInfo/post.md
-                adapter.subscribeStates(system.Name + ".info.DevName");
-                adapter.subscribeStates(system.Name + ".info.LocTime");
-                adapter.subscribeStates(system.Name + ".info.Summer");
-                adapter.subscribeStates(system.Name + ".info.Tz");
-                adapter.subscribeStates(system.Name + ".info.FixedVehCosts");
-                adapter.subscribeStates(system.Name + ".info.OldVehCosts");
-                adapter.subscribeStates(system.Name + ".info.Battery");
-                adapter.subscribeStates(system.Name + ".info.DevMode");
+                adapter.subscribeStates(SystemName + ".info.DevName");
+                adapter.subscribeStates(SystemName + ".info.LocTime");
+                adapter.subscribeStates(SystemName + ".info.Summer");
+                adapter.subscribeStates(SystemName + ".info.Tz");
+                adapter.subscribeStates(SystemName + ".info.FixedVehCosts");
+                adapter.subscribeStates(SystemName + ".info.OldVehCosts");
+                adapter.subscribeStates(SystemName + ".info.Battery");
+                adapter.subscribeStates(SystemName + ".info.DevMode");
 
                 //All parameters except "Permanent" can be set to null if no change is intended.
                 //https://github.com/lephisto/amtron/blob/master/docs/api/ChargeData/post.md
-                //adapter.subscribeStates(system.Name + ".charge.Permanent");
-                adapter.subscribeStates(system.Name + ".charge.RemoteCurr");
-                //adapter.subscribeStates(system.Name + ".charge.AutoChg"); //gibt es den DP?
-                adapter.subscribeStates(system.Name + ".charge.ChgState");
-                adapter.subscribeStates(system.Name + ".charge.Uid");
+                //adapter.subscribeStates(SystemName + ".charge.Permanent");
+                adapter.subscribeStates(SystemName + ".charge.RemoteCurr");
+                //adapter.subscribeStates(SystemName + ".charge.AutoChg"); //gibt es den DP?
+                adapter.subscribeStates(SystemName + ".charge.ChgState");
+                adapter.subscribeStates(SystemName + ".charge.Uid");
 
                 //Solar price can be set to null when no changes have to be made.
                 //https://github.com/lephisto/amtron/blob/master/docs/api/HomeManager/post.md
@@ -674,9 +688,111 @@ async function checkVariables_rest(system) {
     let key;
     let obj;
 
-    
+    const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
 
-    key = system.Name + ".Connection.State";
+    key = SystemName;
+    obj = {
+        type: "channel",
+        common: {
+            name: "Wallbox " + SystemName,
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = SystemName + ".Connection";
+    obj = {
+        type: "channel",
+        common: {
+            name: "Connection ",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".Authorisation";
+    obj = {
+        type: "channel",
+        common: {
+            name: "Authorisation ",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".Backend";
+    obj = {
+        type: "channel",
+        common: {
+            name: "Backend ",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".MCB";
+    obj = {
+        type: "channel",
+        common: {
+            name: "MCB",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".OCPP";
+    obj = {
+        type: "channel",
+        common: {
+            name: "OCPP",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".RCD";
+    obj = {
+        type: "channel",
+        common: {
+            name: "RCD",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".RCMB";
+    obj = {
+        type: "channel",
+        common: {
+            name: "RCMB",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".Schuko";
+    obj = {
+        type: "channel",
+        common: {
+            name: "Schuko",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".Type2";
+    obj = {
+        type: "channel",
+        common: {
+            name: "Type2",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = SystemName + ".Connection.State";
     obj = {
         type: "state",
         common: {
@@ -689,7 +805,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Authorisation.State";
+    key = SystemName + ".Authorisation.State";
     obj = {
         type: "state",
         common: {
@@ -703,7 +819,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Authorisation.UID";
+    key = SystemName + ".Authorisation.UID";
     obj = {
         type: "state",
         common: {
@@ -717,7 +833,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".TimeSinceChargingStart";
+    key = SystemName + ".TimeSinceChargingStart";
     obj = {
         type: "state",
         common: {
@@ -732,7 +848,7 @@ async function checkVariables_rest(system) {
     await CreateObject(key, obj);
 
 
-    key = system.Name + ".Meter";
+    key = SystemName + ".Meter";
     obj = {
         type: "state",
         common: {
@@ -746,7 +862,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Power";
+    key = SystemName + ".Power";
     obj = {
         type: "state",
         common: {
@@ -760,7 +876,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Transaction";
+    key = SystemName + ".Transaction";
     obj = {
         type: "state",
         common: {
@@ -774,7 +890,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".CP_ID";
+    key = SystemName + ".CP_ID";
     obj = {
         type: "state",
         common: {
@@ -788,7 +904,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".OCPP.State";
+    key = SystemName + ".OCPP.State";
     obj = {
         type: "state",
         common: {
@@ -802,7 +918,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Type2.State";
+    key = SystemName + ".Type2.State";
     obj = {
         type: "state",
         common: {
@@ -816,7 +932,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Type2.Proximity";
+    key = SystemName + ".Type2.Proximity";
     obj = {
         type: "state",
         common: {
@@ -830,7 +946,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".SigCurrent";
+    key = SystemName + ".SigCurrent";
     obj = {
         type: "state",
         common: {
@@ -844,7 +960,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Schuko.State";
+    key = SystemName + ".Schuko.State";
     obj = {
         type: "state",
         common: {
@@ -859,7 +975,7 @@ async function checkVariables_rest(system) {
     await CreateObject(key, obj);
 
 
-    key = system.Name + ".Backend.ConnectionState";
+    key = SystemName + ".Backend.ConnectionState";
     obj = {
         type: "state",
         common: {
@@ -874,7 +990,7 @@ async function checkVariables_rest(system) {
     await CreateObject(key, obj);
 
 
-    key = system.Name + ".FreeCharging";
+    key = SystemName + ".FreeCharging";
     obj = {
         type: "state",
         common: {
@@ -889,7 +1005,7 @@ async function checkVariables_rest(system) {
     await CreateObject(key, obj);
 
 
-    key = system.Name + ".SlaveState";
+    key = SystemName + ".SlaveState";
     obj = {
         type: "state",
         common: {
@@ -904,7 +1020,7 @@ async function checkVariables_rest(system) {
     await CreateObject(key, obj);
 
 
-    key = system.Name + ".OCPP.MeterConfig";
+    key = SystemName + ".OCPP.MeterConfig";
     obj = {
         type: "state",
         common: {
@@ -918,7 +1034,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".OCPP.MeterSerial";
+    key = SystemName + ".OCPP.MeterSerial";
     obj = {
         type: "state",
         common: {
@@ -932,7 +1048,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Current";
+    key = SystemName + ".Current";
     obj = {
         type: "state",
         common: {
@@ -946,7 +1062,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".EnergyManagerCurrent";
+    key = SystemName + ".EnergyManagerCurrent";
     obj = {
         type: "state",
         common: {
@@ -960,7 +1076,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".AmbientTemperature";
+    key = SystemName + ".AmbientTemperature";
     obj = {
         type: "state",
         common: {
@@ -974,7 +1090,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".FirmwareVersion";
+    key = SystemName + ".FirmwareVersion";
     obj = {
         type: "state",
         common: {
@@ -988,7 +1104,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".SerialNumber";
+    key = SystemName + ".SerialNumber";
     obj = {
         type: "state",
         common: {
@@ -1002,7 +1118,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".ContactCyclesSchuko";
+    key = SystemName + ".ContactCyclesSchuko";
     obj = {
         type: "state",
         common: {
@@ -1016,7 +1132,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".ContactcyclesType2";
+    key = SystemName + ".ContactcyclesType2";
     obj = {
         type: "state",
         common: {
@@ -1030,7 +1146,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".MaxCurrent";
+    key = SystemName + ".MaxCurrent";
     obj = {
         type: "state",
         common: {
@@ -1044,7 +1160,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".RCMB.State";
+    key = SystemName + ".RCMB.State";
     obj = {
         type: "state",
         common: {
@@ -1058,7 +1174,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".RCMB.MaxValues";
+    key = SystemName + ".RCMB.MaxValues";
     obj = {
         type: "state",
         common: {
@@ -1072,7 +1188,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".RCMB.CurrentValues";
+    key = SystemName + ".RCMB.CurrentValues";
     obj = {
         type: "state",
         common: {
@@ -1086,7 +1202,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".CableAttached";
+    key = SystemName + ".CableAttached";
     obj = {
         type: "state",
         common: {
@@ -1101,7 +1217,7 @@ async function checkVariables_rest(system) {
     await CreateObject(key, obj);
 
 
-    key = system.Name + ".Schuko.Config";
+    key = SystemNamee + ".Schuko.Config";
     obj = {
         type: "state",
         common: {
@@ -1115,7 +1231,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".RCD.State";
+    key = SystemName + ".RCD.State";
     obj = {
         type: "state",
         common: {
@@ -1129,7 +1245,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".MCB.Type2State";
+    key = SystemName + ".MCB.Type2State";
     obj = {
         type: "state",
         common: {
@@ -1143,7 +1259,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".MCB.SchukoState";
+    key = SystemName + ".MCB.SchukoState";
     obj = {
         type: "state",
         common: {
@@ -1157,7 +1273,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".CP_Vendor";
+    key = SystemName + ".CP_Vendor";
     obj = {
         type: "state",
         common: {
@@ -1171,7 +1287,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Errors";
+    key = SystemName + ".Errors";
     obj = {
         type: "state",
         common: {
@@ -1185,7 +1301,7 @@ async function checkVariables_rest(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".CP_Model";
+    key = SystemName + ".CP_Model";
     obj = {
         type: "state",
         common: {
@@ -1200,7 +1316,7 @@ async function checkVariables_rest(system) {
     await CreateObject(key, obj);
 
 
-    key = system.Name + ".DisplayText";
+    key = SystemName + ".DisplayText";
     obj = {
         type: "state",
         common: {
@@ -1223,7 +1339,30 @@ async function checkVariables_MHCP(system) {
 
     //dev info data
 
-    key = system.Name + ".info.DevName";
+    const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
+
+    key = SystemName ;
+    obj = {
+        type: "channel",
+        common: {
+            name: "Wallbox "  + SystemName,
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = SystemName + ".info"
+    obj = {
+        type: "channel",
+        common: {
+            name: "info",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".info.DevName";
     obj = {
         type: "state",
         common: {
@@ -1236,7 +1375,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.LocTime";
+    key = SystemName + ".info.LocTime";
     obj = {
         type: "state",
         common: {
@@ -1249,7 +1388,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Summer";
+    key = SystemName + ".info.Summer";
     obj = {
         type: "state",
         common: {
@@ -1262,7 +1401,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Tz";
+    key = SystemName + ".info.Tz";
     obj = {
         type: "state",
         common: {
@@ -1275,7 +1414,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.ItemNo";
+    key = SystemName + ".info.ItemNo";
     obj = {
         type: "state",
         common: {
@@ -1288,7 +1427,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Sn";
+    key = SystemName + ".info.Sn";
     obj = {
         type: "state",
         common: {
@@ -1301,7 +1440,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Hcc3";
+    key = SystemName + ".info.Hcc3";
     obj = {
         type: "state",
         common: {
@@ -1314,7 +1453,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Hmi";
+    key = SystemName + ".info.Hmi";
     obj = {
         type: "state",
         common: {
@@ -1327,7 +1466,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Rfid";
+    key = SystemName + ".info.Rfid";
     obj = {
         type: "state",
         common: {
@@ -1340,7 +1479,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Wifi";
+    key = SystemName + ".info.Wifi";
     obj = {
         type: "state",
         common: {
@@ -1353,7 +1492,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.FixedVehCosts";
+    key = SystemName + ".info.FixedVehCosts";
     obj = {
         type: "state",
         common: {
@@ -1366,7 +1505,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.OldVehCosts";
+    key = SystemName + ".info.OldVehCosts";
     obj = {
         type: "state",
         common: {
@@ -1379,7 +1518,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Color";
+    key = SystemName + ".info.Color";
     obj = {
         type: "state",
         common: {
@@ -1392,7 +1531,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.DevMode";
+    key = SystemName + ".info.DevMode";
     obj = {
         type: "state",
         common: {
@@ -1405,7 +1544,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.ChgState";
+    key = SystemName + ".info.ChgState";
     obj = {
         type: "state",
         common: {
@@ -1418,7 +1557,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.WifiOn";
+    key = SystemName + ".info.WifiOn";
     obj = {
         type: "state",
         common: {
@@ -1431,7 +1570,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.AutoChg";
+    key = SystemName + ".info.AutoChg";
     obj = {
         type: "state",
         common: {
@@ -1444,7 +1583,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.ChgContinue";
+    key = SystemName + ".info.ChgContinue";
     obj = {
         type: "state",
         common: {
@@ -1457,7 +1596,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Err";
+    key = SystemName + ".info.Err";
     obj = {
         type: "state",
         common: {
@@ -1470,7 +1609,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Battery";
+    key = SystemName + ".info.Battery";
     obj = {
         type: "state",
         common: {
@@ -1483,7 +1622,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Phases";
+    key = SystemName + ".info.Phases";
     obj = {
         type: "state",
         common: {
@@ -1496,7 +1635,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Cable";
+    key = SystemName + ".info.Cable";
     obj = {
         type: "state",
         common: {
@@ -1509,7 +1648,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.Auth";
+    key = SystemName + ".info.Auth";
     obj = {
         type: "state",
         common: {
@@ -1522,7 +1661,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.DsoEnabled";
+    key = SystemName + ".info.DsoEnabled";
     obj = {
         type: "state",
         common: {
@@ -1535,7 +1674,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.EmEnabled";
+    key = SystemName + ".info.EmEnabled";
     obj = {
         type: "state",
         common: {
@@ -1548,7 +1687,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.MaxCurr";
+    key = SystemName + ".info.MaxCurr";
     obj = {
         type: "state",
         common: {
@@ -1562,7 +1701,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.MaxPwr";
+    key = SystemName + ".info.MaxPwr";
     obj = {
         type: "state",
         common: {
@@ -1576,7 +1715,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".info.MaxCurrWb";
+    key = SystemName + ".info.MaxCurrWb";
     obj = {
         type: "state",
         common: {
@@ -1591,8 +1730,18 @@ async function checkVariables_MHCP(system) {
     await CreateObject(key, obj);
 
     //dev charge data
+    key = SystemName + ".charge"
+    obj = {
+        type: "channel",
+        common: {
+            name: "charge",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
 
-    key = system.Name + ".charge.ChgState";
+
+    key = SystemName + ".charge.ChgState";
     obj = {
         type: "state",
         common: {
@@ -1605,7 +1754,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.Tariff";
+    key = SystemName + ".charge.Tariff";
     obj = {
         type: "state",
         common: {
@@ -1618,7 +1767,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.Price";
+    key = SystemName + ".charge.Price";
     obj = {
         type: "state",
         common: {
@@ -1631,7 +1780,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.Uid";
+    key = SystemName + ".charge.Uid";
     obj = {
         type: "state",
         common: {
@@ -1644,7 +1793,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.ChgDuration";
+    key = SystemName + ".charge.ChgDuration";
     obj = {
         type: "state",
         common: {
@@ -1657,7 +1806,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.ChgNrg";
+    key = SystemName + ".charge.ChgNrg";
     obj = {
         type: "state",
         common: {
@@ -1671,7 +1820,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.NrgDemand";
+    key = SystemName + ".charge.NrgDemand";
     obj = {
         type: "state",
         common: {
@@ -1685,7 +1834,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.Solar";
+    key = SystemName + ".charge.Solar";
     obj = {
         type: "state",
         common: {
@@ -1698,7 +1847,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.EmTime";
+    key = SystemName + ".charge.EmTime";
     obj = {
         type: "state",
         common: {
@@ -1711,7 +1860,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.RemTime";
+    key = SystemName + ".charge.RemTime";
     obj = {
         type: "state",
         common: {
@@ -1724,7 +1873,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.ActPwr";
+    key = SystemName + ".charge.ActPwr";
     obj = {
         type: "state",
         common: {
@@ -1737,7 +1886,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.ActCurr";
+    key = SystemName + ".charge.ActCurr";
     obj = {
         type: "state",
         common: {
@@ -1751,7 +1900,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.MaxCurrT1";
+    key = SystemName + ".charge.MaxCurrT1";
     obj = {
         type: "state",
         common: {
@@ -1765,7 +1914,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.BeginH_T1";
+    key = SystemName + ".charge.BeginH_T1";
     obj = {
         type: "state",
         common: {
@@ -1778,7 +1927,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.BeginM_T1";
+    key = SystemName + ".charge.BeginM_T1";
     obj = {
         type: "state",
         common: {
@@ -1792,7 +1941,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.PriceT1";
+    key = SystemName + ".charge.PriceT1";
     obj = {
         type: "state",
         common: {
@@ -1805,7 +1954,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.MaxCurrT2";
+    key = SystemName + ".charge.MaxCurrT2";
     obj = {
         type: "state",
         common: {
@@ -1818,7 +1967,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.BeginH_T2";
+    key = SystemName + ".charge.BeginH_T2";
     obj = {
         type: "state",
         common: {
@@ -1831,7 +1980,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.BeginM_T2";
+    key = SystemName + ".charge.BeginM_T2";
     obj = {
         type: "state",
         common: {
@@ -1844,7 +1993,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.PriceT2";
+    key = SystemName + ".charge.PriceT2";
     obj = {
         type: "state",
         common: {
@@ -1857,7 +2006,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.RemoteCurr";
+    key = SystemName + ".charge.RemoteCurr";
     obj = {
         type: "state",
         common: {
@@ -1871,7 +2020,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.SolarPrice";
+    key = SystemName + ".charge.SolarPrice";
     obj = {
         type: "state",
         common: {
@@ -1884,7 +2033,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.ExcessNrg";
+    key = SystemName + ".charge.ExcessNrg";
     obj = {
         type: "state",
         common: {
@@ -1897,7 +2046,7 @@ async function checkVariables_MHCP(system) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".charge.HCCP";
+    key = SystemName + ".charge.HCCP";
     obj = {
         type: "state",
         common: {
@@ -1915,7 +2064,7 @@ async function checkVariables_MHCP(system) {
     await checkVariables_MHCP_Statistic(system, "Month");
     await checkVariables_MHCP_Statistic(system, "Year");
 
-    key = system.Name + ".Statistics.Annual.Years";
+    key = SystemName + ".Statistics.Annual.Years";
     obj = {
         type: "state",
         common: {
@@ -1937,7 +2086,30 @@ async function checkVariables_MHCP_Statistic(system, period) {
 
     //statistic data
 
-    key = system.Name + ".Statistics." + period + ".ChgNrg";
+    const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, '_');
+
+    key = SystemName + ".Statistics";
+    obj = {
+        type: "channel",
+        common: {
+            name: "Statistics",
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+    key = SystemName + ".Statistics" + period;
+    obj = {
+        type: "channel",
+        common: {
+            name: "Statistics period " + period,
+            role: "value",
+        }
+    }
+    await CreateObject(key, obj);
+
+
+    key = SystemName + ".Statistics." + period + ".ChgNrg";
     obj = {
         type: "state",
         common: {
@@ -1951,7 +2123,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Statistics." + period + ".HybridNrg";
+    key = SystemName + ".Statistics." + period + ".HybridNrg";
     obj = {
         type: "state",
         common: {
@@ -1964,7 +2136,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Statistics." + period + ".Solar";
+    key = SystemName + ".Statistics." + period + ".Solar";
     obj = {
         type: "state",
         common: {
@@ -1977,7 +2149,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Statistics." + period + ".Tariff1";
+    key = SystemName + ".Statistics." + period + ".Tariff1";
     obj = {
         type: "state",
         common: {
@@ -1990,7 +2162,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Statistics." + period + ".Tariff2";
+    key = SystemName + ".Statistics." + period + ".Tariff2";
     obj = {
         type: "state",
         common: {
@@ -2003,7 +2175,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Statistics." + period + ".Hybrid";
+    key = SystemName + ".Statistics." + period + ".Hybrid";
     obj = {
         type: "state",
         common: {
@@ -2016,7 +2188,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Statistics." + period + ".ChgCosts";
+    key = SystemName + ".Statistics." + period + ".ChgCosts";
     obj = {
         type: "state",
         common: {
@@ -2029,7 +2201,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
     }
     await CreateObject(key, obj);
 
-    key = system.Name + ".Statistics." + period + ".HybridCosts";
+    key = SystemName + ".Statistics." + period + ".HybridCosts";
     obj = {
         type: "state",
         common: {
@@ -2045,7 +2217,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
 
     if (period == "Week" || period == "Month" || period == "Year") {
 
-        key = system.Name + ".Statistics." + period + ".AvgCosts";
+        key = SystemName + ".Statistics." + period + ".AvgCosts";
         obj = {
             type: "state",
             common: {
@@ -2058,7 +2230,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
         }
         await CreateObject(key, obj);
 
-        key = system.Name + ".Statistics." + period + ".FixCosts";
+        key = SystemName + ".Statistics." + period + ".FixCosts";
         obj = {
             type: "state",
             common: {
@@ -2071,7 +2243,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
         }
         await CreateObject(key, obj);
 
-        key = system.Name + ".Statistics." + period + ".OldCosts";
+        key = SystemName + ".Statistics." + period + ".OldCosts";
         obj = {
             type: "state",
             common: {
@@ -2084,7 +2256,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
         }
         await CreateObject(key, obj);
 
-        key = system.Name + ".Statistics." + period + ".KmDiff";
+        key = SystemName + ".Statistics." + period + ".KmDiff";
         obj = {
             type: "state",
             common: {
