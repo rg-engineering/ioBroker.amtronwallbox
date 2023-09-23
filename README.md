@@ -1,4 +1,4 @@
-﻿![Logo](admin/amtronwallbox.png)
+![Logo](admin/amtronwallbox.png)
 # ioBroker.amtronwallbox
 
 ![Number of Installations](http://iobroker.live/badges/amtronwallbox-installed.svg) ![Number of Installations](http://iobroker.live/badges/amtronwallbox-stable.svg)
@@ -40,9 +40,7 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
 * please create issues at [github](https://github.com/rg-engineering/ioBroker.amtronwallbox/issues) if you find bugs or whish new features.
    
 ## Changelog
-
-
-### **WORK IN PROGRESS**
+### 0.2.6 (2023-09-23)
 * (René) bug fix for reported exceptions by sentry
 
 ### 0.2.5 (2023-08-27)
@@ -93,5 +91,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
