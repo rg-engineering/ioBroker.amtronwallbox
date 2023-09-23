@@ -41,10 +41,9 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
    
 ## Changelog
 
-<!--
-  Placeholder for the next version (at the beginning of the line):
-  ### **WORK IN PROGRESS**
--->
+
+### **WORK IN PROGRESS**
+* (René) bug fix for reported exceptions by sentry
 
 ### 0.2.5 (2023-08-27)
 * (René) smaller bug fixes, see issue #59
