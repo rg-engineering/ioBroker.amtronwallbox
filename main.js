@@ -811,6 +811,16 @@ async function checkVariables_rest(system) {
 	};
 	await CreateObject(key, obj);
 
+	key = SystemName + ".Connection";
+	obj = {
+		type: "channel",
+		common: {
+			name: "Connection",
+			role: "value",
+		}
+	};
+	await CreateObject(key, obj);
+
 
 	key = SystemName + ".Connection.State";
 	obj = {
@@ -821,6 +831,16 @@ async function checkVariables_rest(system) {
 			role: "value",
 			read: true,
 			write: false
+		}
+	};
+	await CreateObject(key, obj);
+
+	key = SystemName + ".Authorisation";
+	obj = {
+		type: "channel",
+		common: {
+			name: "Authorisation",
+			role: "value",
 		}
 	};
 	await CreateObject(key, obj);
@@ -924,6 +944,16 @@ async function checkVariables_rest(system) {
 	};
 	await CreateObject(key, obj);
 
+	key = SystemName + ".OCPP";
+	obj = {
+		type: "channel",
+		common: {
+			name: "OCPP",
+			role: "value",
+		}
+	};
+	await CreateObject(key, obj);
+
 	key = SystemName + ".OCPP.State";
 	obj = {
 		type: "state",
@@ -934,6 +964,16 @@ async function checkVariables_rest(system) {
 			unit: "",
 			read: true,
 			write: false
+		}
+	};
+	await CreateObject(key, obj);
+
+	key = SystemName + ".Type2";
+	obj = {
+		type: "channel",
+		common: {
+			name: "Type2",
+			role: "value",
 		}
 	};
 	await CreateObject(key, obj);
@@ -980,6 +1020,17 @@ async function checkVariables_rest(system) {
 	};
 	await CreateObject(key, obj);
 
+
+	key = SystemName + ".Schuko";
+	obj = {
+		type: "channel",
+		common: {
+			name: "Schuko",
+			role: "value",
+		}
+	};
+	await CreateObject(key, obj);
+
 	key = SystemName + ".Schuko.State";
 	obj = {
 		type: "state",
@@ -994,6 +1045,15 @@ async function checkVariables_rest(system) {
 	};
 	await CreateObject(key, obj);
 
+	key = SystemName + ".Backend";
+	obj = {
+		type: "channel",
+		common: {
+			name: "Backend",
+			role: "value",
+		}
+	};
+	await CreateObject(key, obj);
 
 	key = SystemName + ".Backend.ConnectionState";
 	obj = {
@@ -1180,6 +1240,17 @@ async function checkVariables_rest(system) {
 	};
 	await CreateObject(key, obj);
 
+
+	key = SystemName + ".RCMB";
+	obj = {
+		type: "channel",
+		common: {
+			name: "RCMB",
+			role: "value",
+		}
+	};
+	await CreateObject(key, obj);
+
 	key = SystemName + ".RCMB.State";
 	obj = {
 		type: "state",
@@ -1261,6 +1332,17 @@ async function checkVariables_rest(system) {
 			unit: "",
 			read: true,
 			write: false
+		}
+	};
+	await CreateObject(key, obj);
+
+
+	key = SystemName + ".MCB";
+	obj = {
+		type: "channel",
+		common: {
+			name: "MCB",
+			role: "value",
 		}
 	};
 	await CreateObject(key, obj);
@@ -2083,6 +2165,28 @@ async function checkVariables_MHCP(system) {
 	await checkVariables_MHCP_Statistic(system, "Week");
 	await checkVariables_MHCP_Statistic(system, "Month");
 	await checkVariables_MHCP_Statistic(system, "Year");
+
+	key = SystemName + ".Statistics";
+	obj = {
+		type: "channel",
+		common: {
+			name: "Statistics",
+			role: "value",
+		}
+	};
+	await CreateObject(key, obj);
+
+
+	key = SystemName + ".Statistics.Annual";
+	obj = {
+		type: "channel",
+		common: {
+			name: "Statistics Year",
+			role: "value",
+		}
+	};
+	await CreateObject(key, obj);
+
 
 	key = SystemName + ".Statistics.Annual.Years";
 	obj = {
