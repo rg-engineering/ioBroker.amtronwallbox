@@ -40,6 +40,15 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
 * please create issues at [github](https://github.com/rg-engineering/ioBroker.amtronwallbox/issues) if you find bugs or whish new features.
    
 ## Changelog
+
+<!--
+  Placeholder for the next version (at the beginning of the line):
+  ### **WORK IN PROGRESS**
+-->
+
+### **WORK IN PROGRESS**
+* (René) dependencies updated
+
 ### 0.2.6 (2023-09-23)
 * (René) bug fix for reported exceptions by sentry
 
