@@ -45,8 +45,7 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.2.7 (2023-11-19)
 * (René) dependencies updated
 
 ### 0.2.6 (2023-09-23)
