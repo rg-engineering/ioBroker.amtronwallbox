@@ -46,7 +46,7 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
   ### **WORK IN PROGRESS**
 -->
 ### 0.2.8 (2023-11-26)
-* (René)
+* (René) role of states overworked
 
 ### 0.2.7 (2023-11-19)
 * (René) dependencies updated
