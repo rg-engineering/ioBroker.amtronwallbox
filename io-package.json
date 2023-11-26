@@ -1,169 +1,169 @@
 {
-    "common": {
-        "name": "amtronwallbox",
-        "version": "0.2.7",
-        "news": {
-            "0.2.7": {
-                "en": "dependencies updated",
-                "de": "Abhängigkeiten aktualisiert",
-                "ru": "зависимости обновлены",
-                "pt": "dependências atualizadas",
-                "nl": "afhankelijkheden bijgewerkt",
-                "fr": "dépendances mises à jour",
-                "it": "dipendenze aggiornate",
-                "es": "dependencias actualizadas",
-                "pl": "zależności zostały zaktualizowane",
-                "uk": "залежності оновлено",
-                "zh-cn": "依赖项已更新"
-            },
-            "0.2.6": {
-                "en": "further preparation for latest repository",
-                "de": "Weitere Vorbereitungen für das neueste Repository",
-                "ru": "дальнейшая подготовка к последнему репозиторию",
-                "pt": "preparação adicional para o repositório mais recente",
-                "nl": "verdere voorbereiding voor de nieuwste repository",
-                "fr": "préparation supplémentaire pour le dernier référentiel",
-                "it": "ulteriore preparazione per l'ultimo repository",
-                "es": "mayor preparación para el último repositorio",
-                "pl": "dalsze przygotowania do najnowszego repozytorium",
-                "uk": "подальша підготовка до останнього сховища",
-                "zh-cn": "为最新存储库做进一步准备"
-            },
-            "0.2.5": {
-                "en": "smaller bug fixes",
-                "de": "kleinere Fehlerbehebungen",
-                "ru": "мелкие исправления ошибок",
-                "pt": "correções de bugs menores",
-                "nl": "kleinere bugfixes",
-                "fr": "petites corrections de bugs",
-                "it": "correzioni di bug minori",
-                "es": "correcciones de errores más pequeñas",
-                "pl": "mniejsze poprawki błędów",
-                "uk": "менші виправлення помилок",
-                "zh-cn": "较小的错误修复"
-            },
-            "0.2.4": {
-                "en": "dependencies updated",
-                "de": "Abhängigkeiten aktualisiert",
-                "ru": "зависимости обновлены",
-                "pt": "dependências atualizadas",
-                "nl": "afhankelijkheden bijgewerkt",
-                "fr": "dépendances mises à jour",
-                "it": "dipendenze aggiornate",
-                "es": "dependencias actualizadas",
-                "pl": "zaktualizowane zależności",
-                "uk": "залежності оновлено",
-                "zh-cn": "依赖项已更新"
-            },
-            "0.2.3": {
-                "en": "some changes to fullfill requirements to bring the adapter to latest",
-                "de": "Einige Änderungen an den Erfüllungsanforderungen, um den Adapter auf den neuesten Stand zu bringen",
-                "ru": "некоторые изменения в требованиях к полному заполнению, чтобы привести адаптер к последней версии",
-                "pt": "algumas mudanças para atender aos requisitos para trazer o adaptador para o mais recente",
-                "nl": "enkele wijzigingen om aan de vereisten te voldoen om de adapter naar de nieuwste versie te brengen",
-                "fr": "quelques modifications aux exigences de remplissage pour mettre l'adaptateur à jour",
-                "it": "alcune modifiche ai requisiti di riempimento per portare l'adattatore al più recente",
-                "es": "algunos cambios en los requisitos de cumplimiento para llevar el adaptador a la versión más reciente",
-                "pl": "niektóre zmiany w celu spełnienia wymagań, aby adapter był najnowszy",
-                "uk": "деякі зміни у повному виконанні вимог, щоб адаптувати адаптер до останньої версії",
-                "zh-cn": "对 fullfill 要求的一些更改以使适配器达到最新"
-            },
-            "0.2.2": {
-                "en": "dependencies updated",
-                "de": "Abhängigkeiten aktualisiert",
-                "ru": "зависимости обновлены",
-                "pt": "dependências atualizadas",
-                "nl": "afhankelijkheden bijgewerkt",
-                "fr": "dépendances mises à jour",
-                "it": "dipendenze aggiornate",
-                "es": "dependencias actualizadas",
-                "pl": "zaktualizowane zależności",
-                "uk": "залежності оновлено",
-                "zh-cn": "依赖更新"
-            },
-            "0.2.0": {
-                "en": "write data to XTRA wallbox",
-                "de": "Daten in die XTRA Wallbox schreiben",
-                "ru": "записать данные в XTRA Wallbox",
-                "pt": "gravar dados na caixa de embutir XTRA",
-                "nl": "schrijf gegevens naar XTRA wallbox",
-                "fr": "écrire des données sur la wallbox XTRA",
-                "it": "scrivere i dati nella wallbox XTRA",
-                "es": "escribir datos en la caja de pared XTRA",
-                "pl": "zapis danych do stacji ładowania XTRA",
-                "uk": "записати дані на XTRA wallbox",
-                "zh-cn": "将数据写入 XTRA wallbox"
-            }
-        },
-        "titleLang": {
-            "en": "control of AMTRON wallbox",
-            "de": "Steuerung der AMTRON Wallbox",
-            "ru": "управление настенной коробкой AMTRON",
-            "pt": "controle da caixa de parede AMTRON",
-            "nl": "bediening van AMTRON wallbox",
-            "fr": "commande de la wallbox AMTRON",
-            "it": "controllo della wallbox AMTRON",
-            "es": "control de la caja de empotrar AMTRON",
-            "pl": "sterowanie wallboxem AMTRON",
-            "zh-cn": "AMTRON 墙盒的控制",
-            "uk": "управління AMTRON wallbox"
-        },
-        "desc": {
-            "en": "read statistic information and set configuration values on AMTRON wallboxes from Mennekes",
-            "de": "Statistikinformationen lesen und Konfigurationswerte auf AMTRON-Wallboxen von Mennekes einstellen",
-            "ru": "читать статистическую информацию и задавать значения конфигурации на настенных ящиках AMTRON от Mennekes",
-            "pt": "leia informações estatísticas e defina valores de configuração em caixas de parede AMTRON da Mennekes",
-            "nl": "lees statistische informatie en stel configuratiewaarden in op AMTRON wallboxes van Mennekes",
-            "fr": "lire les informations statistiques et définir les valeurs de configuration sur les boîtiers muraux AMTRON de Mennekes",
-            "it": "leggere le informazioni statistiche e impostare i valori di configurazione sulle wallbox AMTRON di Mennekes",
-            "es": "leer información estadística y establecer valores de configuración en los wallboxes AMTRON de Mennekes",
-            "pl": "odczytywanie informacji statystycznych i ustawianie wartości konfiguracyjnych w stacjach naściennych AMTRON firmy Mennekes",
-            "zh-cn": "从 Mennekes 读取 AMTRON 墙盒上的统计信息并设置配置值",
-            "uk": "читати статистичну інформацію та встановлювати значення конфігурації на AMTRON wallbox від Mennekes"
-        },
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "icon": "amtronwallbox.png",
-        "enabled": true,
-        "messagebox": false,
-        "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.amtronwallbox/master/admin/amtronwallbox.png",
-        "keywords": [
-            "amtron",
-            "mennekes",
-            "wallbox"
-        ],
-        "readme": "https://github.com/rg-engineering/ioBroker.amtronwallbox/blob/master/README.md",
-        "loglevel": "info",
-        "stopBeforeUpdate": true,
-        "type": "vehicle",
-        "license": "MIT",
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=2.0.0"
-            }
-        ],
-        "plugins": {
-            "sentry": {
-                "dsn": "https://9062b5ac97dc4ee08af43fb2513eb6c8@o390433.ingest.sentry.io/4505104266297344"
-            }
-        },
-        "compact": true,
-        "authors": [
-            {
-                "name": "René G.",
-                "email": "info@rg-engineering.eu"
-            }
-        ],
-        "connectionType": "local",
-        "dataSource": "push",
-        "adminUI": {
-            "config": "materialize"
-        },
-        "messages": []
+  "common": {
+    "name": "amtronwallbox",
+    "version": "0.2.8",
+    "news": {
+      "0.2.8": {
+        "en": "(René)",
+        "de": "(René)",
+        "ru": "(René)",
+        "pt": "(René)",
+        "nl": "(René)",
+        "fr": "(René)",
+        "it": "(René)",
+        "es": "(René)",
+        "pl": "(René)",
+        "uk": "(Рене)",
+        "zh-cn": "(René)"
+      },
+      "0.2.7": {
+        "en": "dependencies updated",
+        "de": "Abhängigkeiten aktualisiert",
+        "ru": "зависимости обновлены",
+        "pt": "dependências atualizadas",
+        "nl": "afhankelijkheden bijgewerkt",
+        "fr": "dépendances mises à jour",
+        "it": "dipendenze aggiornate",
+        "es": "dependencias actualizadas",
+        "pl": "zależności zostały zaktualizowane",
+        "uk": "залежності оновлено",
+        "zh-cn": "依赖项已更新"
+      },
+      "0.2.6": {
+        "en": "further preparation for latest repository",
+        "de": "Weitere Vorbereitungen für das neueste Repository",
+        "ru": "дальнейшая подготовка к последнему репозиторию",
+        "pt": "preparação adicional para o repositório mais recente",
+        "nl": "verdere voorbereiding voor de nieuwste repository",
+        "fr": "préparation supplémentaire pour le dernier référentiel",
+        "it": "ulteriore preparazione per l'ultimo repository",
+        "es": "mayor preparación para el último repositorio",
+        "pl": "dalsze przygotowania do najnowszego repozytorium",
+        "uk": "подальша підготовка до останнього сховища",
+        "zh-cn": "为最新存储库做进一步准备"
+      },
+      "0.2.5": {
+        "en": "smaller bug fixes",
+        "de": "kleinere Fehlerbehebungen",
+        "ru": "мелкие исправления ошибок",
+        "pt": "correções de bugs menores",
+        "nl": "kleinere bugfixes",
+        "fr": "petites corrections de bugs",
+        "it": "correzioni di bug minori",
+        "es": "correcciones de errores más pequeñas",
+        "pl": "mniejsze poprawki błędów",
+        "uk": "менші виправлення помилок",
+        "zh-cn": "较小的错误修复"
+      },
+      "0.2.4": {
+        "en": "dependencies updated",
+        "de": "Abhängigkeiten aktualisiert",
+        "ru": "зависимости обновлены",
+        "pt": "dependências atualizadas",
+        "nl": "afhankelijkheden bijgewerkt",
+        "fr": "dépendances mises à jour",
+        "it": "dipendenze aggiornate",
+        "es": "dependencias actualizadas",
+        "pl": "zaktualizowane zależności",
+        "uk": "залежності оновлено",
+        "zh-cn": "依赖项已更新"
+      },
+      "0.2.3": {
+        "en": "some changes to fullfill requirements to bring the adapter to latest",
+        "de": "Einige Änderungen an den Erfüllungsanforderungen, um den Adapter auf den neuesten Stand zu bringen",
+        "ru": "некоторые изменения в требованиях к полному заполнению, чтобы привести адаптер к последней версии",
+        "pt": "algumas mudanças para atender aos requisitos para trazer o adaptador para o mais recente",
+        "nl": "enkele wijzigingen om aan de vereisten te voldoen om de adapter naar de nieuwste versie te brengen",
+        "fr": "quelques modifications aux exigences de remplissage pour mettre l'adaptateur à jour",
+        "it": "alcune modifiche ai requisiti di riempimento per portare l'adattatore al più recente",
+        "es": "algunos cambios en los requisitos de cumplimiento para llevar el adaptador a la versión más reciente",
+        "pl": "niektóre zmiany w celu spełnienia wymagań, aby adapter był najnowszy",
+        "uk": "деякі зміни у повному виконанні вимог, щоб адаптувати адаптер до останньої версії",
+        "zh-cn": "对 fullfill 要求的一些更改以使适配器达到最新"
+      },
+      "0.2.2": {
+        "en": "dependencies updated",
+        "de": "Abhängigkeiten aktualisiert",
+        "ru": "зависимости обновлены",
+        "pt": "dependências atualizadas",
+        "nl": "afhankelijkheden bijgewerkt",
+        "fr": "dépendances mises à jour",
+        "it": "dipendenze aggiornate",
+        "es": "dependencias actualizadas",
+        "pl": "zaktualizowane zależności",
+        "uk": "залежності оновлено",
+        "zh-cn": "依赖更新"
+      }
     },
-    "native": {
-        "WallboxSystems": [],
-        "readInterval": 5
-    }
+    "titleLang": {
+      "en": "control of AMTRON wallbox",
+      "de": "Steuerung der AMTRON Wallbox",
+      "ru": "управление настенной коробкой AMTRON",
+      "pt": "controle da caixa de parede AMTRON",
+      "nl": "bediening van AMTRON wallbox",
+      "fr": "commande de la wallbox AMTRON",
+      "it": "controllo della wallbox AMTRON",
+      "es": "control de la caja de empotrar AMTRON",
+      "pl": "sterowanie wallboxem AMTRON",
+      "zh-cn": "AMTRON 墙盒的控制",
+      "uk": "управління AMTRON wallbox"
+    },
+    "desc": {
+      "en": "read statistic information and set configuration values on AMTRON wallboxes from Mennekes",
+      "de": "Statistikinformationen lesen und Konfigurationswerte auf AMTRON-Wallboxen von Mennekes einstellen",
+      "ru": "читать статистическую информацию и задавать значения конфигурации на настенных ящиках AMTRON от Mennekes",
+      "pt": "leia informações estatísticas e defina valores de configuração em caixas de parede AMTRON da Mennekes",
+      "nl": "lees statistische informatie en stel configuratiewaarden in op AMTRON wallboxes van Mennekes",
+      "fr": "lire les informations statistiques et définir les valeurs de configuration sur les boîtiers muraux AMTRON de Mennekes",
+      "it": "leggere le informazioni statistiche e impostare i valori di configurazione sulle wallbox AMTRON di Mennekes",
+      "es": "leer información estadística y establecer valores de configuración en los wallboxes AMTRON de Mennekes",
+      "pl": "odczytywanie informacji statystycznych i ustawianie wartości konfiguracyjnych w stacjach naściennych AMTRON firmy Mennekes",
+      "zh-cn": "从 Mennekes 读取 AMTRON 墙盒上的统计信息并设置配置值",
+      "uk": "читати статистичну інформацію та встановлювати значення конфігурації на AMTRON wallbox від Mennekes"
+    },
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "icon": "amtronwallbox.png",
+    "enabled": true,
+    "messagebox": false,
+    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.amtronwallbox/master/admin/amtronwallbox.png",
+    "keywords": [
+      "amtron",
+      "mennekes",
+      "wallbox"
+    ],
+    "readme": "https://github.com/rg-engineering/ioBroker.amtronwallbox/blob/master/README.md",
+    "loglevel": "info",
+    "stopBeforeUpdate": true,
+    "type": "vehicle",
+    "license": "MIT",
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
+    ],
+    "plugins": {
+      "sentry": {
+        "dsn": "https://9062b5ac97dc4ee08af43fb2513eb6c8@o390433.ingest.sentry.io/4505104266297344"
+      }
+    },
+    "compact": true,
+    "authors": [
+      {
+        "name": "René G.",
+        "email": "info@rg-engineering.eu"
+      }
+    ],
+    "connectionType": "local",
+    "dataSource": "push",
+    "adminUI": {
+      "config": "materialize"
+    },
+    "messages": []
+  },
+  "native": {
+    "WallboxSystems": [],
+    "readInterval": 5
+  }
 }
