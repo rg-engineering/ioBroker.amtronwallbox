@@ -19,7 +19,7 @@ For more details and for information how to disable the error reporting see [Sen
                                                                           
 [![paypal](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=34ESBMJ932QZC) 
 
-The adapter serves as an interface to various Amtron wallboxes. The data provided by the box is read out and made available as a data point in the adapter. 
+The adapter serves as an interface to various [Amtron wallboxes](https://www.mennekes.de/emobility/produkte/amtron-wallboxen/). The data provided by the box is read out and made available as a data point in the adapter. 
 The data is only processed locally, a cloud connection is not necessary. For wallboxes that also support write access, the adapter can write data (e.g. charging current).
 The following Amtron wallboxes are supported:
 * Amtron Xtra
@@ -45,6 +45,10 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (René) 
+
 ### 0.2.7 (2023-11-19)
 * (René) dependencies updated
 
