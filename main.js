@@ -715,7 +715,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Wallbox " + SystemName,
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -726,7 +726,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Connection ",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -736,7 +736,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Authorisation ",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -746,7 +746,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Backend ",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -756,7 +756,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "MCB",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -766,7 +766,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "OCPP",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -776,7 +776,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "RCD",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -786,7 +786,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "RCMB",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -796,7 +796,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Schuko",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -806,7 +806,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Type2",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -816,7 +816,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Connection",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -828,7 +828,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Connection State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			read: true,
 			write: false
 		}
@@ -840,7 +840,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Authorisation",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -851,7 +851,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Authorisation State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -865,7 +865,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Authorisation UID",
 			type: "string",
-			role: "value",
+			role: "info",
 			unit: "",
 			read: true,
 			write: false
@@ -879,7 +879,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Time Since Charging Start",
 			type: "number",
-			role: "value",
+			role: "time.span",
 			unit: "s",
 			read: true,
 			write: false
@@ -894,7 +894,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Meter",
 			type: "number",
-			role: "value",
+			role: "value.energy",
 			unit: "Wh",
 			read: true,
 			write: false
@@ -908,7 +908,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Power",
 			type: "number",
-			role: "value",
+			role: "value.power",
 			unit: "W",
 			read: true,
 			write: false
@@ -922,7 +922,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Transaction",
 			type: "number",
-			role: "value",
+			role: "value.energy",
 			unit: "Wh",
 			read: true,
 			write: false
@@ -936,7 +936,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "System ID",
 			type: "string",
-			role: "value",
+			role: "info",
 			unit: "",
 			read: true,
 			write: false
@@ -949,7 +949,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "OCPP",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -960,7 +960,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "OCPP State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -973,7 +973,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Type2",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -984,7 +984,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Type2 State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -1026,7 +1026,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Schuko",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -1037,7 +1037,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Schuko State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -1050,7 +1050,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "Backend",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -1061,7 +1061,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Backend Connection State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -1076,7 +1076,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "FreeCharging",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			unit: "",
 			read: true,
 			write: false
@@ -1091,7 +1091,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "SlaveState",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -1106,7 +1106,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "OCPP Meter Config",
 			type: "string",
-			role: "value",
+			role: "info",
 			unit: "",
 			read: true,
 			write: false
@@ -1120,7 +1120,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "OCPP Meter Serial",
 			type: "string",
-			role: "value",
+			role: "info",
 			unit: "",
 			read: true,
 			write: false
@@ -1134,7 +1134,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Current",
 			type: "number",
-			role: "value",
+			role: "value.current",
 			unit: "A",
 			read: true,
 			write: false
@@ -1148,7 +1148,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Energy Manager Current",
 			type: "number",
-			role: "value",
+			role: "value.current",
 			unit: "A",
 			read: true,
 			write: false
@@ -1162,7 +1162,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "AmbientTemperature",
 			type: "string",
-			role: "value",
+			role: "value.temperature",
 			unit: "°C",
 			read: true,
 			write: false
@@ -1176,7 +1176,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "FirmwareVersion",
 			type: "string",
-			role: "value",
+			role: "info",
 			unit: "",
 			read: true,
 			write: false
@@ -1190,7 +1190,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "SerialNumber",
 			type: "string",
-			role: "value",
+			role: "info",
 			unit: "",
 			read: true,
 			write: false
@@ -1232,7 +1232,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Maximun Current",
 			type: "number",
-			role: "value",
+			role: "value.current",
 			unit: "A",
 			read: true,
 			write: false
@@ -1246,7 +1246,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "RCMB",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -1257,7 +1257,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "RCMB State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -1271,7 +1271,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "RCMB Maximum Values",
 			type: "string",
-			role: "value",
+			role: "value.max",
 			unit: "",
 			read: true,
 			write: false
@@ -1285,7 +1285,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "RCMB Current Values",
 			type: "string",
-			role: "value",
+			role: "value.current",
 			unit: "",
 			read: true,
 			write: false
@@ -1299,7 +1299,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "CableAttached",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			unit: "",
 			read: true,
 			write: false
@@ -1314,7 +1314,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Schuko Config",
 			type: "string",
-			role: "value",
+			role: "info",
 			unit: "",
 			read: true,
 			write: false
@@ -1328,7 +1328,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "RCD State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -1342,7 +1342,7 @@ async function checkVariables_rest(system) {
 		type: "channel",
 		common: {
 			name: "MCB",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -1353,7 +1353,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "MCB Type2 State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -1367,7 +1367,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "MCB Schuko State",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			unit: "",
 			read: true,
 			write: false
@@ -1381,7 +1381,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "System Vendor",
 			type: "string",
-			role: "value",
+			role: "info",
 			unit: "",
 			read: true,
 			write: false
@@ -1409,7 +1409,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "System Model",
 			type: "string",
-			role: "value",
+			role: "info.hardware",
 			unit: "",
 			read: true,
 			write: false
@@ -1424,7 +1424,7 @@ async function checkVariables_rest(system) {
 		common: {
 			name: "Display Text",
 			type: "string",
-			role: "value",
+			role: "info.display",
 			unit: "",
 			read: true,
 			write: false
@@ -1448,7 +1448,7 @@ async function checkVariables_MHCP(system) {
 		type: "channel",
 		common: {
 			name: "Wallbox "  + SystemName,
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -1459,7 +1459,7 @@ async function checkVariables_MHCP(system) {
 		type: "channel",
 		common: {
 			name: "info",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -1470,7 +1470,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "Name of the device",
 			type: "string",
-			role: "value",
+			role: "info.name",
 			read: true,
 			write: true
 		}
@@ -1483,7 +1483,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "timestamp",
 			type: "number",
-			role: "value",
+			role: "date",
 			read: true,
 			write: true
 		}
@@ -1496,7 +1496,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "Is summer time?",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: true
 		}
@@ -1535,7 +1535,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "Serial Number",
 			type: "number",
-			role: "value",
+			role: "info.serial",
 			read: true,
 			write: false
 		}
@@ -1548,7 +1548,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "Info about the HCC3 (main controller)",
 			type: "string",
-			role: "value",
+			role: "info.hardware",
 			read: true,
 			write: false
 		}
@@ -1561,7 +1561,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "Info about hardware software?",
 			type: "string",
-			role: "value",
+			role: "info.hardware",
 			read: true,
 			write: false
 		}
@@ -1574,7 +1574,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "Info about RFID?",
 			type: "string",
-			role: "value",
+			role: "info.hardware",
 			read: true,
 			write: false
 		}
@@ -1587,7 +1587,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "WiFi module version?",
 			type: "string",
-			role: "value",
+			role: "info.hardware",
 			read: true,
 			write: false
 		}
@@ -1652,7 +1652,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "Current charging state",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			read: true,
 			write: false
 		}
@@ -1665,7 +1665,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "true if WiFi is on",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: false
 		}
@@ -1678,7 +1678,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "true if auto-start charging is enabled",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: false
 		}
@@ -1691,7 +1691,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "true if charging should continue after power outage",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: false
 		}
@@ -1704,7 +1704,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "current error code, 0 if there is none",
 			type: "number",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: false
 		}
@@ -1717,7 +1717,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "EV battery capacity for EnergyManager in Wh",
 			type: "number",
-			role: "value",
+			role: "value.energy",
 			read: true,
 			write: true
 		}
@@ -1743,7 +1743,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "true if cable is connected/installed?",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: false
 		}
@@ -1756,7 +1756,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "true if auth by rfid is enabled?",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: false
 		}
@@ -1769,7 +1769,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "?",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: false
 		}
@@ -1782,7 +1782,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "true if EnergyManager mode is enabled",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: false
 		}
@@ -1796,7 +1796,7 @@ async function checkVariables_MHCP(system) {
 			name: "currently set max. charging current per phase in A",
 			unit: "A",
 			type: "number",
-			role: "value",
+			role: "value.power",
 			read: true,
 			write: false
 		}
@@ -1810,7 +1810,7 @@ async function checkVariables_MHCP(system) {
 			name: "currently set max. charging power in W",
 			unit: "W",
 			type: "number",
-			role: "value",
+			role: "value.power",
 			read: true,
 			write: false
 		}
@@ -1824,7 +1824,7 @@ async function checkVariables_MHCP(system) {
 			name: "upper limit for charging current per phase in A",
 			unit: "A",
 			type: "number",
-			role: "value",
+			role: "value.current",
 			read: true,
 			write: false
 		}
@@ -1837,7 +1837,7 @@ async function checkVariables_MHCP(system) {
 		type: "channel",
 		common: {
 			name: "charge",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -1849,7 +1849,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "charge state",
 			type: "string",
-			role: "value",
+			role: "info.status",
 			read: true,
 			write: true
 		}
@@ -1888,7 +1888,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "Uid",
 			type: "string",
-			role: "value",
+			role: "info",
 			read: true,
 			write: true
 		}
@@ -1901,7 +1901,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "how long the wallbox is charging the EV",
 			type: "number",
-			role: "value",
+			role: "time.span",
 			read: true,
 			write: false
 		}
@@ -1915,7 +1915,7 @@ async function checkVariables_MHCP(system) {
 			name: "how much energy the wallbox has charged in Wh",
 			unit: "Wh",
 			type: "number",
-			role: "value",
+			role: "value.energy",
 			read: true,
 			write: false
 		}
@@ -1929,7 +1929,7 @@ async function checkVariables_MHCP(system) {
 			name: "energy demand of the vehicle in Wh",
 			unit: "Wh",
 			type: "number",
-			role: "value",
+			role: "value.energy",
 			read: true,
 			write: false
 		}
@@ -1942,7 +1942,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "maybe percentage of solar energy for current charge",
 			type: "number",
-			role: "value",
+			role: "value.energy",
 			read: true,
 			write: false
 		}
@@ -1981,7 +1981,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "current power draw of vehicle",
 			type: "number",
-			role: "value",
+			role: "value.current",
 			read: true,
 			write: false
 		}
@@ -1995,7 +1995,7 @@ async function checkVariables_MHCP(system) {
 			name: "currently set max. charging current per phase in A",
 			type: "number",
 			unit: "A",
-			role: "value",
+			role: "value.current",
 			read: true,
 			write: false
 		}
@@ -2009,7 +2009,7 @@ async function checkVariables_MHCP(system) {
 			name: "max current per phase in tariff1",
 			type: "number",
 			unit: "A",
-			role: "value",
+			role: "value.current",
 			read: true,
 			write: false
 		}
@@ -2062,7 +2062,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "max current per pahse in tariff2",
 			type: "number",
-			role: "value",
+			role: "value.current",
 			read: true,
 			write: false
 		}
@@ -2141,7 +2141,7 @@ async function checkVariables_MHCP(system) {
 		common: {
 			name: "if only excess energy should be used in energy manager mode",
 			type: "boolean",
-			role: "value",
+			role: "indicator",
 			read: true,
 			write: false
 		}
@@ -2171,7 +2171,7 @@ async function checkVariables_MHCP(system) {
 		type: "channel",
 		common: {
 			name: "Statistics",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -2182,7 +2182,7 @@ async function checkVariables_MHCP(system) {
 		type: "channel",
 		common: {
 			name: "Statistics Year",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -2217,7 +2217,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
 		type: "channel",
 		common: {
 			name: "Statistics",
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -2227,7 +2227,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
 		type: "channel",
 		common: {
 			name: "Statistics period " + period,
-			role: "value",
+			role: "",
 		}
 	};
 	await CreateObject(key, obj);
@@ -2240,7 +2240,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
 			name: "Amount of Wh",
 			type: "number",
 			unit:"Wh",
-			role: "value",
+			role: "value.energy",
 			read: true,
 			write: false
 		}
