@@ -4,17 +4,17 @@
     "version": "0.2.9",
     "news": {
       "0.2.9": {
-        "en": "(René) dependencies updated",
-        "de": "(René)",
-        "ru": "(René) обновления зависимости",
-        "pt": "(René) dependências atualizadas",
-        "nl": "Afhankelijkheid",
-        "fr": "(René) dépendances mises à jour",
-        "it": "(René) dipendenze aggiornate",
-        "es": "(René) dependencies updated",
-        "pl": "(René) zależności od aktualizacji",
-        "uk": "(René) залежностей оновлено",
-        "zh-cn": "(单位:千美元)"
+        "en": "dependencies updated",
+        "de": "Abhängigkeiten aktualisiert",
+        "ru": "зависимости обновлены",
+        "pt": "dependências atualizadas",
+        "nl": "afhankelijkheden bijgewerkt",
+        "fr": "dépendances mises à jour",
+        "it": "dipendenze aggiornate",
+        "es": "dependencias actualizadas",
+        "pl": "zależności zostały zaktualizowane",
+        "uk": "залежності оновлено",
+        "zh-cn": "依赖项已更新"
       },
       "0.2.8": {
         "en": "role of states overworked",
@@ -135,7 +135,7 @@
     "readme": "https://github.com/rg-engineering/ioBroker.amtronwallbox/blob/master/README.md",
     "loglevel": "info",
     "stopBeforeUpdate": true,
-    "type": "vehicle",
+    "type": "energy",
     "license": "MIT",
     "materialize": true,
     "dependencies": [
