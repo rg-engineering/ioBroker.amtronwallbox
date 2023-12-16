@@ -5,7 +5,7 @@
     "news": {
       "0.2.10": {
         "en": "(René) type of adapter changed back to \"energy\"",
-        "de": "(René) Typ des Adapters zurück in die Energie",
+        "de": "(René) Typ des Adapters zurückgestellt auf 'Energie'",
         "ru": "(René) тип адаптера изменился обратно к энергии",
         "pt": "(René) tipo de adaptador alterado de volta à energia",
         "nl": "Een soort van adapter veranderde terug in energie",
