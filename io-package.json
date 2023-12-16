@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.2.10",
+    "version": "0.2.11",
     "news": {
+      "0.2.11": {
+        "en": "(René) type of adapter changed back to \"energy\"",
+        "de": "(René) Typ des Adapters zurück in die Energie",
+        "ru": "(René) тип адаптера изменился обратно к энергии",
+        "pt": "(René) tipo de adaptador alterado de volta à energia",
+        "nl": "Een soort van adapter veranderde terug in energie",
+        "fr": "(René) type d'adaptateur changé en énergie",
+        "it": "(René) tipo di adattatore cambiato di nuovo in energia",
+        "es": "(René) tipo de adaptador cambiado de nuevo a la energía",
+        "pl": "(René) rodzaj adaptatora zmieniał się z powrotem do energii",
+        "uk": "(René) тип адаптера змінився назад до енергії",
+        "zh-cn": "(René) 适应者类型改为能源"
+      },
       "0.2.10": {
         "en": "(René) type of adapter changed back to \"energy\"",
         "de": "(René) Typ des Adapters zurückgestellt auf 'Energie'",
@@ -80,19 +93,6 @@
         "pl": "mniejsze poprawki błędów",
         "uk": "менші виправлення помилок",
         "zh-cn": "较小的错误修复"
-      },
-      "0.2.4": {
-        "en": "dependencies updated",
-        "de": "Abhängigkeiten aktualisiert",
-        "ru": "зависимости обновлены",
-        "pt": "dependências atualizadas",
-        "nl": "afhankelijkheden bijgewerkt",
-        "fr": "dépendances mises à jour",
-        "it": "dipendenze aggiornate",
-        "es": "dependencias actualizadas",
-        "pl": "zaktualizowane zależności",
-        "uk": "залежності оновлено",
-        "zh-cn": "依赖项已更新"
       }
     },
     "titleLang": {
