@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.2.9",
+    "version": "0.2.10",
     "news": {
+      "0.2.10": {
+        "en": "(René) type of adapter changed back to \"energy\"",
+        "de": "(René) Typ des Adapters zurück in die Energie",
+        "ru": "(René) тип адаптера изменился обратно к энергии",
+        "pt": "(René) tipo de adaptador alterado de volta à energia",
+        "nl": "Een soort van adapter veranderde terug in energie",
+        "fr": "(René) type d'adaptateur changé en énergie",
+        "it": "(René) tipo di adattatore cambiato di nuovo in energia",
+        "es": "(René) tipo de adaptador cambiado de nuevo a la energía",
+        "pl": "(René) rodzaj adaptatora zmieniał się z powrotem do energii",
+        "uk": "(René) тип адаптера змінився назад до енергії",
+        "zh-cn": "(René) 适应者类型改为能源"
+      },
       "0.2.9": {
         "en": "dependencies updated",
         "de": "Abhängigkeiten aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "zaktualizowane zależności",
         "uk": "залежності оновлено",
         "zh-cn": "依赖项已更新"
-      },
-      "0.2.3": {
-        "en": "some changes to fullfill requirements to bring the adapter to latest",
-        "de": "Einige Änderungen an den Erfüllungsanforderungen, um den Adapter auf den neuesten Stand zu bringen",
-        "ru": "некоторые изменения в требованиях к полному заполнению, чтобы привести адаптер к последней версии",
-        "pt": "algumas mudanças para atender aos requisitos para trazer o adaptador para o mais recente",
-        "nl": "enkele wijzigingen om aan de vereisten te voldoen om de adapter naar de nieuwste versie te brengen",
-        "fr": "quelques modifications aux exigences de remplissage pour mettre l'adaptateur à jour",
-        "it": "alcune modifiche ai requisiti di riempimento per portare l'adattatore al più recente",
-        "es": "algunos cambios en los requisitos de cumplimiento para llevar el adaptador a la versión más reciente",
-        "pl": "niektóre zmiany w celu spełnienia wymagań, aby adapter był najnowszy",
-        "uk": "деякі зміни у повному виконанні вимог, щоб адаптувати адаптер до останньої версії",
-        "zh-cn": "对 fullfill 要求的一些更改以使适配器达到最新"
       }
     },
     "titleLang": {
