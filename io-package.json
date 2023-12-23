@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.2.11",
+    "version": "0.2.12",
     "news": {
+      "0.2.12": {
+        "en": "(René) see issue #162: ignore unused data from wallbox",
+        "de": "(René) siehe Ausgabe #162: Nicht genutzte Daten von wallbox ignorieren",
+        "ru": "(René) см. номер #162: игнорировать неиспользуемые данные из настенного ящика",
+        "pt": "(René) ver número #162: ignorar dados não utilizados da wallbox",
+        "nl": "Vertaling:",
+        "fr": "(René) voir le numéro #162: ignorer les données inutilisées de la boîte murale",
+        "it": "(René) vedi numero #162: ignora i dati inutilizzati dal wallbox",
+        "es": "(René) ver el número #162: ignorar los datos no utilizados de wallbox",
+        "pl": "(René) ↓, s. 11",
+        "uk": "(René) див. питання #162: ігнорувати невикористані дані з скриньки",
+        "zh-cn": "(René) 见第162号:无视墙壁数据"
+      },
       "0.2.11": {
         "en": "(René) type of adapter changed back to \"energy\"",
         "de": "(René) Typ des Adapters zurück in die Energie",
@@ -80,19 +93,6 @@
         "pl": "dalsze przygotowania do najnowszego repozytorium",
         "uk": "подальша підготовка до останнього сховища",
         "zh-cn": "为最新存储库做进一步准备"
-      },
-      "0.2.5": {
-        "en": "smaller bug fixes",
-        "de": "kleinere Fehlerbehebungen",
-        "ru": "мелкие исправления ошибок",
-        "pt": "correções de bugs menores",
-        "nl": "kleinere bugfixes",
-        "fr": "petites corrections de bugs",
-        "it": "correzioni di bug minori",
-        "es": "correcciones de errores más pequeñas",
-        "pl": "mniejsze poprawki błędów",
-        "uk": "менші виправлення помилок",
-        "zh-cn": "较小的错误修复"
       }
     },
     "titleLang": {
