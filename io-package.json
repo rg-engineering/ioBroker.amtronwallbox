@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.2.12",
+    "version": "0.2.13",
     "news": {
+      "0.2.13": {
+        "en": "(René) just a sentry test",
+        "de": "(René) nur einen Test",
+        "ru": "(René) просто тест на отправку",
+        "pt": "(René) apenas um teste de sentinela",
+        "nl": "Een sentimentele test",
+        "fr": "(René) juste un test",
+        "it": "(René) solo un test di sentina",
+        "es": "(René) sólo una prueba de centinela",
+        "pl": "(René) – test sanitarny",
+        "uk": "(René) просто відправник",
+        "zh-cn": "(René) 只是一个发送的试验"
+      },
       "0.2.12": {
         "en": "(René) see issue #162: ignore unused data from wallbox",
         "de": "(René) siehe Ausgabe #162: Nicht genutzte Daten von wallbox ignorieren",
@@ -80,19 +93,6 @@
         "pl": "zależności zostały zaktualizowane",
         "uk": "залежності оновлено",
         "zh-cn": "依赖项已更新"
-      },
-      "0.2.6": {
-        "en": "further preparation for latest repository",
-        "de": "Weitere Vorbereitungen für das neueste Repository",
-        "ru": "дальнейшая подготовка к последнему репозиторию",
-        "pt": "preparação adicional para o repositório mais recente",
-        "nl": "verdere voorbereiding voor de nieuwste repository",
-        "fr": "préparation supplémentaire pour le dernier référentiel",
-        "it": "ulteriore preparazione per l'ultimo repository",
-        "es": "mayor preparación para el último repositorio",
-        "pl": "dalsze przygotowania do najnowszego repozytorium",
-        "uk": "подальша підготовка до останнього сховища",
-        "zh-cn": "为最新存储库做进一步准备"
       }
     },
     "titleLang": {
