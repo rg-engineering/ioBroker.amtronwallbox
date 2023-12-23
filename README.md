@@ -54,6 +54,10 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (René) just a sentry test
+
 ### 0.2.12 (2023-12-23)
 * (René) see issue #162: ignore unused data from wallbox
 
