@@ -191,6 +191,37 @@ async function read_MHCP_DevInfo(system) {
 
 		adapter.log.debug("got status data: " + typeof buffer.data + " " + JSON.stringify(buffer.data));
 
+		/*
+			"DevName":"Wall-e",
+			"LocTime":1703263828,
+			"Summer":true,
+			"Tz":120,
+			"ItemNo":"1344201",
+			"Sn":420101388,
+			"Hcc3":"HCC3 V1.13",
+			"Hmi":"SW:1.8 HW:0x3 SN:0xa",
+			"Rfid":null,
+			"Wifi":"BA 1.1.9",
+			"FixedVehCosts":0,
+			"OldVehCosts":0,
+			"Color":0,
+			"DevMode":"Remote",
+			"ChgState":"Idle",
+			"WifiOn":true,
+			"AutoChg":true,
+			"ChgContinue":true,
+			"Err":0,
+			"Battery":5000,
+			"Phases":3,
+			"Cable":true,
+			"Auth":false,
+			"DsoEnabled":false,
+			"EmEnabled":false,
+			"MaxCurr":0,
+			"MaxPwr":0,
+			"MaxCurrWb":0
+*/
+
 		const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, "_");
 
 		if (buffer != null && buffer.status == 200 && buffer.data != null) {
@@ -231,12 +262,72 @@ async function read_MHCP_ChargeData(system) {
 
 		adapter.log.debug("got charge data: " + typeof buffer.data + " " + JSON.stringify(buffer.data));
 
+		/*
+
+			"ChgState": "Idle",
+			"Tariff": "T1",
+			"Price": 270,
+			"Uid": "",
+			"ChgDuration": 18613,
+			"ChgNrg": 12648,
+			"NrgDemand": 0,
+			"Solar": 0,
+			"EmTime": 1440,
+			"RemTime": 1440,
+			"ActPwr": 0,
+			"ActCurr": 0,
+			"MaxCurrT1": 0,
+			"BeginH_T1": 4,
+			"BeginM_T1": 30,
+			"PriceT1": 270,
+			"MaxCurrT2": 0,
+			"BeginH_T2": 22,
+			"BeginM_T2": 0,
+			"PriceT2": 200,
+			"RemoteCurr": 0,
+			"SolarPrice": 0,
+			"ExcessNrg": true,
+			"TMaxCurrT1": 0,
+			"TBeginH_T1": 4,
+			"TBeginM_T1": 30,
+			"TPriceT1": 270,
+			"TMaxCurrT2": 0,
+			"TBeginH_T2": 22,
+			"TBeginM_T2": 0,
+			"TPriceT2": 200,
+			"TRemoteCurr": 0,
+			"TSolarPrice": 0,
+			"TExcessNrg": true,
+			"HCCP": "A11"
+			*/
+
+
+
+
+
 		const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, "_");
 
 		if (buffer != null && buffer.status == 200 && buffer.data != null) {
 
 			for (const entry in buffer.data) {
-				await adapter.setStateAsync(SystemName + ".charge." + entry, { ack: true, val: buffer.data[entry] });
+
+				if (entry == "TMaxCurrT1"
+					|| entry == "TBeginH_T1"
+					|| entry == "TBeginM_T1"
+					|| entry == "TPriceT1"
+					|| entry == "TMaxCurrT2"
+					|| entry == "TBeginH_T2"
+					|| entry == "TBeginM_T2"
+					|| entry == "TPriceT2"
+					|| entry == "TRemoteCurr"
+					|| entry == "TSolarPrice"
+					|| entry == "TExcessNrg"
+				) {
+					//do nothing
+				}
+				else {
+					await adapter.setStateAsync(SystemName + ".charge." + entry, { ack: true, val: buffer.data[entry] });
+				}
 			}
 		}
 	}
@@ -458,7 +549,7 @@ async function read_rest(system) {
 	}
 }
 
-
+/*
 function toDate(sDate) {
 
 	//yyyymmdd
@@ -470,6 +561,7 @@ function toDate(sDate) {
 
 	return oDate.toLocaleDateString();
 }
+*/
 
 async function HandleStateChange(id, state) {
 
@@ -504,7 +596,7 @@ async function updateInfo(id,state) {
 
 		if (SystemName == systemName && system.IsActive) {
 			if (system.Type === "ChargeControl") {
-
+				//nothing to do
 			}
 			else if (system.Type === "Compact") {
 				await write_MHCP_DevInfo(system, id,state);
@@ -531,7 +623,7 @@ async function updateCharge(id, state) {
 
 		if (SystemName == systemName && system.IsActive) {
 			if (system.Type === "ChargeControl") {
-
+				//nothing to do
 			}
 			else if (system.Type === "Compact") {
 				await write_MHCP_ChargeData(system, id, state);
@@ -628,10 +720,10 @@ function subscribeVars() {
 
 		if (system.IsActive) {
 			if (system.Type === "ChargeControl") {
-
+				//nothing to do
 			}
 			else if (system.Type === "Compact") {
-
+				//nothing to do
 			}
 			else if (system.Type === "Xtra") {
 
@@ -687,7 +779,7 @@ async function checkVariables() {
 				await checkVariables_rest(system);
 			}
 			else if (system.Type === "Compact") {
-
+				//nothing to do
 			}
 			else if (system.Type === "Xtra") {
 				await checkVariables_MHCP(system);

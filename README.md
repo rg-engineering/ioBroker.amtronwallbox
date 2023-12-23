@@ -54,6 +54,10 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (René) see issue #162: ignore unused data from wallbox
+
 ### 0.2.11 (2023-12-16)
 * (René) type of adapter changed back to "energy"
 
