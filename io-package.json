@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.2.13",
+    "version": "0.2.14",
     "news": {
+      "0.2.14": {
+        "en": "(René) dependencies updated",
+        "de": "(René)",
+        "ru": "(René)",
+        "pt": "(René) dependências atualizadas",
+        "nl": "(René) bijgewerkte afhankelijkheden",
+        "fr": "(René) dépendances mises à jour",
+        "it": "(René) dipendenze aggiornate",
+        "es": "(René) dependencies updated",
+        "pl": "Aktualizacja zależności (René)",
+        "uk": "(René) залежностей оновлено",
+        "zh-cn": "(René) 更新的依赖关系"
+      },
       "0.2.13": {
         "en": "(René) just a sentry test",
         "de": "(René) nur einen Test",
@@ -80,19 +93,6 @@
         "pl": "rola państw jest przepracowana",
         "uk": "роль держ",
         "zh-cn": "国家角色过度劳累"
-      },
-      "0.2.7": {
-        "en": "dependencies updated",
-        "de": "Abhängigkeiten aktualisiert",
-        "ru": "зависимости обновлены",
-        "pt": "dependências atualizadas",
-        "nl": "afhankelijkheden bijgewerkt",
-        "fr": "dépendances mises à jour",
-        "it": "dipendenze aggiornate",
-        "es": "dependencias actualizadas",
-        "pl": "zależności zostały zaktualizowane",
-        "uk": "залежності оновлено",
-        "zh-cn": "依赖项已更新"
       }
     },
     "titleLang": {
