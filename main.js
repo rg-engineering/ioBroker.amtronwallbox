@@ -12,6 +12,8 @@ const axios = require("axios");
 
 const CronJob = require("cron").CronJob;
 
+const timeConverter = require("./lib/support_tools.js").timeConverter;
+
 let cronJobs = [];
 
 /*
@@ -94,6 +96,8 @@ async function main() {
 	adapter.log.debug("read every  " + readInterval + " minutes");
 
 	CronCreate(readInterval, Do);
+
+	CronStatus();
 
 }
 
@@ -2538,6 +2542,7 @@ function CronStop() {
 	}
 }
 
+/*
 function deleteCronJob(id) {
 
 	cronJobs[id].stop();
@@ -2552,6 +2557,7 @@ function deleteCronJob(id) {
 
 
 }
+*/
 
 function CronCreate(Minute, callback) {
 
@@ -2600,7 +2606,7 @@ function CronStatus() {
 			//adapter.log.debug("cron jobs");
 			for (n = 0; n < length; n++) {
 				if ( cronJobs[n] !== undefined && cronJobs[n] != null) {
-					adapter.log.debug("cron status = " + cronJobs[n].running + " next event: " + timeConverter("DE", cronJobs[n].nextDates()));
+					adapter.log.debug("cron status = " + cronJobs[n].running + " next event: " + timeConverter("DE", cronJobs[n].nextDate()));
 				}
 			}
 
