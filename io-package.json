@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.2.14",
+    "version": "0.2.15",
     "news": {
+      "0.2.15": {
+        "en": "(René) change of dependencies\n(René) show cron job in log after creation",
+        "de": "(René) Veränderung der Abhängigkeiten\n(René) cron job in log nach der Erstellung anzeigen",
+        "ru": "(René) изменение зависимостей\n(René) показать работу корона в журнале после создания",
+        "pt": "(René) mudança de dependências\n(René) mostrar trabalho cron em log após a criação",
+        "nl": "(René) verandering van afhankelijkheden\n(René) cron job tonen in log na aanmaak",
+        "fr": "(René) changement de dépendances\n(René) montrer cron emploi dans log après la création",
+        "it": "(René) cambiamento delle dipendenze\n(René) mostrare il lavoro di cron nel registro dopo la creazione",
+        "es": "(René) cambio de dependencia\n(René) show cron job in log after creation",
+        "pl": "(René) zmiana zależności\n(René) show cron job in log after creation",
+        "uk": "(Рене) зміна залежностей\n(René) покажуть на роботу в журналі після створення",
+        "zh-cn": "(René) 属地变化\n(René) 创建后在日志中显示 cron 工作"
+      },
       "0.2.14": {
         "en": "(René) dependencies updated",
         "de": "(René)",
@@ -80,19 +93,6 @@
         "pl": "zależności zostały zaktualizowane",
         "uk": "залежності оновлено",
         "zh-cn": "依赖项已更新"
-      },
-      "0.2.8": {
-        "en": "role of states overworked",
-        "de": "Rolle der Zustände überarbeitet",
-        "ru": "роль государств перегружена работой",
-        "pt": "papel dos estados sobrecarregados",
-        "nl": "rol van staten overbelast",
-        "fr": "rôle des Etats surmenés",
-        "it": "ruolo degli stati oberati di lavoro",
-        "es": "papel de los estados sobrecargado",
-        "pl": "rola państw jest przepracowana",
-        "uk": "роль держ",
-        "zh-cn": "国家角色过度劳累"
       }
     },
     "titleLang": {

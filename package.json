@@ -1,6 +1,6 @@
 {
   "name": "iobroker.amtronwallbox",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "ioBroker Adapter for AMTRON wallboxes",
   "author": {
     "name": "René G.",
