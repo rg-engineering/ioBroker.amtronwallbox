@@ -136,7 +136,11 @@
     "loglevel": "info",
     "stopBeforeUpdate": true,
     "type": "energy",
-    "license": "MIT",
+    "tier": 3,
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "materialize": true,
     "dependencies": [
       {
