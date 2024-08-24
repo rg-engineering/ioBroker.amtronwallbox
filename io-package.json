@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.2.15",
+    "version": "0.2.16",
     "news": {
+      "0.2.16": {
+        "en": "update dependencies\nbug fixes based on adapter checker recommendation",
+        "de": "aktualisierung der abhängigkeiten\nfehlerbehebungen basierend auf adapter-checker empfehlung",
+        "ru": "обновление зависимостей\nисправления ошибок на основе рекомендации адаптера",
+        "pt": "dependências\ncorreções de bugs com base na recomendação do verificador do adaptador",
+        "nl": "afhankelijkheden bijwerken\nbug fixes op basis van adaptercontrole aanbeveling",
+        "fr": "mettre à jour les dépendances\ncorrection des bugs en fonction de la recommandation du vérificateur d'adaptateur",
+        "it": "aggiornamento dipendenze\ncorrezioni di bug in base alla raccomandazione dell'adattatore checker",
+        "es": "dependencias de actualización\ncorrecciones de errores basado en la recomendación de control de adaptador",
+        "pl": "aktualizacji zależności\npoprawki błędów oparte na rekomendacji sprawdzania adaptera",
+        "uk": "оновлення залежності\nвиправлення помилок на основі рекомендації адаптера",
+        "zh-cn": "更新依赖关系\n根据适配器检查器建议修正错误"
+      },
       "0.2.15": {
         "en": "(René) change of dependencies\n(René) show cron job in log after creation",
         "de": "(René) Veränderung der Abhängigkeiten\n(René) cron job in log nach der Erstellung anzeigen",
@@ -80,19 +93,6 @@
         "pl": "(René) rodzaj adaptatora zmieniał się z powrotem do energii",
         "uk": "(René) тип адаптера змінився назад до енергії",
         "zh-cn": "(René) 适应者类型改为能源"
-      },
-      "0.2.9": {
-        "en": "dependencies updated",
-        "de": "Abhängigkeiten aktualisiert",
-        "ru": "зависимости обновлены",
-        "pt": "dependências atualizadas",
-        "nl": "afhankelijkheden bijgewerkt",
-        "fr": "dépendances mises à jour",
-        "it": "dipendenze aggiornate",
-        "es": "dependencias actualizadas",
-        "pl": "zależności zostały zaktualizowane",
-        "uk": "залежності оновлено",
-        "zh-cn": "依赖项已更新"
       }
     },
     "titleLang": {
