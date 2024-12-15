@@ -57,6 +57,7 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
 ### **WORK IN PROGRESS**
 * (René) see issue #284: test with nodejs@22
 * (René) update dependencies
+* (René) migration to jsonConfig
 
 ### 0.2.16 (2024-08-24)
 * (René) update dependencies

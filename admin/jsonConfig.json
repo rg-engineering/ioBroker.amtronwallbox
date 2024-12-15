@@ -1,0 +1,128 @@
+{
+  "type": "tabs",
+  "i18n": true,
+  "items": {
+    "tab-main": {
+      "type": "panel",
+      "label": "Main settings",
+      "items": {
+        "icontest": {
+          "type": "staticImage",
+          "src": "amtronwallbox.png",
+          "newLine": true,
+          "xs": 12,
+          "sm": 3,
+          "md": 3,
+          "lg": 1.2,
+          "xl": 1.2
+        },
+        "dividerHdr1": {
+          "newLine": true,
+          "type": "header",
+          "text": "configuration",
+          "size": 2
+        },
+        "readInterval": {
+          "newLine": true,
+          "type": "number",
+          "label": "readInterval",
+          "help": "readInterval",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        }
+      }
+    },
+    "tab-systems": {
+      "type": "panel",
+      "label": "page-systems",
+      "items": {
+        "dividerHdr2": {
+          "newLine": true,
+          "type": "header",
+          "text": "systems",
+          "size": 2
+        },
+        "WallboxSystems": {
+          "type": "table",
+          "newLine": true,
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12,
+          "label": "Wallbox settings",
+          "showSecondAddAt": 5,
+          "noDelete": false,
+          "items": [
+            {
+              "type": "checkbox",
+              "attr": "IsActive",
+              "width": "5% ",
+              "title": "IsActive",
+              "tooltip": "enable system",
+              "filter": false,
+              "sort": false,
+              "default": false
+            },
+            {
+              "type": "text",
+              "attr": "Name",
+              "width": "10% ",
+              "title": "Name",
+              "tooltip": "system name",
+              "filter": false,
+              "sort": false,
+              "default": false
+            },
+            {
+              "type": "ip",
+              "attr": "IPAddress",
+              "tooltip": "IPAddress",
+              "title": "IPAddress",
+              "onlyIp4": true,
+              "onlyIp6": false,
+              "default": false
+            },
+            {
+              "type": "text",
+              "attr": "ApiKey",
+              "width": "10% ",
+              "title": "ApiKey",
+              "tooltip": "system API key",
+              "filter": false,
+              "sort": false,
+              "default": false
+            },
+            {
+              "type": "select",
+              "attr": "Type",
+              "width": "5% ",
+              "title": "Type",
+              "tooltip": "Type",
+              "filter": false,
+              "sort": false,
+              "default": false,
+              "options": [
+                {
+                  "label": { "en": "Compact" },
+                  "value": "Compact"
+                },
+                {
+                  "label": { "en": "ChargeControl" },
+                  "value": "ChargeControl"
+                },
+                {
+                  "label": { "en": "Xtra" },
+                  "value": "Xtra"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
