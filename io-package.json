@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.2.16",
+    "version": "0.3.0",
     "news": {
+      "0.3.0": {
+        "en": "see issue #284: test with nodejs@22\nupdate dependencies\nmigration to jsonConfig",
+        "de": "siehe ausgabe #284: test mit nodejs@22\naktualisierung der abhängigkeiten\nmigration nach jsonConfig",
+        "ru": "#284: тест с nodejs@22\nобновление зависимостей\nмиграции в jsonConfig",
+        "pt": "veja a edição #284: teste com nodejs@22\ndependências\nmigração para jsonConfig",
+        "nl": "zie nummer #284: test met nodejs@22\nafhankelijkheden bijwerken\nmigratie naar jsonConfig",
+        "fr": "voir numéro n° 284: test avec nodejs@22\nmettre à jour les dépendances\nmigration vers jsonConfig",
+        "it": "vedi numero #284: test con nodejs@22\naggiornamento dipendenze\nmigrazione a jsonConfig",
+        "es": "ver número #284: prueba con nodejs@22\ndependencias de actualización\nmigración a jsonConfig",
+        "pl": "zob. numer # 284: test z nodejs @ 22\naktualizacji zależności\nmigracja do jsonConfig",
+        "uk": "див. питання #284: тест з nodejs@22\nоновлення залежності\nміграції в jsonConfig",
+        "zh-cn": "参见第284期:带节点的测试@22\n更新依赖关系\n迁移到 jsonConfig"
+      },
       "0.2.16": {
         "en": "update dependencies\nbug fixes based on adapter checker recommendation",
         "de": "aktualisierung der abhängigkeiten\nfehlerbehebungen basierend auf adapter-checker empfehlung",
@@ -71,19 +84,6 @@
       "0.2.11": {
         "en": "(René) type of adapter changed back to \"energy\"",
         "de": "(René) Typ des Adapters zurück in die Energie",
-        "ru": "(René) тип адаптера изменился обратно к энергии",
-        "pt": "(René) tipo de adaptador alterado de volta à energia",
-        "nl": "Een soort van adapter veranderde terug in energie",
-        "fr": "(René) type d'adaptateur changé en énergie",
-        "it": "(René) tipo di adattatore cambiato di nuovo in energia",
-        "es": "(René) tipo de adaptador cambiado de nuevo a la energía",
-        "pl": "(René) rodzaj adaptatora zmieniał się z powrotem do energii",
-        "uk": "(René) тип адаптера змінився назад до енергії",
-        "zh-cn": "(René) 适应者类型改为能源"
-      },
-      "0.2.10": {
-        "en": "(René) type of adapter changed back to \"energy\"",
-        "de": "(René) Typ des Adapters zurückgestellt auf 'Energie'",
         "ru": "(René) тип адаптера изменился обратно к энергии",
         "pt": "(René) tipo de adaptador alterado de volta à energia",
         "nl": "Een soort van adapter veranderde terug in energie",
