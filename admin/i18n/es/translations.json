@@ -1,10 +1,19 @@
 {
     "ApiKey": "Clave API",
+    "IP Address": "dirección IP del sistema",
     "IPAddress": "Dirección IP",
     "IsActive": "activo",
     "Main settings": "Ajustes principales",
     "Type": "escribe",
+    "Type of system": "Tipo de sistema",
+    "Wallbox settings": "Configuración de la caja de empotrar",
+    "configuration": "configuración",
+    "enable system": "habilitar este sistema",
     "name": "nombre",
+    "page-systems": "Sistemas",
     "readInterval": "intervalo de lectura [min]",
+    "readInterval_help": "intervalo en minutos, con qué frecuencia se deben leer los datos del wallbox",
+    "system API key": "Clave API del sistema (no utilizada para ChargeControl)",
+    "system name": "nombre del sistema",
     "systems": "sistemas"
 }

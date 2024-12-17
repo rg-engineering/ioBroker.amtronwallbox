@@ -1,10 +1,19 @@
 {
     "ApiKey": "Ключ API",
+    "IP Address": "IP-адреса системи",
     "IPAddress": "IP-адреса",
     "IsActive": "активний",
     "Main settings": "Основні налаштування",
     "Type": "типу",
+    "Type of system": "Тип системи",
+    "Wallbox settings": "Налаштування Wallbox",
+    "configuration": "конфігурація",
+    "enable system": "увімкнути цю систему",
     "name": "назва",
+    "page-systems": "Системи",
     "readInterval": "інтервал читання [хв]",
+    "readInterval_help": "інтервал у хвилинах, як часто дані слід зчитувати з Wallbox",
+    "system API key": "системний ключ API (не використовується для ChargeControl)",
+    "system name": "ім'я системи",
     "systems": "системи"
 }

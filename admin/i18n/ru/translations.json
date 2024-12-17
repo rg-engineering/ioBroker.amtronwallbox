@@ -1,10 +1,19 @@
 {
     "ApiKey": "API-ключ",
+    "IP Address": "IP-адрес системы",
     "IPAddress": "Айпи адрес",
     "IsActive": "активный",
     "Main settings": "Основные параметры",
     "Type": "тип",
+    "Type of system": "Тип системы",
+    "Wallbox settings": "Настройки настенного ящика",
+    "configuration": "конфигурация",
+    "enable system": "включить эту систему",
     "name": "имя",
+    "page-systems": "Системы",
     "readInterval": "интервал чтения [мин]",
+    "readInterval_help": "интервал в минутах, как часто следует читать данные из Wallbox",
+    "system API key": "ключ системного API (не используется для ChargeControl)",
+    "system name": "имя системы",
     "systems": "системы"
 }

@@ -1,10 +1,19 @@
 {
     "ApiKey": "API-Schlüssel",
+    "IP Address": "IP-Adresse des Systems",
     "IPAddress": "IP Adresse",
     "IsActive": "aktiv",
     "Main settings": "Haupteinstellungen",
     "Type": "Typ",
+    "Type of system": "Art des Systems",
+    "Wallbox settings": "Wallbox-Einstellungen",
+    "configuration": "Konfiguration",
+    "enable system": "dieses System aktivieren",
     "name": "Name",
+    "page-systems": "Systeme",
     "readInterval": "Leseintervall [min]",
+    "readInterval_help": "Intervall in Minuten, wie oft Daten von der Wallbox gelesen werden sollen",
+    "system API key": "System-API-Schlüssel (wird nicht für ChargeControl verwendet)",
+    "system name": "Systemname",
     "systems": "Systeme"
 }

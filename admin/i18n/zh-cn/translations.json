@@ -1,10 +1,19 @@
 {
     "ApiKey": "API 密钥",
+    "IP Address": "系统IP地址",
     "IPAddress": "IP地址",
     "IsActive": "积极的",
     "Main settings": "主要设置",
     "Type": "类型",
+    "Type of system": "系统类型",
+    "Wallbox settings": "墙盒设置",
+    "configuration": "配置",
+    "enable system": "启用该系统",
     "name": "姓名",
+    "page-systems": "系统",
     "readInterval": "读取间隔 [分钟]",
+    "readInterval_help": "间隔（以分钟为单位），从 Wallbox 读取数据的频率",
+    "system API key": "系统 API 密钥（不用于 ChargeControl）",
+    "system name": "系统名称",
     "systems": "系统"
 }

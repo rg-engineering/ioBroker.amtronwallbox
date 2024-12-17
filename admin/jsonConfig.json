@@ -26,7 +26,7 @@
           "newLine": true,
           "type": "number",
           "label": "readInterval",
-          "help": "readInterval",
+          "help": "readInterval_help",
           "xs": 12,
           "sm": 12,
           "md": 4,
@@ -78,13 +78,13 @@
               "default": false
             },
             {
-              "type": "ip",
+              "type": "text",
               "attr": "IPAddress",
-              "tooltip": "IPAddress",
+              "tooltip": "IP Address",
               "title": "IPAddress",
-              "onlyIp4": true,
-              "onlyIp6": false,
-              "default": false
+              "filter": false,
+              "sort": false,
+              "default": "192.168.1.100"
             },
             {
               "type": "text",
@@ -101,7 +101,7 @@
               "attr": "Type",
               "width": "5% ",
               "title": "Type",
-              "tooltip": "Type",
+              "tooltip": "Type of system",
               "filter": false,
               "sort": false,
               "default": false,
