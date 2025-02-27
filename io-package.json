@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "news": {
+      "0.3.1": {
+        "en": "changes requested by adapter checker\ndependencies updated",
+        "de": "änderungen, die von adapter checker angefordert werden\naktualisierte abhängigkeiten",
+        "ru": "изменения, запрошенные adapter checker\nобновленные зависимости",
+        "pt": "alterações solicitadas pelo verificador do adaptador\ndependências atualizadas",
+        "nl": "wijzigingen gevraagd door adaptercontrole\nafhankelijkheden bijgewerkt",
+        "fr": "modifications demandées par l'adaptateur checker\ndépendances mises à jour",
+        "it": "modifiche richieste da adattatore checker\ndipendenze aggiornate",
+        "es": "cambios solicitados por el adaptador\ndependencias actualizadas",
+        "pl": "zmiany wymagane przez sprawdzacz adaptera\nzaktualizowane zależności",
+        "uk": "зміни, які вимагаються перевіркою адаптера\nоновлені залежності",
+        "zh-cn": "适配器检查器要求的更改\n更新依赖关系"
+      },
       "0.3.0": {
         "en": "see issue #284: test with nodejs@22\nupdate dependencies\nmigration to jsonConfig",
         "de": "siehe ausgabe #284: test mit nodejs@22\naktualisierung der abhängigkeiten\nmigration nach jsonConfig",
@@ -80,19 +93,6 @@
         "pl": "(René) ↓, s. 11",
         "uk": "(René) див. питання #162: ігнорувати невикористані дані з скриньки",
         "zh-cn": "(René) 见第162号:无视墙壁数据"
-      },
-      "0.2.11": {
-        "en": "(René) type of adapter changed back to \"energy\"",
-        "de": "(René) Typ des Adapters zurück in die Energie",
-        "ru": "(René) тип адаптера изменился обратно к энергии",
-        "pt": "(René) tipo de adaptador alterado de volta à energia",
-        "nl": "Een soort van adapter veranderde terug in energie",
-        "fr": "(René) type d'adaptateur changé en énergie",
-        "it": "(René) tipo di adattatore cambiato di nuovo in energia",
-        "es": "(René) tipo de adaptador cambiado de nuevo a la energía",
-        "pl": "(René) rodzaj adaptatora zmieniał się z powrotem do energii",
-        "uk": "(René) тип адаптера змінився назад до енергії",
-        "zh-cn": "(René) 适应者类型改为能源"
       }
     },
     "titleLang": {

@@ -54,10 +54,9 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.3.1 (2025-02-27)
 * (René) changes requested by adapter checker
-* (René) dependencies updated 
+* (René) dependencies updated
 
 ### 0.3.0 (2024-12-17)
 * (René) see issue #284: test with nodejs@22
