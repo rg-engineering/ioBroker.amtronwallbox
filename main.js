@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 /*
  * AMTRON wallbox adapter für iobroker
  *
@@ -41,8 +42,7 @@ function startAdapter(options) {
 			try {
 				//adapter.log.debug('start');
 				main();
-			}
-			catch (e) {
+			} catch (e) {
 				adapter.log.error("exception catch after ready [" + e + "]");
 			}
 		},
@@ -56,6 +56,7 @@ function startAdapter(options) {
 				adapter && adapter.log && adapter.log.info && adapter.log.info("cleaned everything up...");
 				callback();
 			} catch (e) {
+				adapter.log.error("exception catch after unload [" + e + "]");
 				callback();
 			}
 		},
@@ -89,8 +90,7 @@ async function main() {
 	let readInterval = 15;
 	if (parseInt(adapter.config.readInterval) > 0) {
 		readInterval = adapter.config.readInterval;
-	}
-	else {
+	} else {
 		adapter.log.warn("read interval not defined");
 	}
 	adapter.log.debug("read every  " + readInterval + " minutes");
@@ -103,7 +103,7 @@ async function main() {
 
 async function Do() {
 
-	adapter.log.debug("starting ... " );
+	adapter.log.debug("starting ... ");
 
 	await ReadData();
 
@@ -112,22 +112,18 @@ async function Do() {
 }
 
 
-async function ReadData(){
+async function ReadData() {
 
 	for (const system of adapter.config.WallboxSystems) {
 
 		if (system.IsActive) {
 			if (system.Type === "ChargeControl") {
 				await read_rest(system);
-			}
-			else if (system.Type === "Compact") {
+			} else if (system.Type === "Compact") {
 				await read_MHCP(system);
-			}
-			else if (system.Type === "Xtra") {
+			} else if (system.Type === "Xtra") {
 				await read_MHCP(system);
-			}
-
-			else {
+			} else {
 				//system type ChargeControl string not yet implemented
 				adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
 			}
@@ -143,14 +139,14 @@ async function read_MHCP(system) {
 
 
 		/*
-                var abfrage_DevInfo = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/DevInfo?DevKey=999999";
-                var abfrage_ChargeData = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/ChargeData?DevKey=999999";
-                var abfrage_Statistics_Day = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Day?DevKey=999999";
-                var abfrage_Statistics_Week = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Week?DevKey=999999";
-                var abfrage_Statistics_Month = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Month?DevKey=999999";
-                var abfrage_Statistics_Year = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Year?DevKey=999999";
-                var abfrage_Statistics_Annual = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Annual?DevKey=999999";
-                */
+				var abfrage_DevInfo = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/DevInfo?DevKey=999999";
+				var abfrage_ChargeData = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/ChargeData?DevKey=999999";
+				var abfrage_Statistics_Day = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Day?DevKey=999999";
+				var abfrage_Statistics_Week = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Week?DevKey=999999";
+				var abfrage_Statistics_Month = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Month?DevKey=999999";
+				var abfrage_Statistics_Year = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Year?DevKey=999999";
+				var abfrage_Statistics_Annual = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Annual?DevKey=999999";
+				*/
 
 		await read_MHCP_DevInfo(system);
 
@@ -162,8 +158,7 @@ async function read_MHCP(system) {
 		await read_MHCP_StatisticData(system, "Year");
 		await read_MHCP_StatisticData(system, "Annual");
 
-	}
-	catch (e) {
+	} catch (e) {
 		adapter.log.error("exception in read_MHCP [" + e + "]");
 	}
 }
@@ -172,8 +167,8 @@ async function read_MHCP_DevInfo(system) {
 	//Retrieves information about the wallbox.
 	try {
 		/*
-                var abfrage_DevInfo = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/DevInfo?DevKey=999999";
-        */
+				var abfrage_DevInfo = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/DevInfo?DevKey=999999";
+		*/
 
 		const sURL = "http://" + system.IPAddress + ":25000/MHCP/1.0/DevInfo?DevKey=" + system.ApiKey;
 
@@ -234,8 +229,7 @@ async function read_MHCP_DevInfo(system) {
 				await adapter.setStateAsync(SystemName + ".info." + entry, { ack: true, val: buffer.data[entry] });
 			}
 		}
-	}
-	catch (e) {
+	} catch (e) {
 		adapter.log.error("exception in read_MHCP_DevInfo [" + e + "]");
 	}
 }
@@ -244,8 +238,8 @@ async function read_MHCP_ChargeData(system) {
 	//Retrieves charge information about the wallbox.
 	try {
 		/*
-                var abfrage_ChargeData = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/ChargeData?DevKey=999999";
-        */
+				var abfrage_ChargeData = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/ChargeData?DevKey=999999";
+		*/
 
 		const sURL = "http://" + system.IPAddress + ":25000/MHCP/1.0/ChargeData?DevKey=" + system.ApiKey;
 
@@ -328,14 +322,12 @@ async function read_MHCP_ChargeData(system) {
 					|| entry == "TExcessNrg"
 				) {
 					//do nothing
-				}
-				else {
+				} else {
 					await adapter.setStateAsync(SystemName + ".charge." + entry, { ack: true, val: buffer.data[entry] });
 				}
 			}
 		}
-	}
-	catch (e) {
+	} catch (e) {
 		adapter.log.error("exception in read_MHCP_DevInfo [" + e + "]");
 	}
 }
@@ -345,13 +337,13 @@ async function read_MHCP_StatisticData(system, period) {
 	//Retrieves statistic about the wallbox.
 	try {
 		/*
-                var abfrage_Statistics_Day = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Day?DevKey=999999";
-                var abfrage_Statistics_Week = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Week?DevKey=999999";
-                var abfrage_Statistics_Month = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Month?DevKey=999999";
-                var abfrage_Statistics_Year = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Year?DevKey=999999";
-                var abfrage_Statistics_Annual = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Annual?DevKey=999999";
+				var abfrage_Statistics_Day = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Day?DevKey=999999";
+				var abfrage_Statistics_Week = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Week?DevKey=999999";
+				var abfrage_Statistics_Month = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Month?DevKey=999999";
+				var abfrage_Statistics_Year = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Year?DevKey=999999";
+				var abfrage_Statistics_Annual = "curl -H 'Accept: application/json' http://10.0.1.28:25000/MHCP/1.0/Statistics/Annual?DevKey=999999";
 
-        */
+		*/
 
 		const sURL = "http://" + system.IPAddress + ":25000/MHCP/1.0/Statistics/" + period + "?DevKey=" + system.ApiKey;
 
@@ -377,32 +369,29 @@ async function read_MHCP_StatisticData(system, period) {
 
 			if (period == "Annual") {
 				await adapter.setStateAsync(SystemName + ".Statistics." + period + ".Years", { ack: true, val: JSON.stringify(buffer.data) });
-			}
-			else {
+			} else {
 				for (const entry in buffer.data) {
 
 					if (entry == "TMaxCurrT1"
-                        || entry == "TBeginH_T1"
-                        || entry == "TBeginM_T1"
-                        || entry == "TPriceT1"
-                        || entry == "TMaxCurrT2"
-                        || entry == "TBeginH_T2"
-                        || entry == "TBeginM_T2"
-                        || entry == "TPriceT2"
-                        || entry == "TRemoteCurr"
-                        || entry == "TSolarPrice"
-                        || entry == "TExcessNrg"
+						|| entry == "TBeginH_T1"
+						|| entry == "TBeginM_T1"
+						|| entry == "TPriceT1"
+						|| entry == "TMaxCurrT2"
+						|| entry == "TBeginH_T2"
+						|| entry == "TBeginM_T2"
+						|| entry == "TPriceT2"
+						|| entry == "TRemoteCurr"
+						|| entry == "TSolarPrice"
+						|| entry == "TExcessNrg"
 					) {
 						//do nothing
-					}
-					else {
+					} else {
 						await adapter.setStateAsync(SystemName + ".Statistics." + period + "." + entry, { ack: true, val: buffer.data[entry] });
 					}
 				}
 			}
 		}
-	}
-	catch (e) {
+	} catch (e) {
 		adapter.log.error("exception in read_MHCP_DevInfo [" + e + "]");
 	}
 }
@@ -412,48 +401,48 @@ async function read_rest(system) {
 	try {
 
 		/*
-        http://192.168.3.18/rest/full_state
+		http://192.168.3.18/rest/full_state
 
-        conn_state: no_vehicle_connected
-        auth_state: not_authorized_for_charging
-        auth_uid:
-        time_since_charging_start: 0
-        meter_wh: 16701
-        power_w: 0
-        transaction_wh: 0
-        cp_id: +49 * 839 * 00000000001
-        ocpp_state: available
-        type2_state: a
-        type2_proximity: cable_attached
-        sig_current: 0
-        schuko_state: idle
-        backend_conn_state: pending
-        free_charging: off
-        slave_state:
-        ocpp_meter_cfg: modbus_meter_nzr
-        ocpp_meter_serial: 00202035
-        current_a: 0.00, 0.00, 0.00
-        energy_man_current: 0
-        ambient_temp: +15.00
-        firmware_ver: 5.22.1 - 13295
-        cc_serial_n: 2202532503 / b94060010me2
-        con_cycles_schuko: 0
-        con_cycles_type2: 5
-        max_current: 16
-        rcmb_state: okay
-        rcmb_max_values: 0.0, 0.0
-        rcmb_current_values: 0.0, 0.0
-        cable_attached: on
-        schuko_cfg: disable
-        rcd_state: disable
-        mcb_type2_state: disable
-        mcb_schuko_state: disable
-        cp_vendor: MENNEKES
-        errors: no_errors
-        cp_model: CC612_2S0R_CC
-        display_text:
+		conn_state: no_vehicle_connected
+		auth_state: not_authorized_for_charging
+		auth_uid:
+		time_since_charging_start: 0
+		meter_wh: 16701
+		power_w: 0
+		transaction_wh: 0
+		cp_id: +49 * 839 * 00000000001
+		ocpp_state: available
+		type2_state: a
+		type2_proximity: cable_attached
+		sig_current: 0
+		schuko_state: idle
+		backend_conn_state: pending
+		free_charging: off
+		slave_state:
+		ocpp_meter_cfg: modbus_meter_nzr
+		ocpp_meter_serial: 00202035
+		current_a: 0.00, 0.00, 0.00
+		energy_man_current: 0
+		ambient_temp: +15.00
+		firmware_ver: 5.22.1 - 13295
+		cc_serial_n: 2202532503 / b94060010me2
+		con_cycles_schuko: 0
+		con_cycles_type2: 5
+		max_current: 16
+		rcmb_state: okay
+		rcmb_max_values: 0.0, 0.0
+		rcmb_current_values: 0.0, 0.0
+		cable_attached: on
+		schuko_cfg: disable
+		rcd_state: disable
+		mcb_type2_state: disable
+		mcb_schuko_state: disable
+		cp_vendor: MENNEKES
+		errors: no_errors
+		cp_model: CC612_2S0R_CC
+		display_text:
 
-        */
+		*/
 
 		const sURL = "http://" + system.IPAddress + "/rest/full_state";
 
@@ -473,8 +462,8 @@ async function read_rest(system) {
 
 		adapter.log.debug("got data status " + typeof buffer.data + " " + JSON.stringify(buffer.data));
 		/*
-        got data status string "conn_state:no_vehicle_connected\nauth_state:not_authorized_for_charging\nauth_uid:\ntime_since_charging_start:0\nmeter_wh:16701\npower_w:0\ntransaction_wh:0\ncp_id:+49*839*00000000001\nocpp_state:available\ntype2_state:a\ntype2_proximity:cable_attached\nsig_current:0\nschuko_state:idle\nbackend_conn_state:pending\nfree_charging:off\nslave_state:\nocpp_meter_cfg:modbus_meter_nzr\nocpp_meter_serial:00202035\ncurrent_a:0.00,0.00,0.00\nenergy_man_current:0\nambient_temp:+15.00\nfirmware_ver:5.22.1-13295\ncc_serial_n:2202532503/b94060010me2\ncon_cycles_schuko:0\ncon_cycles_type2:5\nmax_current:16\nrcmb_state:okay\nrcmb_max_values: 0.0, 0.0\nrcmb_current_values: 0.0, 0.0\ncable_attached:on\nschuko_cfg:disable\nrcd_state:disable\nmcb_type2_state:disable\nmcb_schuko_state:disable\ncp_vendor:MENNEKES\nerrors:no_errors\ncp_model:CC612_2S0R_CC\ndisplay_text:"
-        */
+		got data status string "conn_state:no_vehicle_connected\nauth_state:not_authorized_for_charging\nauth_uid:\ntime_since_charging_start:0\nmeter_wh:16701\npower_w:0\ntransaction_wh:0\ncp_id:+49*839*00000000001\nocpp_state:available\ntype2_state:a\ntype2_proximity:cable_attached\nsig_current:0\nschuko_state:idle\nbackend_conn_state:pending\nfree_charging:off\nslave_state:\nocpp_meter_cfg:modbus_meter_nzr\nocpp_meter_serial:00202035\ncurrent_a:0.00,0.00,0.00\nenergy_man_current:0\nambient_temp:+15.00\nfirmware_ver:5.22.1-13295\ncc_serial_n:2202532503/b94060010me2\ncon_cycles_schuko:0\ncon_cycles_type2:5\nmax_current:16\nrcmb_state:okay\nrcmb_max_values: 0.0, 0.0\nrcmb_current_values: 0.0, 0.0\ncable_attached:on\nschuko_cfg:disable\nrcd_state:disable\nmcb_type2_state:disable\nmcb_schuko_state:disable\ncp_vendor:MENNEKES\nerrors:no_errors\ncp_model:CC612_2S0R_CC\ndisplay_text:"
+		*/
 
 		const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, "_");
 
@@ -499,7 +488,7 @@ async function read_rest(system) {
 			await adapter.setStateAsync(SystemName + ".SigCurrent", { ack: true, val: Number(data[11].split(":")[1]) });
 			await adapter.setStateAsync(SystemName + ".Schuko.State", { ack: true, val: data[12].split(":")[1] });
 			await adapter.setStateAsync(SystemName + ".Backend.ConnectionState", { ack: true, val: data[13].split(":")[1] });
-			await adapter.setStateAsync(SystemName + ".FreeCharging", { ack: true, val: Boolean( data[14].split(":")[1]) });
+			await adapter.setStateAsync(SystemName + ".FreeCharging", { ack: true, val: Boolean(data[14].split(":")[1]) });
 			await adapter.setStateAsync(SystemName + ".SlaveState", { ack: true, val: data[15].split(":")[1] });
 			await adapter.setStateAsync(SystemName + ".OCPP.MeterConfig", { ack: true, val: data[16].split(":")[1] });
 			await adapter.setStateAsync(SystemName + ".OCPP.MeterSerial", { ack: true, val: data[17].split(":")[1] });
@@ -525,30 +514,28 @@ async function read_rest(system) {
 			await adapter.setStateAsync(SystemName + ".DisplayText", { ack: true, val: data[37].split(":")[1] });
 
 			/*
-            amtronwallbox.0 	2022-05-20 12:20:53.613	info	State value to set for "amtronwallbox.0.Wallbox.CableAttached" has to be type "boolean" but received type "string"
-            amtronwallbox.0 2022-05-20 12:20:53.594	info	State value to set for "amtronwallbox.0.Wallbox.MaxCurrent" has to be type "number" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.545	info	State value to set for "amtronwallbox.0.Wallbox.ContactcyclesType2" has to be type "number" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.486	info	State value to set for "amtronwallbox.0.Wallbox.ContactCyclesSchuko" has to be type "number" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.449	info	State value to set for "amtronwallbox.0.Wallbox.EnergyManagerCurrent" has to be type "number" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.406	info	State value to set for "amtronwallbox.0.Wallbox.Current" has to be type "number" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.392	info	State value to set for "amtronwallbox.0.Wallbox.FreeCharging" has to be type "boolean" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.342	info	State value to set for "amtronwallbox.0.Wallbox.SigCurrent" has to be type "number" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.324	info	State value to set for "amtronwallbox.0.Wallbox.Transaction" has to be type "number" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.319	info	State value to set for "amtronwallbox.0.Wallbox.Power" has to be type "number" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.313	info	State value to set for "amtronwallbox.0.Wallbox.Meter" has to be type "number" but received type "string"
-            amtronwallbox.0	2022-05-20 12:20:53.268	info	State value to set for "amtronwallbox.0.Wallbox.TimeSinceChargingStart" has to be type "number" but received type "string"
+			amtronwallbox.0 	2022-05-20 12:20:53.613	info	State value to set for "amtronwallbox.0.Wallbox.CableAttached" has to be type "boolean" but received type "string"
+			amtronwallbox.0 2022-05-20 12:20:53.594	info	State value to set for "amtronwallbox.0.Wallbox.MaxCurrent" has to be type "number" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.545	info	State value to set for "amtronwallbox.0.Wallbox.ContactcyclesType2" has to be type "number" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.486	info	State value to set for "amtronwallbox.0.Wallbox.ContactCyclesSchuko" has to be type "number" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.449	info	State value to set for "amtronwallbox.0.Wallbox.EnergyManagerCurrent" has to be type "number" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.406	info	State value to set for "amtronwallbox.0.Wallbox.Current" has to be type "number" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.392	info	State value to set for "amtronwallbox.0.Wallbox.FreeCharging" has to be type "boolean" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.342	info	State value to set for "amtronwallbox.0.Wallbox.SigCurrent" has to be type "number" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.324	info	State value to set for "amtronwallbox.0.Wallbox.Transaction" has to be type "number" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.319	info	State value to set for "amtronwallbox.0.Wallbox.Power" has to be type "number" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.313	info	State value to set for "amtronwallbox.0.Wallbox.Meter" has to be type "number" but received type "string"
+			amtronwallbox.0	2022-05-20 12:20:53.268	info	State value to set for "amtronwallbox.0.Wallbox.TimeSinceChargingStart" has to be type "number" but received type "string"
 
-            */
+			*/
 
 
-		}
-		else {
+		} else {
 			adapter.log.error("error status: " + JSON.stringify(buffer));
 		}
 
 
-	}
-	catch (e) {
+	} catch (e) {
 		adapter.log.error("exception in read_rest [" + e + "]");
 	}
 }
@@ -579,18 +566,16 @@ async function HandleStateChange(id, state) {
 		if (ids[3] === "info") {
 			await updateInfo(id, state);
 			adapter.setForeignState(id, { ack: true });
-		}
-		else if (ids[3] === "charge") {
+		} else if (ids[3] === "charge") {
 			await updateCharge(id, state);
 			adapter.setForeignState(id, { ack: true });
-		}
-		else {
+		} else {
 			adapter.log.warn("unhandled state change " + id);
 		}
 	}
 }
 
-async function updateInfo(id,state) {
+async function updateInfo(id, state) {
 
 	const systemName = id.split(".")[2];
 
@@ -601,15 +586,11 @@ async function updateInfo(id,state) {
 		if (SystemName == systemName && system.IsActive) {
 			if (system.Type === "ChargeControl") {
 				//nothing to do
-			}
-			else if (system.Type === "Compact") {
-				await write_MHCP_DevInfo(system, id,state);
-			}
-			else if (system.Type === "Xtra") {
+			} else if (system.Type === "Compact") {
 				await write_MHCP_DevInfo(system, id, state);
-			}
-
-			else {
+			} else if (system.Type === "Xtra") {
+				await write_MHCP_DevInfo(system, id, state);
+			} else {
 				//system type ChargeControl string not yet implemented
 				adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
 			}
@@ -628,15 +609,11 @@ async function updateCharge(id, state) {
 		if (SystemName == systemName && system.IsActive) {
 			if (system.Type === "ChargeControl") {
 				//nothing to do
-			}
-			else if (system.Type === "Compact") {
+			} else if (system.Type === "Compact") {
 				await write_MHCP_ChargeData(system, id, state);
-			}
-			else if (system.Type === "Xtra") {
+			} else if (system.Type === "Xtra") {
 				await write_MHCP_ChargeData(system, id, state);
-			}
-
-			else {
+			} else {
 				//system type ChargeControl string not yet implemented
 				adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
 			}
@@ -659,14 +636,14 @@ async function write_MHCP_DevInfo(system, id, state) {
 		const param = id.split(".")[4];
 
 		const data = {
-			"DevName": param == "DevName" ? state.val : null,
-			"LocTime": param == "LocTime" ? state.val : null,
-			"Summer": param == "Summer" ? state.val : null,
-			"Tz": param == "Tz" ? state.val : null,
-			"FixedVehCosts": param == "FixedVehCosts" ? state.val : null,
-			"OldVehCosts": param == "OldVehCosts" ? state.val : null,
-			"Battery": param == "Battery" ? state.val : null,
-			"DevMode": param == "DevMode" ? state.val : null,
+			DevName: param == "DevName" ? state.val : null,
+			LocTime: param == "LocTime" ? state.val : null,
+			Summer: param == "Summer" ? state.val : null,
+			Tz: param == "Tz" ? state.val : null,
+			FixedVehCosts: param == "FixedVehCosts" ? state.val : null,
+			OldVehCosts: param == "OldVehCosts" ? state.val : null,
+			Battery: param == "Battery" ? state.val : null,
+			DevMode: param == "DevMode" ? state.val : null,
 		};
 
 		adapter.log.debug("URL " + sURL.replace(/DevKey=.*/, "DevKey=******") + " data " + JSON.stringify(data));
@@ -677,8 +654,7 @@ async function write_MHCP_DevInfo(system, id, state) {
 		adapter.log.debug("got result " + typeof buffer.data + " " + JSON.stringify(buffer.data));
 
 
-	}
-	catch (e) {
+	} catch (e) {
 		adapter.log.error("exception in write_MHCP_DevInfo [" + e + "]");
 	}
 }
@@ -698,11 +674,11 @@ async function write_MHCP_ChargeData(system, id, state) {
 		const param = id.split(".")[4];
 
 		const data = {
-			"Permanent": true,
-			"RemoteCurr": param == "RemoteCurr" ? state.val : null,
-			"AutoChg": param == "AutoChg" ? state.val : null,
-			"ChgState": param == "ChgState" ? state.val : null,
-			"Uid": param == "Uid" ? state.val : null,
+			Permanent: true,
+			RemoteCurr: param == "RemoteCurr" ? state.val : null,
+			AutoChg: param == "AutoChg" ? state.val : null,
+			ChgState: param == "ChgState" ? state.val : null,
+			Uid: param == "Uid" ? state.val : null,
 		};
 
 		adapter.log.debug("URL " + sURL.replace(/DevKey=.*/, "DevKey=******") + " data " + JSON.stringify(data));
@@ -713,8 +689,7 @@ async function write_MHCP_ChargeData(system, id, state) {
 		adapter.log.debug("got result " + typeof buffer.data + " " + JSON.stringify(buffer.data));
 
 
-	}
-	catch (e) {
+	} catch (e) {
 		adapter.log.error("exception in write_MHCP_ChargeData [" + e + "]");
 	}
 }
@@ -725,11 +700,9 @@ function subscribeVars() {
 		if (system.IsActive) {
 			if (system.Type === "ChargeControl") {
 				//nothing to do
-			}
-			else if (system.Type === "Compact") {
+			} else if (system.Type === "Compact") {
 				//nothing to do
-			}
-			else if (system.Type === "Xtra") {
+			} else if (system.Type === "Xtra") {
 
 				const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, "_");
 
@@ -759,9 +732,7 @@ function subscribeVars() {
 				//https://github.com/lephisto/amtron/blob/master/docs/api/Whitelist/post.md
 
 
-			}
-
-			else {
+			} else {
 				//system type ChargeControl string not yet implemented
 				adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
 			}
@@ -781,15 +752,11 @@ async function checkVariables() {
 		if (system.IsActive) {
 			if (system.Type === "ChargeControl") {
 				await checkVariables_rest(system);
-			}
-			else if (system.Type === "Compact") {
+			} else if (system.Type === "Compact") {
 				//nothing to do
-			}
-			else if (system.Type === "Xtra") {
+			} else if (system.Type === "Xtra") {
 				await checkVariables_MHCP(system);
-			}
-
-			else {
+			} else {
 				//system type ChargeControl string not yet implemented
 				adapter.log.warn("system type " + system.Type + " " + typeof system.Type + " not yet implemented");
 			}
@@ -1539,11 +1506,11 @@ async function checkVariables_MHCP(system) {
 
 	const SystemName = system.Name.replace(adapter.FORBIDDEN_CHARS, "_");
 
-	key = SystemName ;
+	key = SystemName;
 	obj = {
 		type: "channel",
 		common: {
-			name: "Wallbox "  + SystemName,
+			name: "Wallbox " + SystemName,
 			role: "",
 		}
 	};
@@ -2335,7 +2302,7 @@ async function checkVariables_MHCP_Statistic(system, period) {
 		common: {
 			name: "Amount of Wh",
 			type: "number",
-			unit:"Wh",
+			unit: "Wh",
 			role: "value.energy",
 			read: true,
 			write: false
@@ -2503,12 +2470,12 @@ async function CreateObject(key, obj) {
 	if (obj_new != null) {
 
 		if ((obj_new.common.role != obj.common.role
-            || obj_new.common.type != obj.common.type
-            || (obj_new.common.unit != obj.common.unit && obj.common.unit != null)
-            || obj_new.common.read != obj.common.read
-            || obj_new.common.write != obj.common.write
-            || obj_new.common.name != obj.common.name)
-            && obj.type === "state"
+			|| obj_new.common.type != obj.common.type
+			|| (obj_new.common.unit != obj.common.unit && obj.common.unit != null)
+			|| obj_new.common.read != obj.common.read
+			|| obj_new.common.write != obj.common.write
+			|| obj_new.common.name != obj.common.name)
+			&& obj.type === "state"
 		) {
 			adapter.log.warn("change object " + JSON.stringify(obj) + " " + JSON.stringify(obj_new));
 			await adapter.extendObject(key, {
@@ -2522,8 +2489,7 @@ async function CreateObject(key, obj) {
 				}
 			});
 		}
-	}
-	else {
+	} else {
 		await adapter.setObjectNotExistsAsync(key, obj);
 	}
 }
@@ -2572,8 +2538,7 @@ function CronCreate(Minute, callback) {
 			cronString = "5 23 * * *";
 			//just for logging
 			Minute = "late evening";
-		}
-		else {
+		} else {
 
 			cronString = "*/" + Minute + " * * * * ";
 		}
@@ -2590,8 +2555,7 @@ function CronCreate(Minute, callback) {
 			timezone
 		);
 
-	}
-	catch (e) {
+	} catch (e) {
 		adapter.log.error("exception in CronCreate [" + e + "]");
 	}
 }
@@ -2605,20 +2569,18 @@ function CronStatus() {
 			length = cronJobs.length;
 			//adapter.log.debug("cron jobs");
 			for (n = 0; n < length; n++) {
-				if ( cronJobs[n] !== undefined && cronJobs[n] != null) {
+				if (cronJobs[n] !== undefined && cronJobs[n] != null) {
 					adapter.log.debug("cron status = " + cronJobs[n].running + " next event: " + timeConverter("DE", cronJobs[n].nextDate()));
 				}
 			}
 
 			if (length > 500) {
 				adapter.log.warn("more then 500 cron jobs existing for this adapter, this might be a configuration error! (" + length + ")");
-			}
-			else {
+			} else {
 				adapter.log.info(length + " cron job(s) created");
 			}
 		}
-	}
-	catch (e) {
+	} catch (e) {
 		adapter.log.error("exception in getCronStat [" + e + "] : " + n + " of " + length);
 	}
 }
