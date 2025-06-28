@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "news": {
+      "0.3.2": {
+        "en": "update dependencies\nnew testing",
+        "de": "aktualisierung der abhängigkeiten\nneue tests",
+        "ru": "обновление зависимостей\nновые испытания",
+        "pt": "atualizar dependências\nnovos testes",
+        "nl": "afhankelijkheden bijwerken\nnieuwe tests",
+        "fr": "mettre à jour les dépendances\nnouveaux essais",
+        "it": "aggiornamento dipendenze\nnuovi test",
+        "es": "dependencias de actualización\nnuevas pruebas",
+        "pl": "aktualizacji zależności\nnowe badania",
+        "uk": "оновлення залежності\nновий тест",
+        "zh-cn": "更新依赖关系\n新测试"
+      },
       "0.3.1": {
         "en": "changes requested by adapter checker\ndependencies updated",
         "de": "änderungen, die von adapter checker angefordert werden\naktualisierte abhängigkeiten",
@@ -80,19 +93,6 @@
         "pl": "(René) – test sanitarny",
         "uk": "(René) просто відправник",
         "zh-cn": "(René) 只是一个发送的试验"
-      },
-      "0.2.12": {
-        "en": "(René) see issue #162: ignore unused data from wallbox",
-        "de": "(René) siehe Ausgabe #162: Nicht genutzte Daten von wallbox ignorieren",
-        "ru": "(René) см. номер #162: игнорировать неиспользуемые данные из настенного ящика",
-        "pt": "(René) ver número #162: ignorar dados não utilizados da wallbox",
-        "nl": "Vertaling:",
-        "fr": "(René) voir le numéro #162: ignorer les données inutilisées de la boîte murale",
-        "it": "(René) vedi numero #162: ignora i dati inutilizzati dal wallbox",
-        "es": "(René) ver el número #162: ignorar los datos no utilizados de wallbox",
-        "pl": "(René) ↓, s. 11",
-        "uk": "(René) див. питання #162: ігнорувати невикористані дані з скриньки",
-        "zh-cn": "(René) 见第162号:无视墙壁数据"
       }
     },
     "titleLang": {
