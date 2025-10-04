@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "news": {
+      "0.3.3": {
+        "en": "update dependencies + changes based on adapter checker",
+        "de": "aktualisierung abhängigkeiten + änderungen basierend auf adapter-checker",
+        "ru": "зависимости обновления + изменения на основе проверки адаптера",
+        "pt": "atualizar dependências + alterações com base no verificador de adaptadores",
+        "nl": "update afhankelijkheden + wijzigingen op basis van adaptercontrole",
+        "fr": "mettre à jour les dépendances + les changements basés sur le vérificateur d'adaptateur",
+        "it": "aggiornamento dipendenze + modifiche in base all'adattatore checker",
+        "es": "dependencias de actualización + cambios basados en el control de adaptador",
+        "pl": "aktualizacja zależności + zmiany w oparciu o sprawdzacz adaptera",
+        "uk": "оновлення залежності + зміни на основі перевірки адаптера",
+        "zh-cn": "根据适配器检查器更新依赖性+变化"
+      },
       "0.3.2": {
         "en": "update dependencies\nnew testing",
         "de": "aktualisierung der abhängigkeiten\nneue tests",
@@ -80,19 +93,6 @@
         "pl": "Aktualizacja zależności (René)",
         "uk": "(René) залежностей оновлено",
         "zh-cn": "(René) 更新的依赖关系"
-      },
-      "0.2.13": {
-        "en": "(René) just a sentry test",
-        "de": "(René) nur einen Test",
-        "ru": "(René) просто тест на отправку",
-        "pt": "(René) apenas um teste de sentinela",
-        "nl": "Een sentimentele test",
-        "fr": "(René) juste un test",
-        "it": "(René) solo un test di sentina",
-        "es": "(René) sólo una prueba de centinela",
-        "pl": "(René) – test sanitarny",
-        "uk": "(René) просто відправник",
-        "zh-cn": "(René) 只是一个发送的试验"
       }
     },
     "titleLang": {
