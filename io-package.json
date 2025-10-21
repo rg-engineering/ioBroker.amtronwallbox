@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "news": {
+      "0.3.4": {
+        "en": "update dependencies + changes based on adapter checker",
+        "de": "aktualisierung abhängigkeiten + änderungen basierend auf adapter-checker",
+        "ru": "зависимости обновления + изменения на основе проверки адаптера",
+        "pt": "atualizar dependências + alterações com base no verificador de adaptadores",
+        "nl": "update afhankelijkheden + wijzigingen op basis van adaptercontrole",
+        "fr": "mettre à jour les dépendances + les changements basés sur le vérificateur d'adaptateur",
+        "it": "aggiornamento dipendenze + modifiche in base all'adattatore checker",
+        "es": "dependencias de actualización + cambios basados en el control de adaptador",
+        "pl": "aktualizacja zależności + zmiany w oparciu o sprawdzacz adaptera",
+        "uk": "оновлення залежності + зміни на основі перевірки адаптера",
+        "zh-cn": "根据适配器检查器更新依赖性+变化"
+      },
       "0.3.3": {
         "en": "update dependencies + changes based on adapter checker",
         "de": "aktualisierung abhängigkeiten + änderungen basierend auf adapter-checker",
@@ -80,19 +93,6 @@
         "pl": "(René) zmiana zależności\n(René) show cron job in log after creation",
         "uk": "(Рене) зміна залежностей\n(René) покажуть на роботу в журналі після створення",
         "zh-cn": "(René) 属地变化\n(René) 创建后在日志中显示 cron 工作"
-      },
-      "0.2.14": {
-        "en": "(René) dependencies updated",
-        "de": "(René)",
-        "ru": "(René)",
-        "pt": "(René) dependências atualizadas",
-        "nl": "(René) bijgewerkte afhankelijkheden",
-        "fr": "(René) dépendances mises à jour",
-        "it": "(René) dipendenze aggiornate",
-        "es": "(René) dependencies updated",
-        "pl": "Aktualizacja zależności (René)",
-        "uk": "(René) залежностей оновлено",
-        "zh-cn": "(René) 更新的依赖关系"
       }
     },
     "titleLang": {
