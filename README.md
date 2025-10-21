@@ -54,6 +54,10 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (René) update dependencies + changes based on adapter checker
+
 ### 0.3.3 (2025-10-04)
 * (René) update dependencies + changes based on adapter checker
 
