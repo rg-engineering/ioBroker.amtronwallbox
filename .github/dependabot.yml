@@ -9,3 +9,13 @@ updates:
       timezone: "Europe/Berlin"
     target-branch: "master"
     open-pull-requests-limit: 30
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+        interval: monthly
+        time: "04:00"
+        timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    assignees:
+        - rg-enineering
