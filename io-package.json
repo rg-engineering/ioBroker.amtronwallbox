@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.3.5",
+    "version": "0.3.6",
     "news": {
+      "0.3.6": {
+        "en": "update dependencies + changes based on adapter checker",
+        "de": "aktualisierung abhängigkeiten + änderungen basierend auf adapter-checker",
+        "ru": "зависимости обновления + изменения на основе проверки адаптера",
+        "pt": "atualizar dependências + alterações com base no verificador de adaptadores",
+        "nl": "update afhankelijkheden + wijzigingen op basis van adaptercontrole",
+        "fr": "mettre à jour les dépendances + les changements basés sur le vérificateur d'adaptateur",
+        "it": "aggiornamento dipendenze + modifiche in base all'adattatore checker",
+        "es": "dependencias de actualización + cambios basados en el control de adaptador",
+        "pl": "aktualizacja zależności + zmiany w oparciu o sprawdzacz adaptera",
+        "uk": "оновлення залежності + зміни на основі перевірки адаптера",
+        "zh-cn": "根据适配器检查器更新依赖性+变化"
+      },
       "0.3.5": {
         "en": "bug fix sentry",
         "de": "fehlerbehebung gesendet",
@@ -80,19 +93,6 @@
         "pl": "zob. numer # 284: test z nodejs @ 22\naktualizacji zależności\nmigracja do jsonConfig",
         "uk": "див. питання #284: тест з nodejs@22\nоновлення залежності\nміграції в jsonConfig",
         "zh-cn": "参见第284期:带节点的测试@22\n更新依赖关系\n迁移到 jsonConfig"
-      },
-      "0.2.16": {
-        "en": "update dependencies\nbug fixes based on adapter checker recommendation",
-        "de": "aktualisierung der abhängigkeiten\nfehlerbehebungen basierend auf adapter-checker empfehlung",
-        "ru": "обновление зависимостей\nисправления ошибок на основе рекомендации адаптера",
-        "pt": "dependências\ncorreções de bugs com base na recomendação do verificador do adaptador",
-        "nl": "afhankelijkheden bijwerken\nbug fixes op basis van adaptercontrole aanbeveling",
-        "fr": "mettre à jour les dépendances\ncorrection des bugs en fonction de la recommandation du vérificateur d'adaptateur",
-        "it": "aggiornamento dipendenze\ncorrezioni di bug in base alla raccomandazione dell'adattatore checker",
-        "es": "dependencias de actualización\ncorrecciones de errores basado en la recomendación de control de adaptador",
-        "pl": "aktualizacji zależności\npoprawki błędów oparte na rekomendacji sprawdzania adaptera",
-        "uk": "оновлення залежності\nвиправлення помилок на основі рекомендації адаптера",
-        "zh-cn": "更新依赖关系\n根据适配器检查器建议修正错误"
       }
     },
     "titleLang": {
