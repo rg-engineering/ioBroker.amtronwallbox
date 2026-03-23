@@ -37,7 +37,7 @@
     "@iobroker/eslint-config": "^2.2.0",
     "@iobroker/testing": "^5.2.2"
   },
-  "main": "main.js",
+  "main": "build/main.js",
   "bugs": {
     "url": "https://github.com/rg-engineering/ioBroker.amtronwallbox"
   },
@@ -57,7 +57,8 @@
     "!typings",
     "io-package.json",
     "LICENSE",
-    "main.js"
+    "!main.js",
+    "build/"
   ],
   "readmeFilename": "README.md",
   "scripts": {
@@ -68,6 +69,13 @@
     "lint": "eslint -c eslint.config.mjs .",
     "translate": "translate-adapter",
     "release": "release-script",
-    "npm": "npm i"
+    "0-clean": "node tasks.js --0-clean",
+    "1-npm": "node tasks.js --1-npm",
+    "2-build": "node tasks.js --2-build",
+    "3-copy": "node tasks.js --3-copy",
+    "4-patch": "node tasks.js --4-patch",
+    "build": "npm run build-backend  && npm pack",
+    "build-backend": "tsc -p tsconfig.build.json",
+    "npm": "npm i "
   }
 }
