@@ -16,12 +16,12 @@ export interface iobObject {
 
 export interface AmtronwallboxConfig {
     
-
+    // {"IsActive":true,"Name":"Wallbox","IPAddress":"192.168.3.18","ApiKey":"","Type":"ChargeControl"}
     IsActive: boolean,
     IPAddress: string,
     ApiKey:string,
-    readInterval: number,
+    
     Type: string,
     Name: string,
-    timezone: string
+    
 }

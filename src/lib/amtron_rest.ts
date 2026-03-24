@@ -10,9 +10,9 @@ export default class amtron_rest extends Base {
 
 
 
-	constructor(adapter: Amtronwallbox, id: number, config: AmtronwallboxConfig) {
-		super(adapter, id, "amtronwallbox" + id, config);
-		super(adapter, id, "amtronwallbox" + id, config);
+	constructor(adapter: Amtronwallbox, id: number, config: AmtronwallboxConfig, readInterval: number, timezone: string) {
+		super(adapter, id, "amtronwallbox" + id, config, readInterval, timezone);
+		
 
 
 	}
@@ -144,7 +144,10 @@ export default class amtron_rest extends Base {
 				await this.SetState(SystemName + ".Current", true, Number(data[18].split(":")[1]));
 				await this.SetState(SystemName + ".EnergyManagerCurrent", true, Number(data[19].split(":")[1]));
 				await this.SetState(SystemName + ".AmbientTemperature", true, data[20].split(":")[1]);
-				await this.SetState(SystemName + ".FirmwareVersion", true, data[21].split(":")[1]);
+
+				this.sVersion = data[21].split(":")[1];
+
+				await this.SetState(SystemName + ".FirmwareVersion", true, this.sVersion);
 				await this.SetState(SystemName + ".SerialNumber", true, data[22].split(":")[1]);
 				await this.SetState(SystemName + ".ContactCyclesSchuko", true, Number(data[23].split(":")[1]));
 				await this.SetState(SystemName + ".ContactcyclesType2", true, Number(data[24].split(":")[1]));

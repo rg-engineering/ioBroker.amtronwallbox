@@ -125,7 +125,7 @@
     "mode": "daemon",
     "icon": "amtronwallbox.png",
     "enabled": true,
-    "messagebox": false,
+    "messagebox": true,
     "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.amtronwallbox/master/admin/amtronwallbox.png",
     "keywords": [
       "amtron",

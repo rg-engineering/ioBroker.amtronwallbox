@@ -10,8 +10,8 @@ export default class amtron_MHCP extends Base {
 	
 
 
-	constructor(adapter: Amtronwallbox, id: number, config: AmtronwallboxConfig) {
-		super(adapter, id, "amtronwallbox" + id, config);
+	constructor(adapter: Amtronwallbox, id: number, config: AmtronwallboxConfig, readInterval:number, timezone:string) {
+		super(adapter, id, "amtronwallbox" + id, config, readInterval, timezone);
 
 		
 	}
@@ -32,7 +32,7 @@ export default class amtron_MHCP extends Base {
 	
 
 
-
+	
 	
 
 	async ReadData():Promise<void> {
@@ -136,6 +136,10 @@ export default class amtron_MHCP extends Base {
 
 				for (const entry in buffer.data) {
 					await this.SetState(SystemName + ".info." + entry, true, buffer.data[entry]);
+
+					if (entry == "Hmi") {
+                        this.sVersion = buffer.data[entry];
+					}
 				}
 			}
 		} catch (e) {

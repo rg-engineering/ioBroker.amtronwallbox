@@ -20,10 +20,12 @@ export default class Base {
     Name: string;
     timezone: string;
 
-    cronJobs: CronJob[];
+    sVersion: string;
+
+    cronJobs: CronJob<() => void, null>[] = [];
 
 
-    constructor(adapter: Amtronwallbox | null, id: number, name: string, config: AmtronwallboxConfig) {
+    constructor(adapter: Amtronwallbox | null, id: number, name: string, config: AmtronwallboxConfig, readInterval:number, timezone:string) {
 
         if (adapter != null) {
             this.adapter = adapter;
@@ -35,18 +37,25 @@ export default class Base {
 
 
         this.IsActive = config.IsActive;
-        this.readInterval = config.readInterval;
+        this.readInterval = readInterval;
         this.Type = config.Type;
         this.IPAddress = config.IPAddress;
         this.ApiKey = config.ApiKey;
         this.Name = config.Name;
-        this.timezone = config.timezone;
+        this.timezone = timezone;
+
+        this.sVersion="unknown;"
 
         this.cronJobs = [];
 
         this.logDebug("instance created");
 
     }
+
+    GetVersion(): string {
+        return this.name + ": " + this.sVersion + " ";
+    }
+
 
     GetForbiddenChars(): RegExp {
         if (this.adapter == null) {
@@ -260,7 +269,7 @@ export default class Base {
     }
     */
 
-    CronCreate(Minute: number, callback: () => Promise<void>): void {
+    CronCreate(Minute: number, callback: () => void): void {
         try {
             const timezone = this.timezone || "Europe/Berlin";
 
@@ -282,14 +291,15 @@ export default class Base {
             this.logDebug("create cron job #" + nextCron + " every " + sMinute + " string: " + cronString + " " + timezone);
 
             //details siehe https://www.npmjs.com/package/cron
-            const job = new CronJob(
-                cronString,
-                () => { (async () => { await callback(); })(); },
-                () => this.logDebug("cron job stopped"),
-                true,
-                timezone
-            );
+            const job = CronJob.from({
+                cronTime: cronString,
+                onTick: () => callback(),
+                onComplete: () => this.logDebug("cron job stopped"),
+                start: true,
+                timeZone: timezone
+            });
             this.cronJobs.push(job);
+
 
         } catch (e) {
             this.logError("exception in CronCreate [" + e + "]");
@@ -306,7 +316,9 @@ export default class Base {
                 //adapter.log.debug("cron jobs");
                 for (n = 0; n < length; n++) {
                     if (this.cronJobs[n] !== undefined && this.cronJobs[n] != null) {
-                        this.logDebug("cron status = " + this.cronJobs[n].running + " next event: " + this.timeConverter("DE", this.cronJobs[n].nextDate()));
+                        this.logDebug("cron status = " + this.cronJobs[n].isActive + " next event: " + this.timeConverter("DE", this.cronJobs[n].nextDate().toJSDate()));
+
+
                     }
                 }
 
@@ -321,7 +333,7 @@ export default class Base {
         }
     }
 
-    timeConverter(SystemLanguage: string, time: DateTime, timeonly = false): string {
+    timeConverter(SystemLanguage: string, time: Date, timeonly = false): string {
 
         let a;
 

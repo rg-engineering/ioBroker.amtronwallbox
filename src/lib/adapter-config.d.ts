@@ -10,7 +10,10 @@ declare global {
 	namespace ioBroker {
 		interface AdapterConfig {
 
-            wallboxes: AmtronwallboxConfig[];
+			timezone: string
+			readInterval: number,
+
+			WallboxSystems: AmtronwallboxConfig[];
 
 		}
 	}

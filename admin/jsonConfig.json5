@@ -16,6 +16,47 @@
           "lg": 1.2,
           "xl": 1.2
         },
+
+        "currentversiontxt": {
+          "type": "staticText",
+          "newLine": true,
+          "text": "current installed version",
+          "xs": 12,
+          "sm": 2,
+          "md": 2,
+          "lg": 2,
+          "xl": 2
+        },
+
+        "currentversion": {
+          "type": "textSendTo",
+          "label": "current installed firmware version",
+          "command": "checkCurrentVersion",
+          "jsonData": "{\"test\": \"aaa\", \"test2\": \"bbb\" }",
+          "alsoDependsOn": [ "checkCurrentVersion" ],
+          "xs": 12,
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "xl": 4
+
+        },
+
+
+        "URLFirmware": {
+          "type": "staticLink",
+          "text": "link to Software download page",
+          "href": "https://www.mennekes.de/emobility/services/software-updates/?_gl=1*15k0mir*_up*MQ..*_gs*MQ..&gclid=Cj0KCQjw7IjOBhDyARIsAFzrWQyt4Zh48z24nNrfbinvm6sW1uqWkjwcxPb97d2Vh9WUyqkLEChGGHAaAlVWEALw_wcB",
+          "button": true,
+          "icon": "info",
+          "newLine": true,
+          "xs": 12,
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "xl": 4
+        },
+
         "dividerHdr1": {
           "newLine": true,
           "type": "header",

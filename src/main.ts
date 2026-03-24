@@ -33,25 +33,25 @@ export class Amtronwallbox extends utils.Adapter {
 		this.log.debug(JSON.stringify(this.config));
 
 		try {
-			if (!Array.isArray(this.config.wallboxes)) {
-				this.log.error("Keine Wallbox-Konfiguration gefunden.");
+			if (!Array.isArray(this.config.WallboxSystems)) {
+				this.log.error("no Wallbox-config found.");
 				return;
 			}
 
-			for (let l = 0; l < this.config.wallboxes.length; l++) {
-				const config = this.config.wallboxes[l];
+			for (let l = 0; l < this.config.WallboxSystems.length; l++) {
+				const config = this.config.WallboxSystems[l];
 
 				if (config && config.IsActive) {
-					this.log.debug("Erzeuge Instanz der Amtronwallbox");
+					this.log.debug("create amtron wallbox instance");
 
 					if (config.Type === "ChargeControl") {
-						const instance = new amtron_rest(this, l + 1, config);
+						const instance = new amtron_rest(this, l + 1, config, this.config.readInterval, this.config.timezone);
 						this.wallboxes.push(instance);
 					} else if (config.Type === "Compact" || config.Type === "Xtra") {
-						const instance = new amtron_MHCP(this, l + 1, config);
+						const instance = new amtron_MHCP(this, l + 1, config, this.config.readInterval, this.config.timezone);
 						this.wallboxes.push(instance);
 					} else {
-						this.log.error("Systemtyp " + config.Type + " (" + typeof config.Type + ") ist noch nicht implementiert");
+						this.log.error("Systemtyp " + config.Type + " (" + typeof config.Type + ") not yet implemented");
 					}
 				}
 			}
@@ -109,14 +109,44 @@ export class Amtronwallbox extends utils.Adapter {
 	 */
 	private async onMessage(obj: ioBroker.Message): Promise<void> {
 		this.log.info("on message " + JSON.stringify(obj));
+
+		await Promise.resolve();
+
 		if (typeof obj === "object" && obj.command) {
-			if (obj.command === "´xxx") {
-				if (obj.callback) {
-					this.sendTo(obj.from, obj.command, "", obj.callback);
-				}
+
+			switch (obj.command) {
+
+				case "checkCurrentVersion":
+					this.CheckVersion("current", obj);
+					break;
 			}
 		}
 	}
+
+
+	CheckVersion(version: string, msg: ioBroker.Message) : void {
+
+		if (version == "installable") {
+			const version = "";
+			this.sendTo(msg.from, msg.command, version, msg.callback);
+		} else if (version == "current") {
+			const version =  this.GetInstalledVersions();
+			this.sendTo(msg.from, msg.command, version, msg.callback);
+		} else if (version == "supported") {
+			this.sendTo(msg.from, msg.command, "", msg.callback);
+		}
+	}
+
+	 GetInstalledVersions(): string {
+
+		let version = "";
+
+		 for (let l = 0; l < this.wallboxes.length; l++) {
+			 version += this.wallboxes[l].GetVersion();
+		}
+        return version;
+	}
+
 }
 
 if (require.main !== module) {

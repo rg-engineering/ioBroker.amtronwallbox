@@ -41,9 +41,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Amtronwallbox = void 0;
-//https://www.iobroker.net/#en/documentation/dev/adapterdev.md
+// https://www.iobroker.net/#en/documentation/dev/adapterdev.md
 const utils = __importStar(require("@iobroker/adapter-core"));
-const amtronwallbox_1 = __importDefault(require("./lib/amtronwallbox"));
+const amtron_MHCP_1 = __importDefault(require("./lib/amtron_MHCP"));
+const amtron_rest_1 = __importDefault(require("./lib/amtron_rest"));
 class Amtronwallbox extends utils.Adapter {
     wallboxes = [];
     constructor(options = {}) {
@@ -58,105 +59,121 @@ class Amtronwallbox extends utils.Adapter {
         this.on("unload", this.onUnload.bind(this));
     }
     /**
-     * Is called when databases are connected and adapter received configuration.
+     * Wird aufgerufen, wenn die Datenbanken verbunden sind und die Adapter-Konfiguration empfangen wurde.
      */
     async onReady() {
         this.log.debug(JSON.stringify(this.config));
         try {
-            for (let l = 0; l < this.config.wallboxes.length; l++) {
-                const config = this.config.wallboxes[l];
-                if (this.config.wallboxes[l].active) {
-                    this.log.debug("create instance of amtronwallbox");
-                    const instance = new amtronwallbox_1.default(this, l + 1, config);
-                    this.wallboxes.push(instance);
+            if (!Array.isArray(this.config.WallboxSystems)) {
+                this.log.error("no Wallbox-config found.");
+                return;
+            }
+            for (let l = 0; l < this.config.WallboxSystems.length; l++) {
+                const config = this.config.WallboxSystems[l];
+                if (config && config.IsActive) {
+                    this.log.debug("create amtron wallbox instance");
+                    if (config.Type === "ChargeControl") {
+                        const instance = new amtron_rest_1.default(this, l + 1, config, this.config.readInterval, this.config.timezone);
+                        this.wallboxes.push(instance);
+                    }
+                    else if (config.Type === "Compact" || config.Type === "Xtra") {
+                        const instance = new amtron_MHCP_1.default(this, l + 1, config, this.config.readInterval, this.config.timezone);
+                        this.wallboxes.push(instance);
+                    }
+                    else {
+                        this.log.error("Systemtyp " + config.Type + " (" + typeof config.Type + ") not yet implemented");
+                    }
                 }
             }
             for (let n = 0; n < this.wallboxes.length; n++) {
-                //muss auch in den cron / intervall
+                // Muss auch in den Cron / Intervall
                 await this.wallboxes[n].Start();
             }
         }
         catch (e) {
-            this.log.error("exception in onReady [" + e + "]");
+            this.log.error("Exception in onReady [" + e + "]");
         }
     }
     /**
-     * Is called when adapter shuts down - callback has to be called under any circumstances!
+     * Wird aufgerufen, wenn der Adapter heruntergefahren wird - Callback MUSS unter allen Umständen aufgerufen werden!
      */
     async onUnload(callback) {
         try {
-            // Here you must clear all timeouts or intervals that may still be active
-            // clearTimeout(timeout1);
-            // clearTimeout(timeout2);
-            // ...
+            // Hier müssen alle Timeouts oder Intervalle gelöscht werden, die noch aktiv sein könnten
+            for (let n = 0; n < this.wallboxes.length; n++) {
+                await this.wallboxes[n].Stop();
+            }
             callback();
         }
         catch (e) {
-            this.log.error("exception in onUnload " + e);
+            this.log.error("Exception in onUnload " + e);
             callback();
         }
     }
-    // If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
-    // You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
-    // /**
-    //  * Is called if a subscribed object changes
-    //  */
+    /**
+     * Wird aufgerufen, wenn ein abonniertes Objekt geändert wird
+     */
     onObjectChange(id, obj) {
         if (obj) {
-            // The object was changed
-            this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
+            this.log.info(`Objekt ${id} geändert: ${JSON.stringify(obj)}`);
         }
         else {
-            // The object was deleted
-            this.log.info(`object ${id} deleted`);
+            this.log.info(`Objekt ${id} gelöscht`);
         }
     }
     /**
-     * Is called if a subscribed state changes
+     * Wird aufgerufen, wenn ein abonnierter State geändert wird
      */
     onStateChange(id, state) {
         if (state) {
-            // The state was changed
-            //const ids = id.split(".");
+            // State wurde geändert
         }
         else {
-            // The state was deleted
-            this.log.info(`state ${id} deleted`);
+            this.log.info(`State ${id} gelöscht`);
         }
     }
-    // If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
-    // /**
-    //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-    //  * Using this method requires "common.messagebox" property to be set to true in io-package.json
-    //  */
+    /**
+     * Nachrichtenbehandlung
+     */
     async onMessage(obj) {
         this.log.info("on message " + JSON.stringify(obj));
+        await Promise.resolve();
         if (typeof obj === "object" && obj.command) {
-            //if (obj.command === "getIP") {
-            //	this.log.info("get IP");
-            //
-            //	const myIP = this.GetIP();
-            //	// Send response in callback if required
-            //	if (obj.callback) {
-            //		this.sendTo(obj.from, obj.command, myIP, obj.callback);
-            //	}
-            //} else if (obj.command === "getUUID") {
-            if (obj.command === "´xxx") {
-                // Send response in callback if required
-                if (obj.callback) {
-                    this.sendTo(obj.from, obj.command, "", obj.callback);
-                }
+            switch (obj.command) {
+                case "checkCurrentVersion":
+                    this.CheckVersion("current", obj);
+                    break;
             }
         }
+    }
+    CheckVersion(version, msg) {
+        if (version == "installable") {
+            const version = "";
+            this.sendTo(msg.from, msg.command, version, msg.callback);
+        }
+        else if (version == "current") {
+            const version = this.GetInstalledVersions();
+            this.sendTo(msg.from, msg.command, version, msg.callback);
+        }
+        else if (version == "supported") {
+            this.sendTo(msg.from, msg.command, "", msg.callback);
+        }
+    }
+    GetInstalledVersions() {
+        let version = "";
+        for (let l = 0; l < this.wallboxes.length; l++) {
+            version += this.wallboxes[l].GetVersion();
+        }
+        return version;
     }
 }
 exports.Amtronwallbox = Amtronwallbox;
 if (require.main !== module) {
-    // Export the constructor in compact mode
+    // Exportiere den Konstruktor im Kompaktmodus
     module.exports = (options) => new Amtronwallbox(options);
 }
 else {
-    // otherwise start the instance directly
+    // Starte die Instanz direkt
     (() => new Amtronwallbox())();
 }
 //# sourceMappingURL=main.js.map
