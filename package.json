@@ -39,7 +39,7 @@
   },
   "main": "build/main.js",
   "bugs": {
-    "url": "https://github.com/rg-engineering/ioBroker.amtronwallbox"
+    "url": "https://github.com/rg-engineering/ioBroker.amtronwallbox/issues"
   },
   "files": [
     "admin/",

@@ -17,3 +17,4 @@ node_modules
 /bin/Microsoft.NodejsTools.WebRole.dll
 /.vscode/extensions.json
 /obj/Debug/
+/iobroker.amtronwallbox-0.3.6.tgz
