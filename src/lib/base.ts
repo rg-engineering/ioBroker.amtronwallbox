@@ -137,8 +137,8 @@ export default class Base {
 
         await this.CreateDatapoint(
             key,
-            obj.type,
             obj.common.name,
+            obj.type,
             obj.common.role,
             obj.common.type,
             obj.common.unit,

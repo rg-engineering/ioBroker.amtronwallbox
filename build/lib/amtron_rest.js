@@ -20,11 +20,32 @@ class amtron_rest extends base_1.default {
         await super.ReadData();
         await this.read_rest();
     }
+    parseDeviceData(rawText) {
+        const result = {};
+        const lines = rawText.split("\n");
+        for (let line of lines) {
+            line = line.trim();
+            if (!line) {
+                continue;
+            }
+            // Nur am ersten Doppelpunkt splitten
+            const [key, ...rest] = line.split(":");
+            const valueRaw = rest.join(":").trim();
+            let value = valueRaw;
+            // Optional: Komma-separierte Werte als Array
+            if (valueRaw.includes(",")) {
+                value = valueRaw.split(",").map(v => v.trim());
+            }
+            result[key.trim()] = value;
+        }
+        return result;
+    }
     async read_rest() {
         try {
             /*
             http://192.168.3.18/rest/full_state
     
+            //alt
             conn_state: no_vehicle_connected
             auth_state: not_authorized_for_charging
             auth_uid:
@@ -63,6 +84,49 @@ class amtron_rest extends base_1.default {
             errors: no_errors
             cp_model: CC612_2S0R_CC
             display_text:
+
+
+            //SW version 5.33
+conn_state:no_vehicle_connected
+auth_state:not_authorized_for_charging
+auth_uid:
+time_since_charging_start:0
+meter_wh:399529
+power_w:0
+voltage_v:232,233,233
+transaction_wh:0
+cp_id:+49*839*00000000001
+ocpp_state:available
+type2_state:a
+type2_proximity:cable_attached
+sig_current:0
+schuko_state:idle
+backend_conn_state:pending
+free_charging:off
+slave_state:
+ocpp_meter_cfg:modbus_meter_nzr_ecocount_s85_or_sl85
+ocpp_meter_serial:00202035
+current_a:0.00,0.01,0.00
+energy_man_current:0
+ambient_temp:+7.00
+firmware_ver:5.33.9-21459
+cc_serial_n:2202532503/b94060010me2
+con_cycles_schuko:0
+con_cycles_type2:212
+max_current:16
+rcmb_state:okay
+rcmb_max_values: 0.0, 0.0
+rcmb_current_values: 0.0, 0.0
+cable_attached:on
+schuko_cfg:disable
+rcd_state:disable
+mcb_type2_state:disable
+mcb_schuko_state:disable
+cp_vendor:MENNEKES
+errors:keine_fehler
+cp_model:CC612_2S0R_CC
+display_text:
+wlan_state:wlan_disconnected
     
             */
             const sURL = "http://" + this.IPAddress + "/rest/full_state";
@@ -83,47 +147,51 @@ class amtron_rest extends base_1.default {
             */
             const SystemName = this.Name.replace(this.GetForbiddenChars(), "_");
             if (buffer != null && buffer.status == 200 && buffer.data != null && typeof buffer.data === "string") {
-                const data = buffer.data.split(/\r?\n/);
-                this.logDebug("data " + JSON.stringify(data));
-                await this.SetState(SystemName + ".Connection.State", true, data[0].split(":")[1]);
-                await this.SetState(SystemName + ".Authorisation.State", true, data[1].split(":")[1]);
-                await this.SetState(SystemName + ".Authorisation.UID", true, data[2].split(":")[1]);
-                await this.SetState(SystemName + ".TimeSinceChargingStart", true, Number(data[3].split(":")[1]));
-                await this.SetState(SystemName + ".Meter", true, Number(data[4].split(":")[1]));
-                await this.SetState(SystemName + ".Power", true, Number(data[5].split(":")[1]));
-                await this.SetState(SystemName + ".Transaction", true, Number(data[6].split(":")[1]));
-                await this.SetState(SystemName + ".CP_ID", true, data[7].split(":")[1]);
-                await this.SetState(SystemName + ".OCPP.State", true, data[8].split(":")[1]);
-                await this.SetState(SystemName + ".Type2.State", true, data[9].split(":")[1]);
-                await this.SetState(SystemName + ".Type2.Proximity", true, data[10].split(":")[1]);
-                await this.SetState(SystemName + ".SigCurrent", true, Number(data[11].split(":")[1]));
-                await this.SetState(SystemName + ".Schuko.State", true, data[12].split(":")[1]);
-                await this.SetState(SystemName + ".Backend.ConnectionState", true, data[13].split(":")[1]);
-                await this.SetState(SystemName + ".FreeCharging", true, Boolean(data[14].split(":")[1]));
-                await this.SetState(SystemName + ".SlaveState", true, data[15].split(":")[1]);
-                await this.SetState(SystemName + ".OCPP.MeterConfig", true, data[16].split(":")[1]);
-                await this.SetState(SystemName + ".OCPP.MeterSerial", true, data[17].split(":")[1]);
-                await this.SetState(SystemName + ".Current", true, Number(data[18].split(":")[1]));
-                await this.SetState(SystemName + ".EnergyManagerCurrent", true, Number(data[19].split(":")[1]));
-                await this.SetState(SystemName + ".AmbientTemperature", true, data[20].split(":")[1]);
-                this.sVersion = data[21].split(":")[1];
+                //const data = buffer.data.split(/\r?\n/);
+                //this.logDebug("data " + JSON.stringify(data));
+                const result = this.parseDeviceData(buffer.data);
+                this.logDebug("parsed data " + JSON.stringify(result));
+                await this.SetState(SystemName + ".Connection.State", true, Array.isArray(result.conn_state) ? result.conn_state.join(",") : result.conn_state);
+                await this.SetState(SystemName + ".Authorisation.State", true, Array.isArray(result.auth_state) ? result.auth_state.join(",") : result.auth_state);
+                await this.SetState(SystemName + ".Authorisation.UID", true, Array.isArray(result.auth_uid) ? result.auth_uid.join(",") : result.auth_uid);
+                await this.SetState(SystemName + ".TimeSinceChargingStart", true, Number(result.time_since_charging_start));
+                await this.SetState(SystemName + ".Meter", true, Number(result.meter_wh));
+                await this.SetState(SystemName + ".Power", true, Number(result.power_w));
+                await this.SetState(SystemName + ".Voltage", true, Array.isArray(result.voltage_v) ? result.voltage_v.join(",") : result.voltage_v);
+                await this.SetState(SystemName + ".Transaction", true, Number(result.transaction_wh));
+                await this.SetState(SystemName + ".CP_ID", true, Array.isArray(result.cp_id) ? result.cp_id.join(",") : result.cp_id);
+                await this.SetState(SystemName + ".OCPP.State", true, Array.isArray(result.ocpp_state) ? result.ocpp_state.join(",") : result.ocpp_state);
+                await this.SetState(SystemName + ".Type2.State", true, Array.isArray(result.type2_state) ? result.type2_state.join(",") : result.type2_state);
+                await this.SetState(SystemName + ".Type2.Proximity", true, Array.isArray(result.type2_proximity) ? result.type2_proximity.join(",") : result.type2_proximity);
+                await this.SetState(SystemName + ".SigCurrent", true, Number(result.sig_current));
+                await this.SetState(SystemName + ".Schuko.State", true, Array.isArray(result.schuko_state) ? result.schuko_state.join(",") : result.schuko_state);
+                await this.SetState(SystemName + ".Backend.ConnectionState", true, Array.isArray(result.backend_conn_state) ? result.backend_conn_state.join(",") : result.backend_conn_state);
+                await this.SetState(SystemName + ".FreeCharging", true, Boolean(result.free_charging));
+                await this.SetState(SystemName + ".SlaveState", true, Array.isArray(result.slave_state) ? result.slave_state.join(",") : result.slave_state);
+                await this.SetState(SystemName + ".OCPP.MeterConfig", true, Array.isArray(result.ocpp_meter_cfg) ? result.ocpp_meter_cfg.join(",") : result.ocpp_meter_cfg);
+                await this.SetState(SystemName + ".OCPP.MeterSerial", true, Array.isArray(result.ocpp_meter_serial) ? result.ocpp_meter_serial.join(",") : result.ocpp_meter_serial);
+                await this.SetState(SystemName + ".Current", true, Array.isArray(result.current_a) ? result.current_a.join(",") : result.current_a);
+                await this.SetState(SystemName + ".EnergyManagerCurrent", true, Number(result.energy_man_current));
+                await this.SetState(SystemName + ".AmbientTemperature", true, Number(result.ambient_temp));
+                this.sVersion = Array.isArray(result.firmware_ver) ? result.firmware_ver.join(",") : result.firmware_ver;
                 await this.SetState(SystemName + ".FirmwareVersion", true, this.sVersion);
-                await this.SetState(SystemName + ".SerialNumber", true, data[22].split(":")[1]);
-                await this.SetState(SystemName + ".ContactCyclesSchuko", true, Number(data[23].split(":")[1]));
-                await this.SetState(SystemName + ".ContactcyclesType2", true, Number(data[24].split(":")[1]));
-                await this.SetState(SystemName + ".MaxCurrent", true, Number(data[25].split(":")[1]));
-                await this.SetState(SystemName + ".RCMB.State", true, data[26].split(":")[1]);
-                await this.SetState(SystemName + ".RCMB.MaxValues", true, data[27].split(":")[1]);
-                await this.SetState(SystemName + ".RCMB.CurrentValues", true, data[28].split(":")[1]);
-                await this.SetState(SystemName + ".CableAttached", true, Boolean(data[29].split(":")[1]));
-                await this.SetState(SystemName + ".Schuko.Config", true, data[30].split(":")[1]);
-                await this.SetState(SystemName + ".RCD.State", true, data[31].split(":")[1]);
-                await this.SetState(SystemName + ".MCB.Type2State", true, data[32].split(":")[1]);
-                await this.SetState(SystemName + ".MCB.SchukoState", true, data[33].split(":")[1]);
-                await this.SetState(SystemName + ".CP_Vendor", true, data[34].split(":")[1]);
-                await this.SetState(SystemName + ".Errors", true, data[35].split(":")[1]);
-                await this.SetState(SystemName + ".CP_Model", true, data[36].split(":")[1]);
-                await this.SetState(SystemName + ".DisplayText", true, data[37].split(":")[1]);
+                await this.SetState(SystemName + ".SerialNumber", true, Array.isArray(result.cc_serial_n) ? result.cc_serial_n.join(",") : result.cc_serial_n);
+                await this.SetState(SystemName + ".ContactCyclesSchuko", true, Number(result.con_cycles_schuko));
+                await this.SetState(SystemName + ".ContactcyclesType2", true, Number(result.con_cycles_type2));
+                await this.SetState(SystemName + ".MaxCurrent", true, Number(result.max_current));
+                await this.SetState(SystemName + ".RCMB.State", true, Array.isArray(result.rcmb_state) ? result.rcmb_state.join(",") : result.rcmb_state);
+                await this.SetState(SystemName + ".RCMB.MaxValues", true, Array.isArray(result.rcmb_max_values) ? result.rcmb_max_values.join(",") : result.rcmb_max_values);
+                await this.SetState(SystemName + ".RCMB.CurrentValues", true, Array.isArray(result.rcmb_current_values) ? result.rcmb_current_values.join(",") : result.rcmb_current_values);
+                await this.SetState(SystemName + ".CableAttached", true, Boolean(result.cable_attached));
+                await this.SetState(SystemName + ".Schuko.Config", true, Array.isArray(result.schuko_cfg) ? result.schuko_cfg.join(",") : result.schuko_cfg);
+                await this.SetState(SystemName + ".RCD.State", true, Array.isArray(result.rcd_state) ? result.rcd_state.join(",") : result.rcd_state);
+                await this.SetState(SystemName + ".MCB.Type2State", true, Array.isArray(result.mcb_type2_state) ? result.mcb_type2_state.join(",") : result.mcb_type2_state);
+                await this.SetState(SystemName + ".MCB.SchukoState", true, Array.isArray(result.mcb_schuko_state) ? result.mcb_schuko_state.join(",") : result.mcb_schuko_state);
+                await this.SetState(SystemName + ".CP_Vendor", true, Array.isArray(result.cp_vendor) ? result.cp_vendor.join(",") : result.cp_vendor);
+                await this.SetState(SystemName + ".Errors", true, Array.isArray(result.errors) ? result.errors.join(",") : result.errors);
+                await this.SetState(SystemName + ".CP_Model", true, Array.isArray(result.cp_model) ? result.cp_model.join(",") : result.cp_model);
+                await this.SetState(SystemName + ".DisplayText", true, Array.isArray(result.display_text) ? result.display_text.join(",") : result.display_text);
+                await this.SetState(SystemName + ".WLANstate", true, Array.isArray(result.wlan_state) ? result.wlan_state.join(",") : result.wlan_state);
             }
             else {
                 this.logError("error status: " + JSON.stringify(buffer));
@@ -603,7 +671,7 @@ class amtron_rest extends base_1.default {
             type: "state",
             common: {
                 name: "Current",
-                type: "number",
+                type: "string",
                 role: "value.current",
                 unit: "A",
                 read: true,
@@ -629,7 +697,7 @@ class amtron_rest extends base_1.default {
             type: "state",
             common: {
                 name: "AmbientTemperature",
-                type: "string",
+                type: "number",
                 role: "value.temperature",
                 unit: "°C",
                 read: true,
@@ -880,6 +948,32 @@ class amtron_rest extends base_1.default {
                 name: "Display Text",
                 type: "string",
                 role: "info.display",
+                unit: "",
+                read: true,
+                write: false
+            }
+        };
+        await this.CreateObject(key, obj);
+        key = SystemName + ".Voltage";
+        obj = {
+            type: "state",
+            common: {
+                name: "Voltage",
+                type: "string",
+                role: "info.status",
+                unit: "",
+                read: true,
+                write: false
+            }
+        };
+        await this.CreateObject(key, obj);
+        key = SystemName + ".WLANstate";
+        obj = {
+            type: "state",
+            common: {
+                name: "WLANstate",
+                type: "string",
+                role: "info.status",
                 unit: "",
                 read: true,
                 write: false

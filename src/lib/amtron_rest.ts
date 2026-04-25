@@ -204,6 +204,7 @@ wlan_state:wlan_disconnected
 				await this.SetState(SystemName + ".TimeSinceChargingStart", true, Number(result.time_since_charging_start));
 				await this.SetState(SystemName + ".Meter", true, Number(result.meter_wh));
 				await this.SetState(SystemName + ".Power", true, Number(result.power_w));
+				await this.SetState(SystemName + ".Voltage", true, Array.isArray(result.voltage_v) ? result.voltage_v.join(",") : result.voltage_v);
 				await this.SetState(SystemName + ".Transaction", true, Number(result.transaction_wh));
 				await this.SetState(SystemName + ".CP_ID", true, Array.isArray(result.cp_id) ? result.cp_id.join(",") : result.cp_id);
 				await this.SetState(SystemName + ".OCPP.State", true, Array.isArray(result.ocpp_state) ? result.ocpp_state.join(",") : result.ocpp_state);
@@ -216,22 +217,22 @@ wlan_state:wlan_disconnected
 				await this.SetState(SystemName + ".SlaveState", true, Array.isArray(result.slave_state) ? result.slave_state.join(",") : result.slave_state);
 				await this.SetState(SystemName + ".OCPP.MeterConfig", true, Array.isArray(result.ocpp_meter_cfg) ? result.ocpp_meter_cfg.join(",") : result.ocpp_meter_cfg);
 				await this.SetState(SystemName + ".OCPP.MeterSerial", true, Array.isArray(result.ocpp_meter_serial) ? result.ocpp_meter_serial.join(",") : result.ocpp_meter_serial);
-				await this.SetState(SystemName + ".Current", true, Number(result.current));
-				await this.SetState(SystemName + ".EnergyManagerCurrent", true, Number(result.energy_manager_current));
-				await this.SetState(SystemName + ".AmbientTemperature", true, Number(result.ambient_temperature));
+				await this.SetState(SystemName + ".Current", true, Array.isArray(result.current_a) ? result.current_a.join(",") : result.current_a);
+				await this.SetState(SystemName + ".EnergyManagerCurrent", true, Number(result.energy_man_current));
+				await this.SetState(SystemName + ".AmbientTemperature", true, Number(result.ambient_temp));
 
-				this.sVersion = Array.isArray(result.firmware_version) ? result.firmware_version.join(",") : result.firmware_version;
+				this.sVersion = Array.isArray(result.firmware_ver) ? result.firmware_ver.join(",") : result.firmware_ver;
 
-				await this.SetState(SystemName + ".FirmwareVersion", true, Array.isArray(result.firmware_version) ? result.firmware_version.join(",") : result.firmware_version);
-				await this.SetState(SystemName + ".SerialNumber", true, Array.isArray(result.serial_number) ? result.serial_number.join(",") : result.serial_number);
-				await this.SetState(SystemName + ".ContactCyclesSchuko", true, Number(result.contact_cycles_schuko));
-				await this.SetState(SystemName + ".ContactcyclesType2", true, Number(result.contact_cycles_type2));
+				await this.SetState(SystemName + ".FirmwareVersion", true, this.sVersion);
+				await this.SetState(SystemName + ".SerialNumber", true, Array.isArray(result.cc_serial_n) ? result.cc_serial_n.join(",") : result.cc_serial_n);
+				await this.SetState(SystemName + ".ContactCyclesSchuko", true, Number(result.con_cycles_schuko));
+				await this.SetState(SystemName + ".ContactcyclesType2", true, Number(result.con_cycles_type2));
 				await this.SetState(SystemName + ".MaxCurrent", true, Number(result.max_current));
 				await this.SetState(SystemName + ".RCMB.State", true, Array.isArray(result.rcmb_state) ? result.rcmb_state.join(",") : result.rcmb_state);
 				await this.SetState(SystemName + ".RCMB.MaxValues", true, Array.isArray(result.rcmb_max_values) ? result.rcmb_max_values.join(",") : result.rcmb_max_values);
 				await this.SetState(SystemName + ".RCMB.CurrentValues", true, Array.isArray(result.rcmb_current_values) ? result.rcmb_current_values.join(",") : result.rcmb_current_values);
 				await this.SetState(SystemName + ".CableAttached", true, Boolean(result.cable_attached));
-				await this.SetState(SystemName + ".Schuko.Config", true, Array.isArray(result.schuko_config) ? result.schuko_config.join(",") : result.schuko_config);
+				await this.SetState(SystemName + ".Schuko.Config", true, Array.isArray(result.schuko_cfg) ? result.schuko_cfg.join(",") : result.schuko_cfg);
 				await this.SetState(SystemName + ".RCD.State", true, Array.isArray(result.rcd_state) ? result.rcd_state.join(",") : result.rcd_state);
 				await this.SetState(SystemName + ".MCB.Type2State", true, Array.isArray(result.mcb_type2_state) ? result.mcb_type2_state.join(",") : result.mcb_type2_state);
 				await this.SetState(SystemName + ".MCB.SchukoState", true, Array.isArray(result.mcb_schuko_state) ? result.mcb_schuko_state.join(",") : result.mcb_schuko_state);
@@ -239,6 +240,7 @@ wlan_state:wlan_disconnected
 				await this.SetState(SystemName + ".Errors", true, Array.isArray(result.errors) ? result.errors.join(",") : result.errors);
 				await this.SetState(SystemName + ".CP_Model", true, Array.isArray(result.cp_model) ? result.cp_model.join(",") : result.cp_model);
 				await this.SetState(SystemName + ".DisplayText", true, Array.isArray(result.display_text) ? result.display_text.join(",") : result.display_text);
+				await this.SetState(SystemName + ".WLANstate", true, Array.isArray(result.wlan_state) ? result.wlan_state.join(",") : result.wlan_state);
 
 			} else {
 				this.logError("error status: " + JSON.stringify(buffer));
@@ -470,6 +472,8 @@ wlan_state:wlan_disconnected
 			}
 		};
 		await this.CreateObject(key, obj);
+
+		
 
 		key = SystemName + ".Authorisation.UID";
 		obj = {
@@ -765,7 +769,7 @@ wlan_state:wlan_disconnected
 			type: "state",
 			common: {
 				name: "Current",
-				type: "number",
+				type: "string",
 				role: "value.current",
 				unit: "A",
 				read: true,
@@ -793,7 +797,7 @@ wlan_state:wlan_disconnected
 			type: "state",
 			common: {
 				name: "AmbientTemperature",
-				type: "string",
+				type: "number",
 				role: "value.temperature",
 				unit: "°C",
 				read: true,
@@ -1067,6 +1071,35 @@ wlan_state:wlan_disconnected
 				name: "Display Text",
 				type: "string",
 				role: "info.display",
+				unit: "",
+				read: true,
+				write: false
+			}
+		};
+		await this.CreateObject(key, obj);
+
+
+		key = SystemName + ".Voltage";
+		obj = {
+			type: "state",
+			common: {
+				name: "Voltage",
+				type: "string",
+				role: "info.status",
+				unit: "",
+				read: true,
+				write: false
+			}
+		};
+		await this.CreateObject(key, obj);
+
+		key = SystemName + ".WLANstate";
+		obj = {
+			type: "state",
+			common: {
+				name: "WLANstate",
+				type: "string",
+				role: "info.status",
 				unit: "",
 				read: true,
 				write: false

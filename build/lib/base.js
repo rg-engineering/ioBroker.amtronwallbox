@@ -100,7 +100,7 @@ class Base {
         }
     }
     async CreateObject(key, obj) {
-        await this.CreateDatapoint(key, obj.type, obj.common.name, obj.common.role, obj.common.type, obj.common.unit, obj.common.read, obj.common.write, obj.common.desc);
+        await this.CreateDatapoint(key, obj.common.name, obj.type, obj.common.role, obj.common.type, obj.common.unit, obj.common.read, obj.common.write, obj.common.desc);
     }
     async CreateDatapoint(key, name, type, common_role, common_type, common_unit, common_read, common_write, common_desc) {
         if (this.adapter == null) {

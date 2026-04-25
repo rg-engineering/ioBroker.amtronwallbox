@@ -56,6 +56,11 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (René) see issue ##423: parser for ChargeControl overworked, compatibility with new datapoints of v5.33 of wallbox firmware
+* (René) adapter rewritten in typescript
+
 ### 0.3.6 (2026-03-15)
 * (René) update dependencies + changes based on adapter checker
 
