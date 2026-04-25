@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "0.3.6",
+    "version": "1.0.0",
     "news": {
+      "1.0.0": {
+        "en": "see issue ##423: parser for ChargeControl overworked, compatibility with new datapoints of v5.33 of wallbox firmware\nadapter rewritten in typescript",
+        "de": "siehe Ausgabe: Parser for ChargeControl überarbeitet, Kompatibilität mit neuen Datenpunkten von v5.33 der Wallbox Firmware\nadapter neu geschrieben in typescript",
+        "ru": "##423: парсер для ChargeControl перегружен, совместимость с новыми точками данных v5.33 прошивки Wallbox\nадаптер переписан в typescript",
+        "pt": "ver problema #423: analisador para ChargeControl sobrecarregado, compatibilidade com novos pontos de dados do v5.33 do firmware wallbox\nadaptador reescrito em texto",
+        "nl": "zie nummer ##423: parser voor ChargeControl overwerkt, compatibiliteit met nieuwe datapunten van v5.33 van wallbox firmware\nadapter herschreven in typescript",
+        "fr": "voir ##423: analyseur pour ChargeControl surchargé, compatibilité avec les nouveaux points de données de v5.33 de firmware wallbox\nadaptateur réécrit en dactylographié",
+        "it": "vedi numero ##423: parser for ChargeControl overworked, compatibilità con nuovi datapoint di v5.33 del firmware wallbox\nadattatore riscritto in typescript",
+        "es": "ver número ##423: parser for ChargeControl overworked, compatibilidad con nuevos puntos de datos de v5.33 de firmware de Wallbox\nadaptador reescrito en tiposcript",
+        "pl": "zobacz numer # # 423: parser dla ChargeControl przepracowany, kompatybilność z nowymi punktami danych v5.33 oprogramowania do tapet\nadapter przepisywany na maszynie",
+        "uk": "див. питання #423: парсер для перезавантаження заряду ChargeControl, сумісність з новими точками даних прошивки v5.33\nпереписка адаптера в форматі",
+        "zh-cn": "参见第 ^ 423 期: 充电控制解析器超负荷工作, 与 wallbox 固件 v5. 33 的新数据点兼容\n适配器重写为打印符"
+      },
       "0.3.6": {
         "en": "update dependencies + changes based on adapter checker",
         "de": "aktualisierung abhängigkeiten + änderungen basierend auf adapter-checker",
@@ -80,19 +93,6 @@
         "pl": "zmiany wymagane przez sprawdzacz adaptera\nzaktualizowane zależności",
         "uk": "зміни, які вимагаються перевіркою адаптера\nоновлені залежності",
         "zh-cn": "适配器检查器要求的更改\n更新依赖关系"
-      },
-      "0.3.0": {
-        "en": "see issue #284: test with nodejs@22\nupdate dependencies\nmigration to jsonConfig",
-        "de": "siehe ausgabe #284: test mit nodejs@22\naktualisierung der abhängigkeiten\nmigration nach jsonConfig",
-        "ru": "#284: тест с nodejs@22\nобновление зависимостей\nмиграции в jsonConfig",
-        "pt": "veja a edição #284: teste com nodejs@22\ndependências\nmigração para jsonConfig",
-        "nl": "zie nummer #284: test met nodejs@22\nafhankelijkheden bijwerken\nmigratie naar jsonConfig",
-        "fr": "voir numéro n° 284: test avec nodejs@22\nmettre à jour les dépendances\nmigration vers jsonConfig",
-        "it": "vedi numero #284: test con nodejs@22\naggiornamento dipendenze\nmigrazione a jsonConfig",
-        "es": "ver número #284: prueba con nodejs@22\ndependencias de actualización\nmigración a jsonConfig",
-        "pl": "zob. numer # 284: test z nodejs @ 22\naktualizacji zależności\nmigracja do jsonConfig",
-        "uk": "див. питання #284: тест з nodejs@22\nоновлення залежності\nміграції в jsonConfig",
-        "zh-cn": "参见第284期:带节点的测试@22\n更新依赖关系\n迁移到 jsonConfig"
       }
     },
     "titleLang": {
