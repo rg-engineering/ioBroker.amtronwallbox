@@ -72,6 +72,8 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
 ### 0.3.3 (2025-10-04)
 * (René) update dependencies + changes based on adapter checker
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 MIT License
 
