@@ -22,17 +22,23 @@ class amtron_rest extends base_1.default {
     }
     parseDeviceData(rawText) {
         const result = {};
+        if (!rawText || typeof rawText !== "string") {
+            this.logError("parseDeviceData: Ungültiger Eingabetext");
+            return result;
+        }
         const lines = rawText.split("\n");
         for (let line of lines) {
             line = line.trim();
             if (!line) {
                 continue;
             }
-            // Nur am ersten Doppelpunkt splitten
             const [key, ...rest] = line.split(":");
+            if (!key) {
+                this.logError(`parseDeviceData: Zeile ohne Schlüssel: "${line}"`);
+                continue;
+            }
             const valueRaw = rest.join(":").trim();
             let value = valueRaw;
-            // Optional: Komma-separierte Werte als Array
             if (valueRaw.includes(",")) {
                 value = valueRaw.split(",").map(v => v.trim());
             }
@@ -140,65 +146,82 @@ wlan_state:wlan_disconnected
                 timeout: 5000
             };
             this.logDebug("URL " + sURL);
-            const buffer = await axios_1.default.get(sURL, config);
-            this.logDebug("got data status " + typeof buffer.data + " " + JSON.stringify(buffer.data));
-            /*
-            got data status string "conn_state:no_vehicle_connected\nauth_state:not_authorized_for_charging\nauth_uid:\ntime_since_charging_start:0\nmeter_wh:16701\npower_w:0\ntransaction_wh:0\ncp_id:+49*839*00000000001\nocpp_state:available\ntype2_state:a\ntype2_proximity:cable_attached\nsig_current:0\nschuko_state:idle\nbackend_conn_state:pending\nfree_charging:off\nslave_state:\nocpp_meter_cfg:modbus_meter_nzr\nocpp_meter_serial:00202035\ncurrent_a:0.00,0.00,0.00\nenergy_man_current:0\nambient_temp:+15.00\nfirmware_ver:5.22.1-13295\ncc_serial_n:2202532503/b94060010me2\ncon_cycles_schuko:0\ncon_cycles_type2:5\nmax_current:16\nrcmb_state:okay\nrcmb_max_values: 0.0, 0.0\nrcmb_current_values: 0.0, 0.0\ncable_attached:on\nschuko_cfg:disable\nrcd_state:disable\nmcb_type2_state:disable\nmcb_schuko_state:disable\ncp_vendor:MENNEKES\nerrors:no_errors\ncp_model:CC612_2S0R_CC\ndisplay_text:"
-            */
+            let buffer;
+            try {
+                buffer = await axios_1.default.get(sURL, config);
+            }
+            catch (err) {
+                this.logError("HTTP-Fehler beim Abruf: " + (err?.message || err));
+                return;
+            }
+            if (!buffer || buffer.status !== 200 || typeof buffer.data !== "string") {
+                this.logError("Fehlerhafte Antwort: " + JSON.stringify(buffer));
+                return;
+            }
             const SystemName = this.Name.replace(this.GetForbiddenChars(), "_");
-            if (buffer != null && buffer.status == 200 && buffer.data != null && typeof buffer.data === "string") {
-                //const data = buffer.data.split(/\r?\n/);
-                //this.logDebug("data " + JSON.stringify(data));
-                const result = this.parseDeviceData(buffer.data);
-                this.logDebug("parsed data " + JSON.stringify(result));
-                await this.SetState(SystemName + ".Connection.State", true, Array.isArray(result.conn_state) ? result.conn_state.join(",") : result.conn_state);
-                await this.SetState(SystemName + ".Authorisation.State", true, Array.isArray(result.auth_state) ? result.auth_state.join(",") : result.auth_state);
-                await this.SetState(SystemName + ".Authorisation.UID", true, Array.isArray(result.auth_uid) ? result.auth_uid.join(",") : result.auth_uid);
-                await this.SetState(SystemName + ".TimeSinceChargingStart", true, Number(result.time_since_charging_start));
-                await this.SetState(SystemName + ".Meter", true, Number(result.meter_wh));
-                await this.SetState(SystemName + ".Power", true, Number(result.power_w));
-                await this.SetState(SystemName + ".Voltage", true, Array.isArray(result.voltage_v) ? result.voltage_v.join(",") : result.voltage_v);
-                await this.SetState(SystemName + ".Transaction", true, Number(result.transaction_wh));
-                await this.SetState(SystemName + ".CP_ID", true, Array.isArray(result.cp_id) ? result.cp_id.join(",") : result.cp_id);
-                await this.SetState(SystemName + ".OCPP.State", true, Array.isArray(result.ocpp_state) ? result.ocpp_state.join(",") : result.ocpp_state);
-                await this.SetState(SystemName + ".Type2.State", true, Array.isArray(result.type2_state) ? result.type2_state.join(",") : result.type2_state);
-                await this.SetState(SystemName + ".Type2.Proximity", true, Array.isArray(result.type2_proximity) ? result.type2_proximity.join(",") : result.type2_proximity);
-                await this.SetState(SystemName + ".SigCurrent", true, Number(result.sig_current));
-                await this.SetState(SystemName + ".Schuko.State", true, Array.isArray(result.schuko_state) ? result.schuko_state.join(",") : result.schuko_state);
-                await this.SetState(SystemName + ".Backend.ConnectionState", true, Array.isArray(result.backend_conn_state) ? result.backend_conn_state.join(",") : result.backend_conn_state);
-                await this.SetState(SystemName + ".FreeCharging", true, Boolean(result.free_charging));
-                await this.SetState(SystemName + ".SlaveState", true, Array.isArray(result.slave_state) ? result.slave_state.join(",") : result.slave_state);
-                await this.SetState(SystemName + ".OCPP.MeterConfig", true, Array.isArray(result.ocpp_meter_cfg) ? result.ocpp_meter_cfg.join(",") : result.ocpp_meter_cfg);
-                await this.SetState(SystemName + ".OCPP.MeterSerial", true, Array.isArray(result.ocpp_meter_serial) ? result.ocpp_meter_serial.join(",") : result.ocpp_meter_serial);
-                await this.SetState(SystemName + ".Current", true, Array.isArray(result.current_a) ? result.current_a.join(",") : result.current_a);
-                await this.SetState(SystemName + ".EnergyManagerCurrent", true, Number(result.energy_man_current));
-                await this.SetState(SystemName + ".AmbientTemperature", true, Number(result.ambient_temp));
-                this.sVersion = Array.isArray(result.firmware_ver) ? result.firmware_ver.join(",") : result.firmware_ver;
-                await this.SetState(SystemName + ".FirmwareVersion", true, this.sVersion);
-                await this.SetState(SystemName + ".SerialNumber", true, Array.isArray(result.cc_serial_n) ? result.cc_serial_n.join(",") : result.cc_serial_n);
-                await this.SetState(SystemName + ".ContactCyclesSchuko", true, Number(result.con_cycles_schuko));
-                await this.SetState(SystemName + ".ContactcyclesType2", true, Number(result.con_cycles_type2));
-                await this.SetState(SystemName + ".MaxCurrent", true, Number(result.max_current));
-                await this.SetState(SystemName + ".RCMB.State", true, Array.isArray(result.rcmb_state) ? result.rcmb_state.join(",") : result.rcmb_state);
-                await this.SetState(SystemName + ".RCMB.MaxValues", true, Array.isArray(result.rcmb_max_values) ? result.rcmb_max_values.join(",") : result.rcmb_max_values);
-                await this.SetState(SystemName + ".RCMB.CurrentValues", true, Array.isArray(result.rcmb_current_values) ? result.rcmb_current_values.join(",") : result.rcmb_current_values);
-                await this.SetState(SystemName + ".CableAttached", true, Boolean(result.cable_attached));
-                await this.SetState(SystemName + ".Schuko.Config", true, Array.isArray(result.schuko_cfg) ? result.schuko_cfg.join(",") : result.schuko_cfg);
-                await this.SetState(SystemName + ".RCD.State", true, Array.isArray(result.rcd_state) ? result.rcd_state.join(",") : result.rcd_state);
-                await this.SetState(SystemName + ".MCB.Type2State", true, Array.isArray(result.mcb_type2_state) ? result.mcb_type2_state.join(",") : result.mcb_type2_state);
-                await this.SetState(SystemName + ".MCB.SchukoState", true, Array.isArray(result.mcb_schuko_state) ? result.mcb_schuko_state.join(",") : result.mcb_schuko_state);
-                await this.SetState(SystemName + ".CP_Vendor", true, Array.isArray(result.cp_vendor) ? result.cp_vendor.join(",") : result.cp_vendor);
-                await this.SetState(SystemName + ".Errors", true, Array.isArray(result.errors) ? result.errors.join(",") : result.errors);
-                await this.SetState(SystemName + ".CP_Model", true, Array.isArray(result.cp_model) ? result.cp_model.join(",") : result.cp_model);
-                await this.SetState(SystemName + ".DisplayText", true, Array.isArray(result.display_text) ? result.display_text.join(",") : result.display_text);
-                await this.SetState(SystemName + ".WLANstate", true, Array.isArray(result.wlan_state) ? result.wlan_state.join(",") : result.wlan_state);
+            let result;
+            try {
+                result = this.parseDeviceData(buffer.data);
             }
-            else {
-                this.logError("error status: " + JSON.stringify(buffer));
+            catch (err) {
+                this.logError("Fehler beim Parsen der Gerätedaten: " + (err?.message || err));
+                return;
             }
+            this.logDebug("parsed data " + JSON.stringify(result));
+            // Hilfsfunktion für robustes Setzen von States
+            const safeSetState = async (key, ack, value) => {
+                try {
+                    await this.SetState(key, ack, value);
+                }
+                catch (err) {
+                    this.logError(`Fehler beim Setzen von State ${key}: ${(err?.message || err)}`);
+                }
+            };
+            // Beispiel für robustes Setzen (nur ein paar States exemplarisch, Rest analog)
+            await safeSetState(SystemName + ".Connection.State", true, Array.isArray(result.conn_state) ? result.conn_state.join(",") : result.conn_state ?? "");
+            await safeSetState(SystemName + ".Authorisation.State", true, Array.isArray(result.auth_state) ? result.auth_state.join(",") : result.auth_state ?? "");
+            await safeSetState(SystemName + ".Authorisation.UID", true, Array.isArray(result.auth_uid) ? result.auth_uid.join(",") : result.auth_uid ?? "");
+            await safeSetState(SystemName + ".TimeSinceChargingStart", true, Number(result.time_since_charging_start) || 0);
+            await safeSetState(SystemName + ".Meter", true, Number(result.meter_wh) || 0);
+            await safeSetState(SystemName + ".Power", true, Number(result.power_w) || 0);
+            await safeSetState(SystemName + ".Voltage", true, Array.isArray(result.voltage_v) ? result.voltage_v.join(",") : result.voltage_v);
+            await safeSetState(SystemName + ".Transaction", true, Number(result.transaction_wh) || 0);
+            await safeSetState(SystemName + ".CP_ID", true, Array.isArray(result.cp_id) ? result.cp_id.join(",") : result.cp_id);
+            await safeSetState(SystemName + ".OCPP.State", true, Array.isArray(result.ocpp_state) ? result.ocpp_state.join(",") : result.ocpp_state);
+            await safeSetState(SystemName + ".Type2.State", true, Array.isArray(result.type2_state) ? result.type2_state.join(",") : result.type2_state);
+            await safeSetState(SystemName + ".Type2.Proximity", true, Array.isArray(result.type2_proximity) ? result.type2_proximity.join(",") : result.type2_proximity);
+            await safeSetState(SystemName + ".SigCurrent", true, Number(result.sig_current));
+            await safeSetState(SystemName + ".Schuko.State", true, Array.isArray(result.schuko_state) ? result.schuko_state.join(",") : result.schuko_state);
+            await safeSetState(SystemName + ".Backend.ConnectionState", true, Array.isArray(result.backend_conn_state) ? result.backend_conn_state.join(",") : result.backend_conn_state);
+            await safeSetState(SystemName + ".FreeCharging", true, Boolean(result.free_charging));
+            await safeSetState(SystemName + ".SlaveState", true, Array.isArray(result.slave_state) ? result.slave_state.join(",") : result.slave_state);
+            await safeSetState(SystemName + ".OCPP.MeterConfig", true, Array.isArray(result.ocpp_meter_cfg) ? result.ocpp_meter_cfg.join(",") : result.ocpp_meter_cfg);
+            await safeSetState(SystemName + ".OCPP.MeterSerial", true, Array.isArray(result.ocpp_meter_serial) ? result.ocpp_meter_serial.join(",") : result.ocpp_meter_serial);
+            await safeSetState(SystemName + ".Current", true, Array.isArray(result.current_a) ? result.current_a.join(",") : result.current_a);
+            await safeSetState(SystemName + ".EnergyManagerCurrent", true, Number(result.energy_man_current));
+            await safeSetState(SystemName + ".AmbientTemperature", true, Number(result.ambient_temp));
+            this.sVersion = Array.isArray(result.firmware_ver) ? result.firmware_ver.join(",") : result.firmware_ver;
+            await safeSetState(SystemName + ".FirmwareVersion", true, this.sVersion);
+            await safeSetState(SystemName + ".SerialNumber", true, Array.isArray(result.cc_serial_n) ? result.cc_serial_n.join(",") : result.cc_serial_n);
+            await safeSetState(SystemName + ".ContactCyclesSchuko", true, Number(result.con_cycles_schuko));
+            await safeSetState(SystemName + ".ContactcyclesType2", true, Number(result.con_cycles_type2));
+            await safeSetState(SystemName + ".MaxCurrent", true, Number(result.max_current));
+            await safeSetState(SystemName + ".RCMB.State", true, Array.isArray(result.rcmb_state) ? result.rcmb_state.join(",") : result.rcmb_state);
+            await safeSetState(SystemName + ".RCMB.MaxValues", true, Array.isArray(result.rcmb_max_values) ? result.rcmb_max_values.join(",") : result.rcmb_max_values);
+            await safeSetState(SystemName + ".RCMB.CurrentValues", true, Array.isArray(result.rcmb_current_values) ? result.rcmb_current_values.join(",") : result.rcmb_current_values);
+            await safeSetState(SystemName + ".CableAttached", true, Boolean(result.cable_attached));
+            await safeSetState(SystemName + ".Schuko.Config", true, Array.isArray(result.schuko_cfg) ? result.schuko_cfg.join(",") : result.schuko_cfg);
+            await safeSetState(SystemName + ".RCD.State", true, Array.isArray(result.rcd_state) ? result.rcd_state.join(",") : result.rcd_state);
+            await safeSetState(SystemName + ".MCB.Type2State", true, Array.isArray(result.mcb_type2_state) ? result.mcb_type2_state.join(",") : result.mcb_type2_state);
+            await safeSetState(SystemName + ".MCB.SchukoState", true, Array.isArray(result.mcb_schuko_state) ? result.mcb_schuko_state.join(",") : result.mcb_schuko_state);
+            await safeSetState(SystemName + ".CP_Vendor", true, Array.isArray(result.cp_vendor) ? result.cp_vendor.join(",") : result.cp_vendor);
+            await safeSetState(SystemName + ".Errors", true, Array.isArray(result.errors) ? result.errors.join(",") : result.errors);
+            await safeSetState(SystemName + ".CP_Model", true, Array.isArray(result.cp_model) ? result.cp_model.join(",") : result.cp_model);
+            await safeSetState(SystemName + ".DisplayText", true, Array.isArray(result.display_text) ? result.display_text.join(",") : result.display_text);
+            await safeSetState(SystemName + ".WLANstate", true, Array.isArray(result.wlan_state) ? result.wlan_state.join(",") : result.wlan_state);
         }
         catch (e) {
-            this.logError("exception in read_rest [" + e + "]");
+            this.logError("exception in read_rest [" + (e?.message || e) + "]");
         }
     }
     async checkVariables() {
