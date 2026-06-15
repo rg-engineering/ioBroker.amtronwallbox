@@ -68,7 +68,7 @@ export default class amtron_MHCP extends Base {
 			await this.read_MHCP_StatisticData("Annual");
 
 		} catch (e) {
-			this.logError("exception in read_MHCP [" + e + "]");
+			this.logError("exception in read_MHCP [" + String(e) + "]");
 		}
 	}
 
@@ -143,7 +143,7 @@ export default class amtron_MHCP extends Base {
 				}
 			}
 		} catch (e) {
-			this.logError("exception in read_MHCP_DevInfo [" + e + "]");
+			this.logError("exception in read_MHCP_DevInfo [" + String(e) + "]");
 		}
 	}
 
@@ -241,7 +241,7 @@ export default class amtron_MHCP extends Base {
 				}
 			}
 		} catch (e) {
-			this.logError("exception in read_MHCP_DevInfo [" + e + "]");
+			this.logError("exception in read_MHCP_DevInfo [" + String(e) + "]");
 		}
 	}
 
@@ -305,7 +305,7 @@ export default class amtron_MHCP extends Base {
 				}
 			}
 		} catch (e) {
-			this.logError("exception in read_MHCP_DevInfo [" + e + "]");
+			this.logError("exception in read_MHCP_DevInfo [" + String(e) + "]");
 		}
 	}
 

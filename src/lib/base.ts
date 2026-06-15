@@ -302,7 +302,7 @@ export default class Base {
 
 
         } catch (e) {
-            this.logError("exception in CronCreate [" + e + "]");
+            this.logError("exception in CronCreate [" + String(e) + "]");
         }
     }
 
@@ -329,7 +329,7 @@ export default class Base {
                 }
             }
         } catch (e) {
-            this.logError("exception in getCronStat [" + e + "] : " + n + " of " + length);
+            this.logError("exception in getCronStat [" + String(e) + "] : " + n + " of " + length);
         }
     }
 
