@@ -1,4 +1,8 @@
 # Older changes
+## 0.3.3 (2025-10-04)
+* (René) update dependencies + changes based on adapter checker
+
+
 ## 0.3.2 (2025-06-28)
 * (René) update dependencies
 * (René) new testing

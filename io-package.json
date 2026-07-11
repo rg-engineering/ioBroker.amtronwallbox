@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "news": {
+      "1.0.1": {
+        "en": "Adapter requires node.js >= 22 now\nupdate dependencies + changes based on adapter checker",
+        "de": "Der Adapter benötigt jetzt Node.js >= 22.\nAbhängigkeiten aktualisieren + Änderungen basierend auf dem Adapter-Checker",
+        "ru": "Для работы адаптера требуется Node.js версии >= 22.\nОбновление зависимостей + изменения на основе проверки адаптера",
+        "pt": "O adaptador agora requer Node.js >= 22.\nAtualizar dependências + alterações com base no verificador de adaptadores",
+        "nl": "De adapter vereist nu Node.js versie 22 of hoger.\nAfhankelijkheden bijwerken + wijzigingen op basis van adaptercontrole",
+        "fr": "L'adaptateur nécessite désormais Node.js >= 22.\nMise à jour des dépendances + modifications basées sur le vérificateur d'adaptateur",
+        "it": "L'adattatore ora richiede Node.js >= 22\naggiorna le dipendenze + modifiche in base al controllo dell'adattatore",
+        "es": "El adaptador ahora requiere node.js >= 22.\nActualizar dependencias + cambios según el verificador del adaptador",
+        "pl": "Adapter wymaga teraz node.js >= 22\nzaktualizuj zależności + zmiany na podstawie sprawdzania adaptera",
+        "uk": "Адаптер тепер вимагає node.js >= 22\nоновлення залежностей + зміни на основі перевірки адаптера",
+        "zh-cn": "适配器现在需要 node.js 版本 >= 22。\n根据适配器检查器更新依赖项和更改"
+      },
       "1.0.0": {
         "en": "see issue ##423: parser for ChargeControl overworked, compatibility with new datapoints of v5.33 of wallbox firmware\nadapter rewritten in typescript",
         "de": "siehe Ausgabe: Parser for ChargeControl überarbeitet, Kompatibilität mit neuen Datenpunkten von v5.33 der Wallbox Firmware\nadapter neu geschrieben in typescript",
@@ -80,19 +93,6 @@
         "pl": "aktualizacji zależności\nnowe badania",
         "uk": "оновлення залежності\nновий тест",
         "zh-cn": "更新依赖关系\n新测试"
-      },
-      "0.3.1": {
-        "en": "changes requested by adapter checker\ndependencies updated",
-        "de": "änderungen, die von adapter checker angefordert werden\naktualisierte abhängigkeiten",
-        "ru": "изменения, запрошенные adapter checker\nобновленные зависимости",
-        "pt": "alterações solicitadas pelo verificador do adaptador\ndependências atualizadas",
-        "nl": "wijzigingen gevraagd door adaptercontrole\nafhankelijkheden bijgewerkt",
-        "fr": "modifications demandées par l'adaptateur checker\ndépendances mises à jour",
-        "it": "modifiche richieste da adattatore checker\ndipendenze aggiornate",
-        "es": "cambios solicitados por el adaptador\ndependencias actualizadas",
-        "pl": "zmiany wymagane przez sprawdzacz adaptera\nzaktualizowane zależności",
-        "uk": "зміни, які вимагаються перевіркою адаптера\nоновлені залежності",
-        "zh-cn": "适配器检查器要求的更改\n更新依赖关系"
       }
     },
     "titleLang": {
