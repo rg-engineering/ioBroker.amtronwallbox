@@ -148,15 +148,15 @@
               "default": false,
               "options": [
                 {
-                  "label": { "en": "Compact" },
+                  "label": "Compact",
                   "value": "Compact"
                 },
                 {
-                  "label": { "en": "ChargeControl" },
+                  "label": "ChargeControl",
                   "value": "ChargeControl"
                 },
                 {
-                  "label": { "en": "Xtra" },
+                  "label": "Xtra",
                   "value": "Xtra"
                 }
               ]

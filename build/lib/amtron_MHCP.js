@@ -40,7 +40,7 @@ class amtron_MHCP extends base_1.default {
             await this.read_MHCP_StatisticData("Annual");
         }
         catch (e) {
-            this.logError("exception in read_MHCP [" + e + "]");
+            this.logError("exception in read_MHCP [" + String(e) + "]");
         }
     }
     async read_MHCP_DevInfo() {
@@ -103,7 +103,7 @@ class amtron_MHCP extends base_1.default {
             }
         }
         catch (e) {
-            this.logError("exception in read_MHCP_DevInfo [" + e + "]");
+            this.logError("exception in read_MHCP_DevInfo [" + String(e) + "]");
         }
     }
     async read_MHCP_ChargeData() {
@@ -186,7 +186,7 @@ class amtron_MHCP extends base_1.default {
             }
         }
         catch (e) {
-            this.logError("exception in read_MHCP_DevInfo [" + e + "]");
+            this.logError("exception in read_MHCP_DevInfo [" + String(e) + "]");
         }
     }
     async read_MHCP_StatisticData(period) {
@@ -241,7 +241,7 @@ class amtron_MHCP extends base_1.default {
             }
         }
         catch (e) {
-            this.logError("exception in read_MHCP_DevInfo [" + e + "]");
+            this.logError("exception in read_MHCP_DevInfo [" + String(e) + "]");
         }
     }
     async checkVariables() {

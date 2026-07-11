@@ -1,0 +1,22 @@
+{
+  "ApiKey": "Klucz API",
+  "ChargeControl": "ChargeControl",
+  "Compact": "Compact",
+  "IP Address": "Adres IP systemu",
+  "IPAddress": "Adres IP",
+  "IsActive": "aktywny",
+  "Main settings": "Ustawienia główne",
+  "Type": "rodzaj",
+  "Type of system": "Typ systemu",
+  "Wallbox settings": "Ustawienia Wallboxa",
+  "Xtra": "Xtra",
+  "configuration": "konfiguracja",
+  "enable system": "włączyć ten system",
+  "name": "Nazwa",
+  "page-systems": "Systemy",
+  "readInterval": "interwał odczytu [min]",
+  "readInterval_help": "interwał w minutach, jak często mają być odczytywane dane z wallboxa",
+  "system API key": "klucz API systemu (nieużywany w przypadku ChargeControl)",
+  "system name": "nazwa systemu",
+  "systems": "systemy"
+}

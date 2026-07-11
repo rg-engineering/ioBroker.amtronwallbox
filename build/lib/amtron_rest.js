@@ -151,7 +151,7 @@ wlan_state:wlan_disconnected
                 buffer = await axios_1.default.get(sURL, config);
             }
             catch (err) {
-                this.logError("HTTP-Fehler beim Abruf: " + (err?.message || err));
+                this.logError("HTTP-Fehler beim Abruf: " + String(err));
                 return;
             }
             if (!buffer || buffer.status !== 200 || typeof buffer.data !== "string") {
@@ -164,7 +164,7 @@ wlan_state:wlan_disconnected
                 result = this.parseDeviceData(buffer.data);
             }
             catch (err) {
-                this.logError("Fehler beim Parsen der Gerätedaten: " + (err?.message || err));
+                this.logError("Fehler beim Parsen der Gerätedaten: " + String(err));
                 return;
             }
             this.logDebug("parsed data " + JSON.stringify(result));
@@ -174,7 +174,7 @@ wlan_state:wlan_disconnected
                     await this.SetState(key, ack, value);
                 }
                 catch (err) {
-                    this.logError(`Fehler beim Setzen von State ${key}: ${(err?.message || err)}`);
+                    this.logError("Fehler beim Setzen von State " + key + ": " + String(err));
                 }
             };
             // Beispiel für robustes Setzen (nur ein paar States exemplarisch, Rest analog)
@@ -221,7 +221,7 @@ wlan_state:wlan_disconnected
             await safeSetState(SystemName + ".WLANstate", true, Array.isArray(result.wlan_state) ? result.wlan_state.join(",") : result.wlan_state);
         }
         catch (e) {
-            this.logError("exception in read_rest [" + (e?.message || e) + "]");
+            this.logError("exception in read_rest [" + String(e) + "]");
         }
     }
     async checkVariables() {

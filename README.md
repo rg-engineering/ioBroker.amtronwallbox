@@ -57,7 +57,8 @@ Note: Since the boxes have different interfaces, it may be that not all interfac
   ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-- (copilot) Adapter requires node.js >= 22 now
+* (copilot) Adapter requires node.js >= 22 now
+* (René) update dependencies + changes based on adapter checker
 
 ### 1.0.0 (2026-04-25)
 * (René) see issue ##423: parser for ChargeControl overworked, compatibility with new datapoints of v5.33 of wallbox firmware

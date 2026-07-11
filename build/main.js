@@ -91,7 +91,7 @@ class Amtronwallbox extends utils.Adapter {
             }
         }
         catch (e) {
-            this.log.error("Exception in onReady [" + e + "]");
+            this.log.error("Exception in onReady [" + String(e) + "]");
         }
     }
     /**
@@ -106,7 +106,7 @@ class Amtronwallbox extends utils.Adapter {
             callback();
         }
         catch (e) {
-            this.log.error("Exception in onUnload " + e);
+            this.log.error("Exception in onUnload " + String(e));
             callback();
         }
     }

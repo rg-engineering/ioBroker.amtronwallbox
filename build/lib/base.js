@@ -230,7 +230,7 @@ class Base {
             this.cronJobs.push(job);
         }
         catch (e) {
-            this.logError("exception in CronCreate [" + e + "]");
+            this.logError("exception in CronCreate [" + String(e) + "]");
         }
     }
     CronStatus() {
@@ -254,7 +254,7 @@ class Base {
             }
         }
         catch (e) {
-            this.logError("exception in getCronStat [" + e + "] : " + n + " of " + length);
+            this.logError("exception in getCronStat [" + String(e) + "] : " + n + " of " + length);
         }
     }
     timeConverter(SystemLanguage, time, timeonly = false) {
