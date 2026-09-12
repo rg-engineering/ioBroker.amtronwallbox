@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "amtronwallbox",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "news": {
+      "1.0.2": {
+        "en": "update dependencies",
+        "de": "Abhängigkeiten updaten",
+        "ru": "обновить зависимости",
+        "pt": "atualizar dependências",
+        "nl": "afhankelijkheden bijwerken",
+        "fr": "mettre à jour les dépendances",
+        "it": "aggiorna dipendenze",
+        "es": "actualizar dependencias",
+        "pl": "aktualizuj zależności",
+        "uk": "оновлення залежностей",
+        "zh-cn": "更新依赖关系"
+      },
       "1.0.1": {
         "en": "Adapter requires node.js >= 22 now\nupdate dependencies + changes based on adapter checker",
         "de": "Der Adapter benötigt jetzt Node.js >= 22.\nAbhängigkeiten aktualisieren + Änderungen basierend auf dem Adapter-Checker",
@@ -80,19 +93,6 @@
         "pl": "aktualizacja zależności + zmiany w oparciu o sprawdzacz adaptera",
         "uk": "оновлення залежності + зміни на основі перевірки адаптера",
         "zh-cn": "根据适配器检查器更新依赖性+变化"
-      },
-      "0.3.2": {
-        "en": "update dependencies\nnew testing",
-        "de": "aktualisierung der abhängigkeiten\nneue tests",
-        "ru": "обновление зависимостей\nновые испытания",
-        "pt": "atualizar dependências\nnovos testes",
-        "nl": "afhankelijkheden bijwerken\nnieuwe tests",
-        "fr": "mettre à jour les dépendances\nnouveaux essais",
-        "it": "aggiornamento dipendenze\nnuovi test",
-        "es": "dependencias de actualización\nnuevas pruebas",
-        "pl": "aktualizacji zależności\nnowe badania",
-        "uk": "оновлення залежності\nновий тест",
-        "zh-cn": "更新依赖关系\n新测试"
       }
     },
     "titleLang": {
