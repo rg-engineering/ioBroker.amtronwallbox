@@ -17,7 +17,7 @@ node_modules
 /bin/Microsoft.NodejsTools.WebRole.dll
 /.vscode/extensions.json
 /obj/Debug/
-/iobroker.amtronwallbox-0.3.6.tgz
-/.github/copilot-instructions.md
+
+
 /.github/dependabot.yml.orig
 /iobroker.amtronwallbox-*.tgz
